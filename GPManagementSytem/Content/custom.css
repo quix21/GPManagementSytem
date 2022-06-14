@@ -1,0 +1,264 @@
+.container {
+    max-width: 1600px;
+}
+
+h4 {
+  margin-right: 0;
+  margin-left: 25px;
+  color: #333d99;
+  font-size: 20px;
+  margin-left: 25px;
+  font-weight: bold;
+}
+
+.sidebar.sidebar-dark.accordion.bg-gradient-primary {
+  background: #c9dbed;
+  /*color: var(--bs-red);*/
+  font-size: 18px;
+}
+
+.sidebar-dark .nav-item .nav-link {
+  color: #0e0d0dcc;
+  font-weight: bold;
+}
+
+.sidebar-dark .nav-item .nav-link i {
+  color: rgba(14,6,59,0.3);
+}
+
+/*span {
+  font-size: 24px;
+  color: #333d99;
+}*/
+
+h1 {
+  margin-left: 25px;
+  font-size: 28px;
+  color: rgb(29,45,160);
+}
+
+hr.main {
+  color: #d0b006;
+  height: 2px;
+}
+
+label {
+  color: rgb(20,20,20);
+  margin-right: 5px;
+}
+
+select {
+  border-radius: 5px;
+}
+
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+  margin-right: calc(var(--bs-gutter-x) / -2);
+  margin-left: calc(var(--bs-gutter-x) / -2);
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #5f5f6f;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #eaecf4;
+  border: 1px solid #d1d3e2;
+  border-radius: .35rem;
+  font-weight: bold;
+}
+
+.input-group-text-checkbox {
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #5f5f6f;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #eaecf4;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.smallLabel {
+    padding-bottom: 0px;
+    padding-top: 4px;
+}
+
+.input-group-text-radio {
+  display: flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgb(20,20,20);
+  text-align: center;
+  white-space: nowrap;
+  background-color: #eaecf4;
+  border: 1px solid #d1d3e2;
+  border-radius: .35rem;
+  font-weight: bold;
+  margin-right: 5px;
+  height: 38px;
+}
+
+.fa.fa-star-add {
+  color: #f6c23e;
+  font-size: 20px;
+}
+
+.fa.fa-star-add {
+  color: #fbfaf8;
+  font-size: 16px;
+}
+
+.fa.fa-star {
+  color: #f6c23e;
+  font-size: 20px;
+}
+
+.fa.fa-binoculars {
+  font-size: 12px;
+  padding: 0px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.btn-group, .btn-group-vertical {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  border: 2px;
+  height: 20px;
+}
+
+.btn-group-radio, .btn-group-vertical {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  border: 2px;
+  /*height: 20px;*/
+}
+
+.fa.fa-info-circle {
+  margin: 5px;
+  font-size: 12px;
+  color: blue;
+}
+
+.table tr td.isChildCellLeft {
+  padding-left: 40px;
+  font-size: 85%;
+}
+
+a {
+  margin-right: 5px;
+}
+
+.img-logo {
+    margin: 10px;
+}
+
+.mwsError {
+    display: none;
+    font-weight: bold;
+}
+
+.mainError {
+    color: red;
+
+}
+
+.validation-summary-errors {
+    color: red;
+}
+
+.nav-item-mySub {
+    margin-left: 50px;
+    font-size: 14px;
+}
+
+.sidebar .nav-item-mySub .nav-link i {
+    font-size: .85rem;
+    margin-right: .25rem;
+}
+
+p.logout {
+    margin-left: 25px;
+}
+
+.addRowButton {
+    padding-bottom: 10px;
+}
+
+.hiddenRow {
+    padding: 0 !important;
+}
+
+td:empty {
+    display: none;
+}
+
+.btn-link {
+    padding: 0;
+    padding-bottom: 3px;
+    font-size: 85%;
+    border: none;
+    color: #212529;
+}
+
+    .btn-link:hover {
+        text-decoration: none;
+        outline: none;
+        border: none;
+    }
+
+    .btn-link:active {
+        text-decoration: none;
+        outline: none;
+        border: none;
+    }
+
+    .btn-link:focus {
+        text-decoration: none;
+        outline: none;
+        border: none;
+    }
+
+.taskTable {
+    width: 100%;
+    font-size: 85%;
+    /*background: #eaecf4;*/
+}
+
+    .taskTable tr:hover {
+        background-color: #f7f7f8;
+    }
+
+.taskTable td.taskCell {
+    padding-left: 60px;
+    width: 70%;
+}
+
+.taskTable td.dateCell {
+    width: 15%;
+}
+
+.taskTable td.dateCell {
+    width: 15%;
+} 

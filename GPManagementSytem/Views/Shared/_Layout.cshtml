@@ -1,0 +1,148 @@
+﻿@using GPManagementSytem.Helper
+@using GPManagementSytem.Models
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>@ViewBag.Title | GP Management System</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/Content/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="~/Content/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="~/Content/custom.css">
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @RenderSection("js", false)
+
+    @{
+        var user = (Users)Session["Username"];
+    }
+
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0">
+                <img src="~/Images/uol-logo.svg" class="img-logo"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"><span style="font-size: 24px;color: #d0b006;"><i class="material-icons">assignment</i>TRACTION</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" href="#" style="font-size: 13.6px;"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddActionPlan", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Add Action Plan</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageActionPlans", "Home") ? "active" : "")" href="~/Home/ManageActionPlans"><i class="fas fa-table"></i>Manage Action Plans</a></li>
+
+                    <li class="nav-item-mySub"><a class="nav-link @(Html.ActionLinkIsCurrentPage("MyActionPlans", "Home") ? "active" : "")" href="~/Home/MyActionPlans"><i class="fas fa-table"></i>My Action Plans</a></li>
+
+
+                    <li class="nav-item"><a class="nav-link" href="reports.html"><i class="fa fa-book"></i>Reports</a></li>
+                    @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUnits", "Home") ? "active" : "")" href="~/Home/ManageUnits"><i class="fas fa-user-circle"></i>Manage Units</a></li>*@
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUsers", "Home") ? "active" : "")" href="~/Home/ManageUsers"><i class="fas fa-user-circle"></i>Manage Users</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddFeedback", "Home") ? "active" : "")" href="~/Home/AddFeedback"><i class="fas fa-user-circle"></i>Feedback</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/Login/Logout"><i class="fas fa-user-circle"></i>Log out</a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow">
+                                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                    <form class="me-auto navbar-search w-100">
+                                        <div class="input-group">
+                                            <input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow">
+                                <div class="nav-item dropdown no-arrow">
+                                    @{
+                                        if (user != null)
+                                        {
+                                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">@user.Username is logged in</span></a>
+                                        }
+                                    }
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                @RenderBody()
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap4.min.js"></script>
+
+
+    @*<script src="~/Scripts/bs-init.js"></script>
+        <script src="~/Scripts/theme.js"></script>*@
+    <script src="~/Scripts/doPopover.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-idle-hands.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/basil.js/0.4.10/basil.min.js"></script>
+
+    <script src="~/Scripts/jquery-idle-hands.js"></script>
+    <script src="~/Scripts/datatablesSetup.js"></script>
+
+    @* Inactivity timeout *@
+    @if (Session["UserId"] != null)
+    {
+        var request = HttpContext.Current.Request;
+        var getPath = $"{request.Url.Scheme}://{request.Url.Authority}{Url.Content("~")}Login/ForceLogout";
+
+
+        <script>
+            $(function () {
+                $.idleHands({
+                    applicationId: 'gpmanagement',
+                    heartRate: 5,
+                    heartbeatUrl: window.location.href,
+                    inactivityDialogDuration: 30,
+                    inactivityLogoutUrl: '@getPath',
+                    maxInactivitySeconds: 600
+                });
+            });
+        </script>
+
+    }
+
+</body>
+</html>

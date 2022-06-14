@@ -35,21 +35,18 @@
             <div class="container-fluid d-flex flex-column p-0">
                 <img src="~/Images/uol-logo.svg" class="img-logo"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon rotate-n-15"></div>
-                    <div class="sidebar-brand-text mx-3"><span style="font-size: 24px;color: #d0b006;"><i class="material-icons">assignment</i>TRACTION</span></div>
+                    <div class="sidebar-brand-text mx-3"><span style="font-size: 12px;color: #d0b006;"><i class="material-icons"></i>GP Management System</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="#" style="font-size: 13.6px;"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddActionPlan", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Add Action Plan</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageActionPlans", "Home") ? "active" : "")" href="~/Home/ManageActionPlans"><i class="fas fa-table"></i>Manage Action Plans</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Sign up</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddNew", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Add New Practice</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManageActionPlans"><i class="fas fa-table"></i>Manage Practices</a></li>
 
-                    <li class="nav-item-mySub"><a class="nav-link @(Html.ActionLinkIsCurrentPage("MyActionPlans", "Home") ? "active" : "")" href="~/Home/MyActionPlans"><i class="fas fa-table"></i>My Action Plans</a></li>
+                    <li class="nav-item-mySub"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AtAGlance", "Home") ? "active" : "")" href="~/Home/MyActionPlans"><i class="fas fa-table"></i>At A Glance</a></li>
 
-
-                    <li class="nav-item"><a class="nav-link" href="reports.html"><i class="fa fa-book"></i>Reports</a></li>
-                    @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUnits", "Home") ? "active" : "")" href="~/Home/ManageUnits"><i class="fas fa-user-circle"></i>Manage Units</a></li>*@
                     <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUsers", "Home") ? "active" : "")" href="~/Home/ManageUsers"><i class="fas fa-user-circle"></i>Manage Users</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddFeedback", "Home") ? "active" : "")" href="~/Home/AddFeedback"><i class="fas fa-user-circle"></i>Feedback</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Login/Logout"><i class="fas fa-user-circle"></i>Log out</a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>

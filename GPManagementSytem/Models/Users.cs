@@ -30,7 +30,7 @@ namespace GPManagementSytem.Models
         [DisplayName("Accound Enabled")]
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime? DateUpdated { get; set; }
+        public DateTime DateUpdated { get; set; }
         public int UpdatedBy { get; set; }
     }
 }

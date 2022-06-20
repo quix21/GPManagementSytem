@@ -1,5 +1,5 @@
-﻿@*@using TRACTION.Models
-@model TRACTION.Models.Users*@
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.Models.Users
 @{
     Layout = null;
 }
@@ -52,7 +52,7 @@
                                     @Html.AntiForgeryToken()
 
 
-                                    <h2 class="text-center">TRACTION Login</h2>
+                                    <h2 class="text-center">GP Management System Login</h2>
                                     <div class="mb-3">
                                         @Html.EditorFor(model => model.Username,
                     new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Username" } }

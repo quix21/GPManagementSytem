@@ -8,14 +8,12 @@ using System.Web;
 
 namespace GPManagementSytem.Models
 {
-    [Table("Users")]
+    [Table("User")]
     public class Users
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        public string Username { get; set; }
         [Required]
         [DisplayName("First name")]
         public string Firstname { get; set; }
@@ -23,16 +21,16 @@ namespace GPManagementSytem.Models
         public string Surname { get; set; }
         [Required]
         public string Email { get; set; }
-        public string Telephone { get; set; }
         [Required]
-        [DisplayName("Unit")]
-        public int UnitId { get; set; }
-        [DisplayName("Is Administrator")]
-        public bool IsAdmin { get; set; }
-        public bool Approved { get; set; }
+        public string Username { get; set; }
+        public string Pwd { get; set; }
+        [Required]
+        [DisplayName("User Type")]
+        public int UserType { get; set; }
         [DisplayName("Accound Enabled")]
-        public bool IsLive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
-        public int CreatedBy { get; set; }
+        public DateTime DateUpdated { get; set; }
+        public int UpdatedBy { get; set; }
     }
 }

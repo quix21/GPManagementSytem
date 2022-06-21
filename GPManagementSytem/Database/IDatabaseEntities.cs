@@ -10,6 +10,7 @@ namespace GPManagementSytem.Database
     public interface IDatabaseEntities
     {
         IDbSet<Users> Users { get; set; }
+        IDbSet<Practices> Practices { get; set; }
 
         int SaveChanges();
     }

@@ -11,7 +11,7 @@ namespace GPManagementSytem.Database
     public class DatabaseEntities: DbContext, IDatabaseEntities
     {
         public IDbSet<Users> Users { get; set; }
-
+        public IDbSet<Practices> Practices { get; set; }
 
         public override int SaveChanges()
         {

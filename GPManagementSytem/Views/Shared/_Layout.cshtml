@@ -40,11 +40,11 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="#" style="font-size: 13.6px;"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Sign up</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddNew", "Home") ? "active" : "")" href="~/Home/AddActionPlan"><i class="fa fa-file-o"></i>Add New Practice</a></li>
-                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManageActionPlans"><i class="fas fa-table"></i>Manage Practices</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="~/Home/AddAllocation"><i class="fa fa-file-o"></i>Sign up</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Add New Practice</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManagePractices"><i class="fas fa-table"></i>Manage Practices</a></li>
 
-                    <li class="nav-item-mySub"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AtAGlance", "Home") ? "active" : "")" href="~/Home/MyActionPlans"><i class="fas fa-table"></i>At A Glance</a></li>
+                    <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AtAGlance", "Home") ? "active" : "")" href="~/Home/AtAGlance"><i class="fas fa-table"></i>At A Glance</a></li>
 
                     <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUsers", "Home") ? "active" : "")" href="~/Home/ManageUsers"><i class="fas fa-user-circle"></i>Manage Users</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/Login/Logout"><i class="fas fa-user-circle"></i>Log out</a></li>

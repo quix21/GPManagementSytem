@@ -86,6 +86,7 @@ namespace GPManagementSytem.App_Start
             kernel.Bind<IDatabaseEntities>().To<DatabaseEntities>();
 
             kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IPracticeService>().To<PracticeService>();
         }
 
     }

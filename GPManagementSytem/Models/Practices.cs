@@ -8,7 +8,7 @@ using System.Web;
 namespace GPManagementSytem.Models
 {
     [Table("Practice")]
-    public class Practice
+    public class Practices
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,6 +25,7 @@ namespace GPManagementSytem.Models
         public string Telephone { get; set; }
         public string Fax { get; set; }
         public string PracticeManager { get; set; }
+        [DisplayFormat(ConvertEmptyStringToNull = false)]
         public string PMEmail { get; set; }
         public string GP2 { get; set; }
         public string GP2Email { get; set; }
@@ -34,7 +35,8 @@ namespace GPManagementSytem.Models
         public string GP4 { get; set; }
         public string GP4Email { get; set; }
         public string SupplierNumber { get; set; }
-        public int DoNotContactSurvey { get; set; }
+        public int DoNotContactSurgery { get; set; }
+        public string Notes { get; set; }
         public string AttachmentsAllocated { get; set; }
         public int ContractReceived { get; set; }
         public string UCCTNotes { get; set; }
@@ -51,9 +53,9 @@ namespace GPManagementSytem.Models
         public DateTime DataReviewDate { get; set; }
         public string TutorTrainingGPName { get; set; }
         public DateTime TutorTrainingDate { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
-        public int UpdatedBy { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
+        public int? UpdatedBy { get; set; }
 
 
     }

@@ -49,7 +49,7 @@ namespace GPManagementSytem.Controllers
 
                 //logger.Info("Login successful for: " + isUser.Username);
 
-                return this.RedirectToAction("ManageActionPlans", "Home");
+                return this.RedirectToAction("ManagePractices", "Home");
             }
             else
             {

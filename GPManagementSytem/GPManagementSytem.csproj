@@ -198,6 +198,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\ActionLinkEntendedMethods.cs" />
+    <Compile Include="Models\Allocations.cs" />
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

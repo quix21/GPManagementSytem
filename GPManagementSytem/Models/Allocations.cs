@@ -8,7 +8,7 @@ using System.Web;
 namespace GPManagementSytem.Models
 {
     [Table("Allocated")]
-    public class Allocateds
+    public class Allocations
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

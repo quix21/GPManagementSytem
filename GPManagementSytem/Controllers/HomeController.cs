@@ -28,5 +28,34 @@ namespace GPManagementSytem.Controllers
 
             return View(myPractices);
         }
+
+        public ActionResult AddAllocation()
+        {
+            AcademicYearDD();
+
+            return View();
+        }
+
+        public void AcademicYearDD()
+        {
+            var myList = new List<SelectListItem>();
+
+            int thisYear = DateTime.Now.Year;
+
+            var getThisYear = DateTime.Now.Year.ToString();
+            var getNextYear = (thisYear + 1).ToString();
+            var getLastYear = (thisYear - 1).ToString();
+
+            //for (int x=1; x<=3; x++)
+            //{
+            myList.Add(new SelectListItem { Value = getLastYear, Text = getLastYear });
+            myList.Add(new SelectListItem { Value = getThisYear, Text = getThisYear, Selected = true });
+            myList.Add(new SelectListItem { Value = getNextYear, Text = getNextYear });
+
+            //}
+
+            ViewBag.AcademicYearDD = myList;
+
+        }
     }
 }

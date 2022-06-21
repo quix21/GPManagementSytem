@@ -1,0 +1,12 @@
+﻿@model GPManagementSytem.Models.Allocations
+
+@{
+    ViewBag.Title = "AddAllocation";
+
+    var rich = new SelectList(ViewBag.AcademicYearDD, "Value", "Text");
+}
+
+<h2>AddAllocation</h2>
+
+<p>@Html.DropDownListFor(model => model.AcademicYear, rich, "--- Select Year ---", new { Class = "form-select" })</p>
+

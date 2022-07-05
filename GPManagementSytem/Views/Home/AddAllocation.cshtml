@@ -1,12 +1,157 @@
 ﻿@model GPManagementSytem.Models.Allocations
 
 @{
-    ViewBag.Title = "AddAllocation";
+    ViewBag.Title = "Add Allocation";
 
     var rich = new SelectList(ViewBag.AcademicYearDD, "Value", "Text");
+    var rich2 = new SelectList(ViewBag.MyTest, "Value", "Text");
+    var rich3 = ViewData["MyTest2"] as List<SelectListItem>;
 }
 
-<h2>AddAllocation</h2>
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+<form>
+    <h4>At A Glance Info</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group"><span class="input-group-text">Practice name</span><input class="form-control" type="text"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group"><span class="input-group-text">Postcode</span><input class="form-control" type="text"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            @*<div class="row">
+                <div class="col-md-1 rotated-text"><div>nothing vert</div></div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+                <div class="col-md-1">nothing</div>
+            </div>*@
+            <div class="row">
+                <div class="col-md-1-9 rotated-text"><div><span class="Year4">@Html.LabelFor(model => model.Year4B1Requested)</span></div></div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        @Html.LabelFor(model => model.Year4B1Allocated)
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B2
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B3
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B4
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B5
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B6
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B7
+                    </span>
+                </div>
+                <div class="col-md-1-9">
+                    <span class="year4-header">
+                        Yr4 B8
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1-9-left"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
+            </div>
+        </div>
+    </div>
+    <div class="container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group"><span class="input-group-text">Notes</span><textarea class="form-control" style="height: 120px;margin-left: 0px;"></textarea></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text-radio">Service Contract Received</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="apdraft" autocomplete="off" checked>
+                        <label class="btn btn-outline-info" for="apdraft">Yes</label>
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="appublished" autocomplete="off">
+                        <label class="btn btn-outline-info" for="appublished">No</label>
 
-<p>@Html.DropDownListFor(model => model.AcademicYear, rich, "--- Select Year ---", new { Class = "form-select" })</p>
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="appna" autocomplete="off">
+                        <label class="btn btn-outline-info" for="appna">N/A</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text-radio">Practice Status</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="practicestatus" id="active" autocomplete="off" checked>
+                        <label class="btn btn-outline-info" for="active">Active</label>
+                        <input type="radio" class="btn-check" name="practicestatus" id="disabled" autocomplete="off">
+                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
+
+                        <input type="radio" class="btn-check" name="practicestatus" id="queried" autocomplete="off">
+                        <label class="btn btn-outline-info" for="queried">Queried</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+</form>
 

@@ -27,6 +27,10 @@ namespace GPManagementSytem.Models
         [Required]
         [DisplayName("User Type")]
         public int UserType { get; set; }
+        public bool Year2 { get; set; }
+        public bool Year3 { get; set; }
+        public bool Year4 { get; set; }
+        public bool Year5 { get; set; }
         [DisplayName("Accound Enabled")]
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }

@@ -56,6 +56,7 @@ namespace GPManagementSytem.Models
         public int Year4B7Allocated { get; set; }
         public int Year4B8Requested { get; set; }
         public int Year4B8Allocated { get; set; }
+        public int Year5B1Requested { get; set; }
         public int Year5B1Allocated { get; set; }
         public int Year5B2Requested { get; set; }
         public int Year5B2Allocated { get; set; }

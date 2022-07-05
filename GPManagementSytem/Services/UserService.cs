@@ -80,51 +80,54 @@ namespace GPManagementSytem.Services
             return authentic;
         }
 
-        //public Users AddUser(Users user)
-        //{
-        //    return UpdateUser(user);
-        //}
+        public Users AddUser(Users user)
+        {
+            return UpdateUser(user);
+        }
 
-        //public Users EditUser(Users user)
-        //{
-        //    return UpdateUser(user);
-        //}
+        public Users EditUser(Users user)
+        {
+            return UpdateUser(user);
+        }
 
-        //private Users UpdateUser(Users user)
-        //{
-        //    var existingEntity = _databaseEntities.Users.FirstOrDefault(x => x.Id == user.Id);
+        private Users UpdateUser(Users user)
+        {
+            var existingEntity = _databaseEntities.Users.FirstOrDefault(x => x.Id == user.Id);
 
-        //    Users entityToUpdate;
+            Users entityToUpdate;
 
-        //    if (existingEntity != null)
-        //    {
-        //        entityToUpdate = existingEntity;
-        //    }
-        //    else
-        //    {
-        //        entityToUpdate = user;
-        //    }
+            if (existingEntity != null)
+            {
+                entityToUpdate = existingEntity;
+            }
+            else
+            {
+                entityToUpdate = user;
+            }
 
-        //    entityToUpdate.Firstname = user.Firstname;
-        //    entityToUpdate.Surname = user.Surname;
-        //    entityToUpdate.Username = user.Username;
-        //    entityToUpdate.Email = user.Email;
-        //    entityToUpdate.Telephone = user.Telephone;
-        //    entityToUpdate.UnitId = user.UnitId;
-        //    entityToUpdate.Approved = user.Approved;
-        //    entityToUpdate.IsLive = user.IsLive;
-        //    entityToUpdate.DateCreated = user.DateCreated;
-        //    entityToUpdate.CreatedBy = user.CreatedBy;
+            entityToUpdate.Firstname = user.Firstname;
+            entityToUpdate.Surname = user.Surname;
+            entityToUpdate.Username = user.Username;
+            entityToUpdate.Email = user.Email;
+            entityToUpdate.Pwd = user.Pwd;
+            entityToUpdate.UserType = user.UserType;
+            entityToUpdate.Year2 = user.Year2;
+            entityToUpdate.Year3 = user.Year3;
+            entityToUpdate.Year4 = user.Year4;
+            entityToUpdate.Year5 = user.Year5;
+            entityToUpdate.DateCreated = user.DateCreated;
+            entityToUpdate.DateUpdated = user.DateUpdated;
+            entityToUpdate.UpdatedBy = user.UpdatedBy;
 
-        //    if (existingEntity == null)
-        //    {
-        //        _databaseEntities.Users.Add(entityToUpdate);
-        //    }
+            if (existingEntity == null)
+            {
+                _databaseEntities.Users.Add(entityToUpdate);
+            }
 
-        //    Save();
+            Save();
 
-        //    return entityToUpdate;
-        //}
+            return entityToUpdate;
+        }
 
         private bool Save()
         {

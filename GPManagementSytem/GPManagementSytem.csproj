@@ -202,6 +202,8 @@
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AllocationService.cs" />
+    <Compile Include="Services\IAllocationService.cs" />
     <Compile Include="Services\IPracticeService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PracticeService.cs" />

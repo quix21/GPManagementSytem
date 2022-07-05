@@ -38,7 +38,7 @@ namespace GPManagementSytem.Controllers
 
         public void AcademicYearDD()
         {
-            var myList = new List<SelectListItem>();
+            List<SelectListItem> myList = new List<SelectListItem>();
 
             int thisYear = DateTime.Now.Year;
 
@@ -55,6 +55,8 @@ namespace GPManagementSytem.Controllers
             //}
 
             ViewBag.AcademicYearDD = myList;
+            ViewBag.MyTest = myList;
+            ViewData["MyTest2"] = myList;
 
         }
     }

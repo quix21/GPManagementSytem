@@ -1,0 +1,361 @@
+﻿@model GPManagementSytem.Models.Allocations
+
+@{
+    ViewBag.Title = "Add Allocation";
+
+    var rich = new SelectList(ViewBag.AcademicYearDD, "Value", "Text");
+    var rich2 = new SelectList(ViewBag.MyTest, "Value", "Text");
+    var rich3 = ViewData["MyTest2"] as List<SelectListItem>;
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+<form>
+    <h4>At A Glance Info</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group"><span class="input-group-text">Practice name</span><input class="form-control" type="text"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group"><span class="input-group-text">Postcode</span><input class="form-control" type="text"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <table class="table myAllocations">
+                <thead>
+                    <tr>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Allocated) </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">Yr2 Wk2</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">Yr2 Wk3</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">Yr2 Wk4</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">Yr2 Wk5</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">Yr2 Wk6</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr 3 - All Blks </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B1 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B2 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B3 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B4 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B5 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B6 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">Yr3 B7 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr 4 - All Blks </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B1 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B2 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B3 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B4 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B5 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B6 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B7 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year4">Yr4 B8 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr 5 - All Blks </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B1 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B2 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B3 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B4 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B5 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year5">Yr5 B6 </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="ServiceContr">Service Contract Recd </span></div>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="glance">
+                    <tr>
+
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year3"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year4"><i class="fa fa-check"></i></td>
+                        <td></td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td></td>
+                        <td class="Year5"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="ServiceContr"><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year3"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year4"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year5"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="ServiceContr">n/a</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year3"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year4"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year5"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="ServiceContr">n/a</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year3"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year4"></td>
+                        <td></td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>x</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td></td>
+                        <td class="Year5"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="ServiceContr"><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year3"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="Year4"><i class="fa fa-check"></i></td>
+                        <td></td>
+                        <td>1</td>
+                        <td>x</td>
+                        <td>1</td>
+                        <td>x</td>
+                        <td>1</td>
+                        <td>x</td>
+                        <td></td>
+                        <td class="Year5"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="ServiceContr"><i class="fa fa-check"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group"><span class="input-group-text">Notes</span><textarea class="form-control" style="height: 120px;margin-left: 0px;"></textarea></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text-radio">Service Contract Received</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="apdraft" autocomplete="off" checked>
+                        <label class="btn btn-outline-info" for="apdraft">Yes</label>
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="appublished" autocomplete="off">
+                        <label class="btn btn-outline-info" for="appublished">No</label>
+
+                        <input type="radio" class="btn-check" name="actionpointstatus" id="appna" autocomplete="off">
+                        <label class="btn btn-outline-info" for="appna">N/A</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text-radio">Practice Status</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="practicestatus" id="active" autocomplete="off" checked>
+                        <label class="btn btn-outline-info" for="active">Active</label>
+                        <input type="radio" class="btn-check" name="practicestatus" id="disabled" autocomplete="off">
+                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
+
+                        <input type="radio" class="btn-check" name="practicestatus" id="queried" autocomplete="off">
+                        <label class="btn btn-outline-info" for="queried">Queried</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+</form>
+

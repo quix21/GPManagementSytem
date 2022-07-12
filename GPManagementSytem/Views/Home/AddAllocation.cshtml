@@ -22,80 +22,73 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
-            <div class="row">
-                <div class="wrapper">
-                    <h3>Header One</h3>
-                    <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat aliquam deserunt harum rem earum assumenda perspiciatis expedita. Aliquid distinctio tenetur fugiat qui recusandae obcaecati voluptates.</p>
-                    </div>
-                </div>
+            <table class="table myAllocations">
+                <thead>
+                    <tr>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Allocated) </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk2Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk2Allocated)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk3Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk3Allocated)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk4Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk4Allocated) </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk5Requested) </span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk5Allocated)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk6Requested)</span></div>
+                        </th>
+                        <th class="rotated-text">
+                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk6Allocated) </span></div>
+                        </th>
 
-                <div class="wrapper">
-                    <h3>Header Two</h3>
-                    <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat aliquam deserunt harum rem earum assumenda perspiciatis expedita. Aliquid distinctio tenetur fugiat qui recusandae obcaecati voluptates.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="myRow">
+                    </tr>
+                </thead>
+                <tbody class="glance">
+                    <tr>
 
-                <div class="col-md-1-9 bottom-left"><span class="Year4">@Html.LabelFor(model => model.Year4B1Requested)</span></div>
-                <div class="col-md-1-9 bottom-left"><span class="Year4">@Html.LabelFor(model => model.Year4B1Allocated)</span></div>
-    @*
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B2
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B3
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B4
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B5
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B6
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B7
-            </span>
-        </div>
-        <div class="col-md-1-9">
-            <span class="year4-header">
-                Yr4 B8
-            </span>
-        </div>*@
-            </div>
-            <div class="row">
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-                <div class="col-md-1-9"><input class="form-control" type="text" /></div>
-            </div>
+                        <td>@Html.EditorFor(model => model.Year2Wk1Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text"} })
+                        </td>
+                        <td>@Html.EditorFor(model => model.Year2Wk1Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk2Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk2Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk3Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk3Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk4Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td class="Year3">@Html.EditorFor(model => model.Year2Wk4Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk5Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk5Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk6Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                        <td>@Html.EditorFor(model => model.Year2Wk6Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                       
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="container"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

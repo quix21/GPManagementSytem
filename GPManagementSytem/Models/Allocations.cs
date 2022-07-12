@@ -14,8 +14,8 @@ namespace GPManagementSytem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int PracticeId { get; set; }
-        public int Year2Wk1Requested { get; set; }
-        public int Year2Wk1Allocated { get; set; }
+        public string Year2Wk1Requested { get; set; }
+        public string Year2Wk1Allocated { get; set; }
         public int Year2Wk2Requested { get; set; }
         public int Year2Wk2Allocated { get; set; }
         public int Year2Wk3Requested { get; set; }

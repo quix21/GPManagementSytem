@@ -28,47 +28,49 @@
             <table class="table myAllocations">
                 <thead>
                     <tr>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Requested)</span></div>
+                        <th>Practice</th>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk1Requested, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk1Allocated) </span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk1Allocated, new { @class = "rotatedLabel" }) </div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk2Requested)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk2Requested, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk2Allocated)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk2Allocated, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk3Requested)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk3Requested, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk3Allocated)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk3Allocated, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year2">@Html.LabelFor(model => model.Year2Wk4Requested)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk4Requested, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk4Allocated) </span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk4Allocated, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk5Requested) </span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk5Requested, new { @class = "rotatedLabel" }) </div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk5Allocated)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk5Allocated, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk6Requested)</span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk6Requested, new { @class = "rotatedLabel" })</div>
                         </th>
-                        <th class="rotated-text">
-                            <div><span class="Year3">@Html.LabelFor(model => model.Year2Wk6Allocated) </span></div>
+                        <th class="rotated-text Year2">
+                            <div>@Html.LabelFor(model => model.Year2Wk6Allocated, new { @class = "rotatedLabel" })</div>
                         </th>
 
                     </tr>
                 </thead>
                 <tbody class="glance">
                     <tr>
+                        <td>My Practice Name</td>
 
                         <td>@Html.EditorFor(model => model.Year2Wk1Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text"} })
                         </td>

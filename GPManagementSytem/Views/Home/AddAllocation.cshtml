@@ -102,7 +102,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="input-group"><span class="input-group-text">Notes</span><textarea class="form-control" style="height: 120px;margin-left: 0px;"></textarea></div>
+            <div class="input-group"><span class="input-group-text">Notes</span>@Model.Notes</div>
         </div>
     </div>
 </div>
@@ -112,18 +112,17 @@
             <div class="input-group">
                 <span class="input-group-text-radio">Service Contract Received</span>
                 <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="actionpointstatus" id="apdraft" autocomplete="off" checked>
-                    <label class="btn btn-outline-info" for="apdraft">Yes</label>
-                    <input type="radio" class="btn-check" name="actionpointstatus" id="appublished" autocomplete="off">
-                    <label class="btn btn-outline-info" for="appublished">No</label>
-
-                    <input type="radio" class="btn-check" name="actionpointstatus" id="appna" autocomplete="off">
-                    <label class="btn btn-outline-info" for="appna">N/A</label>
+                    @Html.RadioButtonFor(model => model.ServiceContractReceived, "1", new { @class = "btn-check", @id = "yes" })
+                    <label class="btn btn-outline-info" for="yes">Yes</label>
+                    @Html.RadioButtonFor(model => model.ServiceContractReceived, "0", new { @class = "btn-check", @id = "no", @checked = "true" })
+                    <label class="btn btn-outline-info" for="no">No</label>
+                    @Html.RadioButtonFor(model => model.ServiceContractReceived, "2", new { @class = "btn-check", @id = "na" })
+                    <label class="btn btn-outline-info" for="na">N/A</label>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    @*<div class="row">
         <div class="col-md-12">
             <div class="input-group">
                 <span class="input-group-text-radio">Practice Status</span>
@@ -138,7 +137,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 <div class="container">
     <div class="row">

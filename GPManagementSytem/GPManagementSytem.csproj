@@ -256,7 +256,6 @@
     <Content Include="Views\Login\Logout.cshtml" />
     <Content Include="Views\Home\ManagePractices.cshtml" />
     <Content Include="Views\Home\AddAllocation.cshtml" />
-    <Content Include="Views\Home\AddAllocation - Copy.cshtml" />
     <Content Include="Views\Home\EditAllocation.cshtml" />
   </ItemGroup>
   <ItemGroup>

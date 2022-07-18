@@ -27,6 +27,11 @@ namespace GPManagementSytem.Services
             return AllNoTracking().ToList();
         }
 
+        public Allocations GetById(int id)
+        {
+            return AllNoTracking().Where(x => x.Id == id).FirstOrDefault();
+        }
+
         public Allocations GetByPracticeAndYear(int PracticeId, string year)
         {
             return AllNoTracking().Where(x => x.PracticeId == PracticeId && x.AcademicYear == year).FirstOrDefault();
@@ -123,6 +128,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.Year5B6Requested = allocations.Year5B6Requested;
             entityToUpdate.Year5B6Allocated = allocations.Year5B6Allocated;
             entityToUpdate.AcademicYear = allocations.AcademicYear;
+            entityToUpdate.ServiceContractReceived = allocations.ServiceContractReceived;
             entityToUpdate.DateCreated = allocations.DateCreated;
             entityToUpdate.DateUpdated = allocations.DateUpdated;
             entityToUpdate.UpdatedBy = allocations.UpdatedBy;
@@ -131,6 +137,8 @@ namespace GPManagementSytem.Services
             {
                 _databaseEntities.Allocations.Add(entityToUpdate);
             }
+
+            Save();
 
             return entityToUpdate;
 

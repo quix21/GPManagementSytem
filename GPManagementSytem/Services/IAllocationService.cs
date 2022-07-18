@@ -8,6 +8,7 @@ namespace GPManagementSytem.Services
 {
     public interface IAllocationService
     {
+        Allocations GetById(int id);
         List<Allocations> GetAll();
         Allocations GetByPracticeAndYear(int PracticeId, string year);
         List<Allocations> GetByAcademicYear(string year);

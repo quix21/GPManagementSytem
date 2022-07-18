@@ -41,10 +41,16 @@ namespace GPManagementSytem.Controllers
             
             if (doesAllocationExist != null)
             {
-                return RedirectToAction("EditAllocation", new { id = id });
+                return RedirectToAction("EditAllocation", new { id = doesAllocationExist.Id });
             }
 
-            var myPractice = _practiceService.GetById(id);
+
+            return View(BuildAddAllocation(id));
+        }
+
+        private AllocationViewModel BuildAddAllocation(int PracticeId)
+        {
+            var myPractice = _practiceService.GetById(PracticeId);
 
             AllocationViewModel allocationViewModel = new AllocationViewModel();
 
@@ -53,16 +59,193 @@ namespace GPManagementSytem.Controllers
             allocationViewModel.Postcode = myPractice.Postcode;
             allocationViewModel.Notes = myPractice.Notes;
 
-            return View(allocationViewModel);
+            return allocationViewModel;
         }
 
         public ActionResult EditAllocation(int id)
         {
-            int myTest = id;
+            var academicYear = AcademicYearDD();
 
-            return View();
+            var myAllocation = _allocationService.GetById(id);
+
+            AllocationViewModel allocationViewModel = BuildAddAllocation(myAllocation.PracticeId);
+
+            allocationViewModel = ParseAllocationViewModelEDIT(allocationViewModel, myAllocation);
+
+            return View(allocationViewModel);
         }
 
+        [HttpPost]
+        public ActionResult EditAllocation(AllocationViewModel allocationViewModel)
+        {
+            var myAllocation = _allocationService.GetById(allocationViewModel.AllocationId);
+
+            if (ModelState.IsValid)
+            {
+                allocationViewModel.DateUpdated = DateTime.Now;
+
+                var updateAllocation = _allocationService.EditAllocation(ParseAllocationViewModelADD(allocationViewModel, myAllocation));
+
+                return RedirectToAction("ManagePractices");
+            }
+            else
+            {
+                return View(allocationViewModel);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddAllocation(AllocationViewModel allocationViewModel)
+        {
+            Allocations allocation = new Allocations();
+
+            if (ModelState.IsValid)
+            {
+                allocation.DateCreated = DateTime.Now;
+                //allocation.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                allocation.UpdatedBy = 1;
+
+                var myAllocation = _allocationService.AddAllocation(ParseAllocationViewModelADD(allocationViewModel, allocation));
+
+                return RedirectToAction("ManagePractices");
+            }
+            else
+            {
+
+            }
+            return View(BuildAddAllocation(allocationViewModel.PracticeId));
+        }
+
+        private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)
+        {
+            allocation.PracticeId = allocationViewModel.PracticeId;
+            allocation.Year2Wk1Requested = allocationViewModel.Year2Wk1Requested;
+            allocation.Year2Wk1Allocated = allocationViewModel.Year2Wk1Allocated;
+            allocation.Year2Wk2Requested = allocationViewModel.Year2Wk2Requested;
+            allocation.Year2Wk2Allocated = allocationViewModel.Year2Wk2Allocated;
+            allocation.Year2Wk3Requested = allocationViewModel.Year2Wk3Requested;
+            allocation.Year2Wk3Allocated = allocationViewModel.Year2Wk3Allocated;
+            allocation.Year2Wk4Requested = allocationViewModel.Year2Wk4Requested;
+            allocation.Year2Wk4Allocated = allocationViewModel.Year2Wk4Allocated;
+            allocation.Year2Wk5Requested = allocationViewModel.Year2Wk5Requested;
+            allocation.Year2Wk5Allocated = allocationViewModel.Year2Wk5Allocated;
+            allocation.Year2Wk6Requested = allocationViewModel.Year2Wk6Requested;
+            allocation.Year2Wk6Allocated = allocationViewModel.Year2Wk6Allocated;
+            allocation.Year3B1Requested = allocationViewModel.Year3B1Requested;
+            allocation.Year3B1Allocated = allocationViewModel.Year3B1Allocated;
+            allocation.Year3B2Requested = allocationViewModel.Year3B2Requested;
+            allocation.Year3B2Allocated = allocationViewModel.Year3B2Allocated;
+            allocation.Year3B3Requested = allocationViewModel.Year3B3Requested;
+            allocation.Year3B3Allocated = allocationViewModel.Year3B3Allocated;
+            allocation.Year3B4Requested = allocationViewModel.Year3B4Requested;
+            allocation.Year3B4Allocated = allocationViewModel.Year3B4Allocated;
+            allocation.Year3B5Requested = allocationViewModel.Year3B5Requested;
+            allocation.Year3B5Allocated = allocationViewModel.Year3B5Allocated;
+            allocation.Year3B6Requested = allocationViewModel.Year3B6Requested;
+            allocation.Year3B6Allocated = allocationViewModel.Year3B6Allocated;
+            allocation.Year3B7Requested = allocationViewModel.Year3B7Requested;
+            allocation.Year3B7Allocated = allocationViewModel.Year3B7Allocated;
+            allocation.Year4B1Requested = allocationViewModel.Year4B1Requested;
+            allocation.Year4B1Allocated = allocationViewModel.Year4B1Allocated;
+            allocation.Year4B2Requested = allocationViewModel.Year4B2Requested;
+            allocation.Year4B2Allocated = allocationViewModel.Year4B2Allocated;
+            allocation.Year4B3Requested = allocationViewModel.Year4B3Requested;
+            allocation.Year4B3Allocated = allocationViewModel.Year4B3Allocated;
+            allocation.Year4B4Requested = allocationViewModel.Year4B4Requested;
+            allocation.Year4B4Allocated = allocationViewModel.Year4B4Allocated;
+            allocation.Year4B5Requested = allocationViewModel.Year4B5Requested;
+            allocation.Year4B5Allocated = allocationViewModel.Year4B5Allocated;
+            allocation.Year4B6Requested = allocationViewModel.Year4B6Requested;
+            allocation.Year4B6Allocated = allocationViewModel.Year4B6Allocated;
+            allocation.Year4B7Requested = allocationViewModel.Year4B7Requested;
+            allocation.Year4B7Allocated = allocationViewModel.Year4B7Allocated;
+            allocation.Year4B8Requested = allocationViewModel.Year4B8Requested;
+            allocation.Year4B8Allocated = allocationViewModel.Year4B8Allocated;
+            allocation.Year5B1Requested = allocationViewModel.Year5B1Requested;
+            allocation.Year5B1Allocated = allocationViewModel.Year5B2Allocated;
+            allocation.Year5B2Requested = allocationViewModel.Year5B2Requested;
+            allocation.Year5B2Allocated = allocationViewModel.Year5B2Allocated;
+            allocation.Year5B3Requested = allocationViewModel.Year5B3Requested;
+            allocation.Year5B3Allocated = allocationViewModel.Year5B3Allocated;
+            allocation.Year5B4Requested = allocationViewModel.Year5B4Requested;
+            allocation.Year5B4Allocated = allocationViewModel.Year5B4Allocated;
+            allocation.Year5B5Requested = allocationViewModel.Year5B5Requested;
+            allocation.Year5B5Allocated = allocationViewModel.Year5B5Allocated;
+            allocation.Year5B6Requested = allocationViewModel.Year5B6Requested;
+            allocation.Year5B6Allocated = allocationViewModel.Year5B6Allocated;
+            allocation.AcademicYear = allocationViewModel.AcademicYear;
+            allocation.ServiceContractReceived = allocationViewModel.ServiceContractReceived;
+            //allocation.DateCreated = allocationViewModel.DateCreated;
+            //allocation.DateUpdated = allocationViewModel.DateUpdated;
+            //allocation.UpdatedBy = allocationViewModel.UpdatedBy;
+
+            return allocation;
+        }
+
+        private AllocationViewModel ParseAllocationViewModelEDIT(AllocationViewModel allocationViewModel, Allocations myAllocation)
+        {
+            allocationViewModel.AllocationId = myAllocation.Id;
+            allocationViewModel.PracticeId = myAllocation.PracticeId;
+            allocationViewModel.Year2Wk1Requested = myAllocation.Year2Wk1Requested;
+            allocationViewModel.Year2Wk1Allocated = myAllocation.Year2Wk1Allocated;
+            allocationViewModel.Year2Wk2Requested = myAllocation.Year2Wk2Requested;
+            allocationViewModel.Year2Wk2Allocated = myAllocation.Year2Wk2Allocated;
+            allocationViewModel.Year2Wk3Requested = myAllocation.Year2Wk3Requested;
+            allocationViewModel.Year2Wk3Allocated = myAllocation.Year2Wk3Allocated;
+            allocationViewModel.Year2Wk4Requested = myAllocation.Year2Wk4Requested;
+            allocationViewModel.Year2Wk4Allocated = myAllocation.Year2Wk4Allocated;
+            allocationViewModel.Year2Wk5Requested = myAllocation.Year2Wk5Requested;
+            allocationViewModel.Year2Wk5Allocated = myAllocation.Year2Wk5Allocated;
+            allocationViewModel.Year2Wk6Requested = myAllocation.Year2Wk6Requested;
+            allocationViewModel.Year2Wk6Allocated = myAllocation.Year2Wk6Allocated;
+            allocationViewModel.Year3B1Requested = myAllocation.Year3B1Requested;
+            allocationViewModel.Year3B1Allocated = myAllocation.Year3B1Allocated;
+            allocationViewModel.Year3B2Requested = myAllocation.Year3B2Requested;
+            allocationViewModel.Year3B2Allocated = myAllocation.Year3B2Allocated;
+            allocationViewModel.Year3B3Requested = myAllocation.Year3B3Requested;
+            allocationViewModel.Year3B3Allocated = myAllocation.Year3B3Allocated;
+            allocationViewModel.Year3B4Requested = myAllocation.Year3B4Requested;
+            allocationViewModel.Year3B4Allocated = myAllocation.Year3B4Allocated;
+            allocationViewModel.Year3B5Requested = myAllocation.Year3B5Requested;
+            allocationViewModel.Year3B5Allocated = myAllocation.Year3B5Allocated;
+            allocationViewModel.Year3B6Requested = myAllocation.Year3B6Requested;
+            allocationViewModel.Year3B6Allocated = myAllocation.Year3B6Allocated;
+            allocationViewModel.Year3B7Requested = myAllocation.Year3B7Requested;
+            allocationViewModel.Year3B7Allocated = myAllocation.Year3B7Allocated;
+            allocationViewModel.Year4B1Requested = myAllocation.Year4B1Requested;
+            allocationViewModel.Year4B1Allocated = myAllocation.Year4B1Allocated;
+            allocationViewModel.Year4B2Requested = myAllocation.Year4B2Requested;
+            allocationViewModel.Year4B2Allocated = myAllocation.Year4B2Allocated;
+            allocationViewModel.Year4B3Requested = myAllocation.Year4B3Requested;
+            allocationViewModel.Year4B3Allocated = myAllocation.Year4B3Allocated;
+            allocationViewModel.Year4B4Requested = myAllocation.Year4B4Requested;
+            allocationViewModel.Year4B4Allocated = myAllocation.Year4B4Allocated;
+            allocationViewModel.Year4B5Requested = myAllocation.Year4B5Requested;
+            allocationViewModel.Year4B5Allocated = myAllocation.Year4B5Allocated;
+            allocationViewModel.Year4B6Requested = myAllocation.Year4B6Requested;
+            allocationViewModel.Year4B6Allocated = myAllocation.Year4B6Allocated;
+            allocationViewModel.Year4B7Requested = myAllocation.Year4B7Requested;
+            allocationViewModel.Year4B7Allocated = myAllocation.Year4B7Allocated;
+            allocationViewModel.Year4B8Requested = myAllocation.Year4B8Requested;
+            allocationViewModel.Year4B8Allocated = myAllocation.Year4B8Allocated;
+            allocationViewModel.Year5B1Requested = myAllocation.Year5B1Requested;
+            allocationViewModel.Year5B1Allocated = myAllocation.Year5B2Allocated;
+            allocationViewModel.Year5B2Requested = myAllocation.Year5B2Requested;
+            allocationViewModel.Year5B2Allocated = myAllocation.Year5B2Allocated;
+            allocationViewModel.Year5B3Requested = myAllocation.Year5B3Requested;
+            allocationViewModel.Year5B3Allocated = myAllocation.Year5B3Allocated;
+            allocationViewModel.Year5B4Requested = myAllocation.Year5B4Requested;
+            allocationViewModel.Year5B4Allocated = myAllocation.Year5B4Allocated;
+            allocationViewModel.Year5B5Requested = myAllocation.Year5B5Requested;
+            allocationViewModel.Year5B5Allocated = myAllocation.Year5B5Allocated;
+            allocationViewModel.Year5B6Requested = myAllocation.Year5B6Requested;
+            allocationViewModel.Year5B6Allocated = myAllocation.Year5B6Allocated;
+            allocationViewModel.AcademicYear = myAllocation.AcademicYear;
+            allocationViewModel.ServiceContractReceived = myAllocation.ServiceContractReceived;
+
+            return allocationViewModel;
+        }
 
         public string AcademicYearDD()
         {

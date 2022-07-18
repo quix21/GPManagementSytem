@@ -1,5 +1,6 @@
 ﻿using GPManagementSytem.Models;
 using GPManagementSytem.Services;
+using GPManagementSytem.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace GPManagementSytem.Controllers
     public class HomeController : Controller
     {
         private readonly IPracticeService _practiceService;
+        private readonly IAllocationService _allocationService;
 
-        public HomeController(IPracticeService practiceService)
+        public HomeController(IPracticeService practiceService, IAllocationService allocationService)
         {
             _practiceService = practiceService;
+            _allocationService = allocationService;
         }
 
         public ActionResult Index()
@@ -29,14 +32,39 @@ namespace GPManagementSytem.Controllers
             return View(myPractices);
         }
 
-        public ActionResult AddAllocation()
+        public ActionResult AddAllocation(int id)
         {
-            AcademicYearDD();
+            var academicYear = AcademicYearDD();
+
+            //check if allocation exists for PracticeId AND academic year
+            var doesAllocationExist = _allocationService.GetByPracticeAndYear(id, academicYear);
+            
+            if (doesAllocationExist != null)
+            {
+                return RedirectToAction("EditAllocation", new { id = id });
+            }
+
+            var myPractice = _practiceService.GetById(id);
+
+            AllocationViewModel allocationViewModel = new AllocationViewModel();
+
+            allocationViewModel.PracticeId = myPractice.Id;
+            allocationViewModel.Surgery = myPractice.Surgery;
+            allocationViewModel.Postcode = myPractice.Postcode;
+            allocationViewModel.Notes = myPractice.Notes;
+
+            return View(allocationViewModel);
+        }
+
+        public ActionResult EditAllocation(int id)
+        {
+            int myTest = id;
 
             return View();
         }
 
-        public void AcademicYearDD()
+
+        public string AcademicYearDD()
         {
             List<SelectListItem> myList = new List<SelectListItem>();
 
@@ -45,19 +73,20 @@ namespace GPManagementSytem.Controllers
             var getThisYear = DateTime.Now.Year.ToString();
             var getNextYear = (thisYear + 1).ToString();
             var getLastYear = (thisYear - 1).ToString();
+            var getYearAfter = (thisYear + 2).ToString();
 
-            //for (int x=1; x<=3; x++)
-            //{
-            myList.Add(new SelectListItem { Value = getLastYear, Text = getLastYear });
-            myList.Add(new SelectListItem { Value = getThisYear, Text = getThisYear, Selected = true });
-            myList.Add(new SelectListItem { Value = getNextYear, Text = getNextYear });
+            string showThisYear = getLastYear + " - " + getThisYear;
+            string showNextYear = getThisYear + " - " + getNextYear;
 
-            //}
 
-            ViewBag.AcademicYearDD = myList;
-            ViewBag.MyTest = myList;
-            ViewData["MyTest2"] = myList;
+            //myList.Add(new SelectListItem { Value = getLastYear, Text = getLastYear });
+            myList.Add(new SelectListItem { Value = showThisYear, Text = showThisYear, Selected = true });
+            myList.Add(new SelectListItem { Value = showNextYear, Text = showNextYear });
 
+            
+            ViewData["AcademicYearDD"] = myList;
+
+            return showThisYear;
         }
     }
 }

@@ -27,6 +27,11 @@ namespace GPManagementSytem.Services
             return AllNoTracking().ToList();
         }
 
+        public Allocations GetByPracticeAndYear(int PracticeId, string year)
+        {
+            return AllNoTracking().Where(x => x.PracticeId == PracticeId && x.AcademicYear == year).FirstOrDefault();
+        }
+
         public List<Allocations> GetByAcademicYear(string year)
         {
             return AllNoTracking().Where(x => x.AcademicYear == year).ToList();

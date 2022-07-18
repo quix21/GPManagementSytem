@@ -9,5 +9,8 @@ namespace GPManagementSytem.Services
     public interface IPracticeService
     {
         List<Practices> GetAll();
+        Practices GetById(int id);
+        Practices AddPractice(Practices practice);
+        Practices EditPractice(Practices practice);
     }
 }

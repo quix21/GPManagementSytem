@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace GPManagementSytem.Models
+namespace GPManagementSytem.ViewModel
 {
-    [Table("Allocation")]
-    public class Allocations
+    public class AllocationViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int AllocationId { get; set; }
+        public string Surgery { get; set; }
+        public string Postcode { get; set; }
+        public string Notes { get; set; }
         public int PracticeId { get; set; }
         public string Year2Wk1Requested { get; set; }
         public string Year2Wk1Allocated { get; set; }
@@ -73,6 +71,5 @@ namespace GPManagementSytem.Models
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
         public int? UpdatedBy { get; set; }
-
     }
 }

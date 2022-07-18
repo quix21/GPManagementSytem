@@ -1,24 +1,31 @@
-﻿@model GPManagementSytem.Models.Allocations
-
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.ViewModel.AllocationViewModel
 @{
     ViewBag.Title = "Add Allocation";
 
-    var rich = new SelectList(ViewBag.AcademicYearDD, "Value", "Text");
-    var rich2 = new SelectList(ViewBag.MyTest, "Value", "Text");
-    var rich3 = ViewData["MyTest2"] as List<SelectListItem>;
+
+    var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
 }
 
 <h1>@ViewBag.Title</h1>
 <hr class="main">
-<form>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary()
+
+    <div class="validation-summary-errors" id="inclusion-errors"></div>
+
+    <div id="error" style="display:none"></div>
+    @Html.HiddenFor(model => model.PracticeId)
     <h4>At A Glance Info</h4>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="input-group"><span class="input-group-text">Practice name</span><input class="form-control" type="text"></div>
+                <div class="input-group"><span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })</div>
             </div>
             <div class="col-md-6">
-                <div class="input-group"><span class="input-group-text">Postcode</span><input class="form-control" type="text"></div>
+                <div class="input-group"><span class="input-group-text">Postcode</span>@Model.Postcode</div>
             </div>
         </div>
     </div>
@@ -70,80 +77,81 @@
                 </thead>
                 <tbody class="glance">
                     <tr>
-                        <td>My Practice Name</td>
+                        <td>@Model.Surgery</td>
 
-                        <td>@Html.EditorFor(model => model.Year2Wk1Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text"} })
-                        </td>
-                        <td>@Html.EditorFor(model => model.Year2Wk1Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk2Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk2Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk3Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk3Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk4Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td class="Year3">@Html.EditorFor(model => model.Year2Wk4Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk5Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk5Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk6Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                        <td>@Html.EditorFor(model => model.Year2Wk6Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-                       
-                    </tr>
-                </tbody>
-            </table>
+                        <td>
+                            @Html.EditorFor(model => model.Year2Wk1Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })
+                    </td>
+                    <td>@Html.EditorFor(model => model.Year2Wk1Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk2Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk2Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk3Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk3Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk4Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td class="Year3">@Html.EditorFor(model => model.Year2Wk4Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk5Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk5Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk6Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+                    <td>@Html.EditorFor(model => model.Year2Wk6Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group"><span class="input-group-text">Notes</span><textarea class="form-control" style="height: 120px;margin-left: 0px;"></textarea></div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group"><span class="input-group-text">Notes</span><textarea class="form-control" style="height: 120px;margin-left: 0px;"></textarea></div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text-radio">Service Contract Received</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="actionpointstatus" id="apdraft" autocomplete="off" checked>
-                        <label class="btn btn-outline-info" for="apdraft">Yes</label>
-                        <input type="radio" class="btn-check" name="actionpointstatus" id="appublished" autocomplete="off">
-                        <label class="btn btn-outline-info" for="appublished">No</label>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-text-radio">Service Contract Received</span>
+                <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="actionpointstatus" id="apdraft" autocomplete="off" checked>
+                    <label class="btn btn-outline-info" for="apdraft">Yes</label>
+                    <input type="radio" class="btn-check" name="actionpointstatus" id="appublished" autocomplete="off">
+                    <label class="btn btn-outline-info" for="appublished">No</label>
 
-                        <input type="radio" class="btn-check" name="actionpointstatus" id="appna" autocomplete="off">
-                        <label class="btn btn-outline-info" for="appna">N/A</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text-radio">Practice Status</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="practicestatus" id="active" autocomplete="off" checked>
-                        <label class="btn btn-outline-info" for="active">Active</label>
-                        <input type="radio" class="btn-check" name="practicestatus" id="disabled" autocomplete="off">
-                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
-
-                        <input type="radio" class="btn-check" name="practicestatus" id="queried" autocomplete="off">
-                        <label class="btn btn-outline-info" for="queried">Queried</label>
-                    </div>
+                    <input type="radio" class="btn-check" name="actionpointstatus" id="appna" autocomplete="off">
+                    <label class="btn btn-outline-info" for="appna">N/A</label>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-text-radio">Practice Status</span>
+                <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="practicestatus" id="active" autocomplete="off" checked>
+                    <label class="btn btn-outline-info" for="active">Active</label>
+                    <input type="radio" class="btn-check" name="practicestatus" id="disabled" autocomplete="off">
+                    <label class="btn btn-outline-info" for="disabled">Disabled</label>
+
+                    <input type="radio" class="btn-check" name="practicestatus" id="queried" autocomplete="off">
+                    <label class="btn btn-outline-info" for="queried">Queried</label>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
-            <div class="col-md-6"></div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
         </div>
     </div>
-</form>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
+}
 

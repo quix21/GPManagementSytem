@@ -343,9 +343,21 @@ th.rotated-text {
         }
 
 th.Year2 {
-    color: #858796;
-    font-size: 1rem;
+    /*color: #858796;
+    font-size: 1rem;*/
     background-color: #f8cbad;
+}
+
+th.Year3 {
+    background-color: #00b0f0;
+}
+
+th.Year4 {
+    background-color: #ffe699;
+}
+
+th.Year5 {
+    background-color: #c6e0b4;
 }
 
 .table thead th {

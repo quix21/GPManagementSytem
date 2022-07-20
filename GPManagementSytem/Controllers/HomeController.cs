@@ -31,6 +31,21 @@ namespace GPManagementSytem.Controllers
 
             var myPractice = _practiceService.GetById(id);
 
+            if (myPractice.Active == 1)
+            {
+                myPractice.PracticeStatusGroup = 1;
+            }
+
+            if (myPractice.Disabled == 1)
+            {
+                myPractice.PracticeStatusGroup = 2;
+            }
+
+            if (myPractice.Queried == 1)
+            {
+                myPractice.PracticeStatusGroup = 3;
+            }
+
             return View(myPractice);
         }
 
@@ -41,6 +56,27 @@ namespace GPManagementSytem.Controllers
 
             if (ModelState.IsValid)
             {
+                switch (practice.PracticeStatusGroup)
+                {
+                    case 1:
+                        practice.Active = 1;
+                        practice.Disabled = 0;
+                        practice.Queried = 0;
+                        break;
+
+                    case 2:
+                        practice.Active = 0;
+                        practice.Disabled = 1;
+                        practice.Queried = 0;
+                        break;
+
+                    case 3:
+                        practice.Active = 0;
+                        practice.Disabled = 0;
+                        practice.Queried = 1;
+                        break;
+                }
+
                 practice.DateUpdated = DateTime.Now;
                 practice.UpdatedBy = 1;
                 _practiceService.EditPractice(practice);

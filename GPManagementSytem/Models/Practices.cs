@@ -57,6 +57,7 @@ namespace GPManagementSytem.Models
         public DateTime? DateUpdated { get; set; }
         public int? UpdatedBy { get; set; }
 
-
+        [NotMapped]
+        public int PracticeStatusGroup { get; set; }
     }
 }

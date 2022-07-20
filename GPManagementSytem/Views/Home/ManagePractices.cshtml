@@ -13,8 +13,8 @@
         <div class="card-header py-3"></div>
         <div class="card-body">
 
-            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                <table class="table my-0" id="simpleManage">
+            <div>
+                <table class="table table-hover" id="simpleManage">
                     <thead>
                         <tr>
                             <th>Surgery</th>
@@ -23,7 +23,7 @@
                             <th>Main GP</th>
                             <th>Practice Manager</th>
                             <th>Practice Manager Email</th>
-                            <th></th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,8 +37,8 @@
                                 <td>@myPractice.Telephone</td>
                                 <td>@myPractice.GP1</td>
                                 <td>@myPractice.PracticeManager</td>
-                                <td>@myPractice.PMEmail&nbsp;</td>
-                                <td style="background: #ffffff;"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button>&nbsp;<button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
+                                <td>@myPractice.PMEmail</td>
+                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button>&nbsp;<button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
                             </tr>
 
 

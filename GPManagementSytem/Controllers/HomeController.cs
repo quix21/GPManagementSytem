@@ -25,6 +25,34 @@ namespace GPManagementSytem.Controllers
             return View();
         }
 
+        public ActionResult EditPractice(int id)
+        {
+            var academicYear = AcademicYearDD();
+
+            var myPractice = _practiceService.GetById(id);
+
+            return View(myPractice);
+        }
+
+        [HttpPost]
+        public ActionResult EditPractice(Practices practice)
+        {
+            var myPractice = _practiceService.GetById(practice.Id);
+
+            if (ModelState.IsValid)
+            {
+                practice.DateUpdated = DateTime.Now;
+                practice.UpdatedBy = 1;
+                _practiceService.EditPractice(practice);
+
+                return RedirectToAction("ManagePractices");
+            }
+            else
+            {
+                return View(myPractice);
+            }
+        }
+
         public ActionResult ManagePractices()
         {
             List<Practices> myPractices = _practiceService.GetAll();

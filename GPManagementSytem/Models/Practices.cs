@@ -15,7 +15,7 @@ namespace GPManagementSytem.Models
         public int Id { get; set; }
         public int OriginalID { get; set;}
         public string Surgery { get; set; }
-        public int SurgeryNotInUse { get; set; }
+        public bool SurgeryNotInUse { get; set; }
         public string GP1 { get; set; }
         public string GP1Email { get; set; }
         public string Address1 { get; set; }
@@ -35,7 +35,7 @@ namespace GPManagementSytem.Models
         public string GP4 { get; set; }
         public string GP4Email { get; set; }
         public string SupplierNumber { get; set; }
-        public int DoNotContactSurgery { get; set; }
+        public bool DoNotContactSurgery { get; set; }
         public string Notes { get; set; }
         public string AttachmentsAllocated { get; set; }
         public int ContractReceived { get; set; }
@@ -46,7 +46,7 @@ namespace GPManagementSytem.Models
         public int Disabled { get; set; }
         public int Queried { get; set; }
         public string ListSize { get; set; }
-        public int NewPractice { get; set; }
+        public bool NewPractice { get; set; }
         public string AcademicYear { get; set; }
         public DateTime QualityVisitDate { get; set; }
         public int OKToProceed { get; set; }

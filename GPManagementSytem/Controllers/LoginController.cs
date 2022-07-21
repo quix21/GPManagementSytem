@@ -1,5 +1,5 @@
 ﻿using GPManagementSytem.Services;
-using GPManagementSytem.SessionManager;
+using GPManagementSytem.SessionManagement;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -45,7 +45,7 @@ namespace GPManagementSytem.Controllers
                 Session["UserId"] = isUser.Id;
 
 
-                //SessionManager.SetLoggedInUser(isUser);
+                SessionManager.SetLoggedInUser(isUser);
 
                 //logger.Info("Login successful for: " + isUser.Username);
 

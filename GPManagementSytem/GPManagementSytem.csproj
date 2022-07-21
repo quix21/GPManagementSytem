@@ -202,14 +202,15 @@
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\CheckAuthorisation.cs" />
     <Compile Include="Services\AllocationService.cs" />
     <Compile Include="Services\IAllocationService.cs" />
     <Compile Include="Services\IPracticeService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\PracticeService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="SessionManager\ISessionManager.cs" />
-    <Compile Include="SessionManager\SessionManager.cs" />
+    <Compile Include="SessionManagement\ISessionManager.cs" />
+    <Compile Include="SessionManagement\SessionManager.cs" />
     <Compile Include="ViewModel\AllocationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +224,7 @@
     <Content Include="Images\uol-logo.svg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bs-init.js" />
     <Content Include="Scripts\datatablesSetup.js" />
@@ -250,7 +252,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Logout.cshtml" />
     <Content Include="Views\Home\ManagePractices.cshtml" />

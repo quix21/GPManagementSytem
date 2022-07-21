@@ -1,4 +1,5 @@
 ﻿using GPManagementSytem.Models;
+using GPManagementSytem.Security;
 using GPManagementSytem.Services;
 using GPManagementSytem.ViewModel;
 using System;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
 {
+    [CheckAuthorisation]
     public class HomeController : Controller
     {
         private readonly IPracticeService _practiceService;
@@ -18,11 +20,6 @@ namespace GPManagementSytem.Controllers
         {
             _practiceService = practiceService;
             _allocationService = allocationService;
-        }
-
-        public ActionResult Index()
-        {
-            return View();
         }
 
         public ActionResult EditPractice(int id)

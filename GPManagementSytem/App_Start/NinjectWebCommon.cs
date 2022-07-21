@@ -17,7 +17,7 @@ namespace GPManagementSytem.App_Start
     using Ninject.Web.Common.WebHost;
     using GPManagementSytem.Database;
     using GPManagementSytem.Services;
-    using GPManagementSytem.SessionManager;
+    using GPManagementSytem.SessionManagement;
 
     public static class NinjectWebCommon
     {
@@ -70,8 +70,8 @@ namespace GPManagementSytem.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-
-            kernel.Bind<ISessionManager>().To<SessionManager>().InRequestScope().WithConstructorArgument("context", ninjectContext => HttpContext.Current.Session);
+            kernel.Bind<ISessionManager>().To<SessionManager>().InRequestScope().WithConstructorArgument("context", ninjectContext => HttpContext.Current.Session
+    );
 
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
             // allows the session to be passed here

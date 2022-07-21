@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.SessionState;
 
-namespace GPManagementSytem.SessionManager
+namespace GPManagementSytem.SessionManagement
 {
-    public class SessionManager: ISessionManager
+    public class SessionManager : ISessionManager
     {
         private static string _userKey = "Username";
 
@@ -33,5 +33,6 @@ namespace GPManagementSytem.SessionManager
         {
             _session()[_userKey] = user;
         }
+
     }
 }

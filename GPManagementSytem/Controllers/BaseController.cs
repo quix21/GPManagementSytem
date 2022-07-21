@@ -1,5 +1,6 @@
 ﻿using GPManagementSytem.Database;
-using GPManagementSytem.SessionManager;
+using GPManagementSytem.SessionManagement;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

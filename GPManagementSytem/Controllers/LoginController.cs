@@ -1,5 +1,6 @@
 ﻿using GPManagementSytem.Services;
 using GPManagementSytem.SessionManagement;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +17,7 @@ namespace GPManagementSytem.Controllers
 
         private bool isImpersonate = Convert.ToBoolean(ConfigurationManager.AppSettings["isImpersonate"].ToString());
 
-        //public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public LoginController(IUserService userService, ISessionManager sessionManager) : base(sessionManager)
         {
@@ -47,7 +48,7 @@ namespace GPManagementSytem.Controllers
 
                 SessionManager.SetLoggedInUser(isUser);
 
-                //logger.Info("Login successful for: " + isUser.Username);
+                logger.Info("Login successful for: " + isUser.Username);
 
                 return this.RedirectToAction("ManagePractices", "Home");
             }
@@ -55,7 +56,7 @@ namespace GPManagementSytem.Controllers
             {
                 ModelState.AddModelError("user", "Login details invalid");
 
-                //logger.Info("Login failed for: " + username);
+                logger.Info("Login failed for: " + username);
             }
 
             //TODO - audit logging

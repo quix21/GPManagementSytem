@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
 {
-    [CheckAuthorisation]
+    //[CheckAuthorisation]
     public class HomeController : Controller
     {
         private readonly IPracticeService _practiceService;
@@ -221,6 +221,11 @@ namespace GPManagementSytem.Controllers
 
             }
             return View(BuildAddAllocation(allocationViewModel.PracticeId));
+        }
+
+        public ActionResult AtAGlance()
+        {
+            return View();
         }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)

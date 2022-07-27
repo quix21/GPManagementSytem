@@ -262,6 +262,7 @@
     <Content Include="Views\Home\EditAllocation.cshtml" />
     <Content Include="Views\Home\EditPractice.cshtml" />
     <Content Include="Views\Home\AddPractice.cshtml" />
+    <Content Include="Views\Home\AtAGlance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

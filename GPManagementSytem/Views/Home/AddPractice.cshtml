@@ -1,7 +1,7 @@
 ﻿@using GPManagementSytem.Models
 @model GPManagementSytem.Models.Practices
 @{
-    ViewBag.Title = "Edit Practice";
+    ViewBag.Title = "Add Practice";
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
 }
@@ -16,7 +16,6 @@
     <div class="validation-summary-errors" id="inclusion-errors"></div>
 
     <div id="error" style="display:none"></div>
-    @Html.HiddenFor(model => model.Id)
     <h4>Main Details</h4>
     <div class="container">
         <div class="row">
@@ -46,7 +45,7 @@
                 <div class="input-group">
                     <span class="input-group-text-radio">@Html.LabelFor(model => model.NewPractice)</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true" })
+                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true", @checked = "true" })
                         <label class="btn btn-outline-info" for="true">Yes</label>
                         @Html.RadioButtonFor(model => model.NewPractice, "false", new { @class = "btn-check", @id = "false" })
                         <label class="btn btn-outline-info" for="false">No</label>
@@ -186,7 +185,7 @@
                 <div class="input-group">
                     <span class="input-group-text-radio">Practice Status</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active", @checked = "true" })
                         <label class="btn btn-outline-info" for="active">Active</label>
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
                         <label class="btn btn-outline-info" for="disabled">Disabled</label>
@@ -221,7 +220,7 @@
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                         @Html.RadioButtonFor(model => model.SurgeryNotInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
                         <label class="btn btn-outline-info" for="NotInUseTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.SurgeryNotInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse" })
+                        @Html.RadioButtonFor(model => model.SurgeryNotInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse", @checked = "true" })
                         <label class="btn btn-outline-info" for="NotInUseFalse">No</label>
                     </div>
                 </div>
@@ -232,7 +231,7 @@
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                         @Html.RadioButtonFor(model => model.DoNotContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
                         <label class="btn btn-outline-info" for="NoContactTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.DoNotContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse" })
+                        @Html.RadioButtonFor(model => model.DoNotContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse", @checked = "true" })
                         <label class="btn btn-outline-info" for="NoContactFalse">No</label>
                     </div>
                 </div>

@@ -22,8 +22,8 @@
                             <th>Telephone</th>
                             <th>Main GP</th>
                             <th>Practice Manager</th>
-                            <th>Practice Manager Email</th>
-                            <th>Actions</th>
+                            <th style="width: 280px">Practice Manager Email</th>
+                            <th style="width: 100px">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +38,7 @@
                                 <td>@myPractice.GP1</td>
                                 <td>@myPractice.PracticeManager</td>
                                 <td>@myPractice.PMEmail</td>
-                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button>&nbsp;<button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
+                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button> | <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
                             </tr>
 
 
@@ -53,7 +53,7 @@
                             <th>Main GP</th>
                             <th>Practice Manager</th>
                             <th>Practice Manager Email</th>
-                            <td><strong></strong></td>
+                            <th>Actions</th>
                         </tr>
                     </tfoot>
                 </table>

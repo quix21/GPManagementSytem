@@ -220,11 +220,11 @@ p.logout {
     padding-bottom: 3px;
     font-size: 85%;
     border: none;
-    color: #212529;
+    /*color: #212529;*/
 }
 
     .btn-link:hover {
-        text-decoration: none;
+        text-decoration: underline;
         outline: none;
         border: none;
     }
@@ -390,3 +390,4 @@ table.myAllocations {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+}

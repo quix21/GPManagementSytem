@@ -261,6 +261,7 @@
     <Content Include="Views\Home\AddAllocation.cshtml" />
     <Content Include="Views\Home\EditAllocation.cshtml" />
     <Content Include="Views\Home\EditPractice.cshtml" />
+    <Content Include="Views\Home\AddPractice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

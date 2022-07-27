@@ -22,6 +22,51 @@ namespace GPManagementSytem.Controllers
             _allocationService = allocationService;
         }
 
+        public ActionResult AddPractice()
+        {
+            var academicYear = AcademicYearDD();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddPractice(Practices practice)
+        {
+            if (ModelState.IsValid)
+            {
+                switch (practice.PracticeStatusGroup)
+                {
+                    case 1:
+                        practice.Active = 1;
+                        practice.Disabled = 0;
+                        practice.Queried = 0;
+                        break;
+
+                    case 2:
+                        practice.Active = 0;
+                        practice.Disabled = 1;
+                        practice.Queried = 0;
+                        break;
+
+                    case 3:
+                        practice.Active = 0;
+                        practice.Disabled = 0;
+                        practice.Queried = 1;
+                        break;
+                }
+
+                practice.DateCreated = DateTime.Now;
+                practice.UpdatedBy = 1;
+                _practiceService.AddPractice(practice);
+
+                return RedirectToAction("ManagePractices");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public ActionResult EditPractice(int id)
         {
             var academicYear = AcademicYearDD();

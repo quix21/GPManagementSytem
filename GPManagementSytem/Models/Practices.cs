@@ -14,14 +14,20 @@ namespace GPManagementSytem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int OriginalID { get; set;}
+        [Required]
         public string Surgery { get; set; }
         public bool SurgeryNotInUse { get; set; }
+        [Required]
         public string GP1 { get; set; }
         public string GP1Email { get; set; }
+        [Required]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
+        [Required]
         public string Town { get; set; }
+        [Required]
         public string Postcode { get; set; }
+        [Required]
         public string Telephone { get; set; }
         public string Fax { get; set; }
         public string PracticeManager { get; set; }

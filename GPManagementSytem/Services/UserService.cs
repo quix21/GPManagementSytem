@@ -75,7 +75,10 @@ namespace GPManagementSytem.Services
                 authentic = true;
 
             }
-            catch (DirectoryServicesCOMException) { }
+            catch (DirectoryServicesCOMException e)
+            {
+                Console.Write(e);
+            }
 
             return authentic;
         }

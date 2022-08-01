@@ -301,17 +301,37 @@ p.logout {
 .Year2 {
     color: #858796;
     background-color: #f8cbad;
-    padding: 5px;
+    padding: 6px;
+}
+
+.Year3 {
+    color: #858796;
+    background-color: #00b0f0;
+
+    padding-right: 6px;
+    padding-left: 6px;
+    padding-top: 2px;
+    padding-bottom: 7px;
 }
 
 
 .Year4 {
     color: #858796;
     background-color: #ffe699;
-    padding: 5px;
+    padding: 6px;
 }
 
+.Year5 {
+    color: #858796;
+    background-color: #c6e0b4;
+    padding: 6px;
+    
+}
 
+.ServiceContract {
+    background-color: #e73c3c;
+    padding: 6px;
+}
 
 @media (min-width: 768px) {
     .col-md-1-9-left {
@@ -377,9 +397,7 @@ th.Year5 {
     padding-top: 15px;
 }
 
-table.myAllocations thead th {
-    padding: 0;
-}
+
 
 .form-control-allocation {
     display: block;
@@ -397,4 +415,26 @@ table.myAllocations thead th {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.GlanceTable {
+
 }
+
+    .GlanceTable td.numberAllocated2 {
+        border-left: 1px solid #f8cbad;
+        border-right: 1px solid #f8cbad;
+    }
+
+    .GlanceTable td.numberAllocated3 {
+        border-left: 1px solid #00b0f0;
+        border-right: 1px solid #00b0f0;
+    }
+
+    .GlanceTable td.numberAllocated4 {
+        border-left: 1px solid #ffe699;
+        border-right: 1px solid #ffe699;
+    }
+
+    .GlanceTable td.numberAllocated5 {
+        border-left: 1px solid #c6e0b4;
+        border-right: 1px solid #c6e0b4;
+    }

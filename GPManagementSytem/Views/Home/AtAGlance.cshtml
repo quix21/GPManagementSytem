@@ -12,7 +12,7 @@
         <div class="card-body">
 
             <div>
-                <table class="table table-hover myAllocations">
+                <table class="table table-hover GlanceTable">
                     <thead>
                         <tr>
                             <th>Practice Name</th>
@@ -36,7 +36,7 @@
                                 <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk6Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year3B1Allocated)</span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
                                 <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B2Allocated)</span></div>
@@ -57,10 +57,10 @@
                                 <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B7Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year4B1Allocated)</span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year4B2Allocated)</span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B2Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
                                 <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B3Allocated)</span></div>
@@ -78,16 +78,16 @@
                                 <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B7Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B1Allocated)</span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B2Allocated)</span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B2Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B3Allocated)</span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B3Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B4Allocated)</span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B4Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
                                 <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B5Allocated)</span></div>
@@ -96,7 +96,7 @@
                                 <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B6Allocated) </span></div>
                             </th>
                              <th class="rotated-text">
-                                <div><span class="ServiceContr">Service Contract Recd </span></div>
+                                <div><span class="ServiceContract">Service Contract Recd </span></div>
                             </th>
                             <th></th>
                         </tr>
@@ -107,33 +107,50 @@
                             <tr>
                                 <td>@myAllocation.Surgery</td>
                                 <td>@myAllocation.Postcode</td>
-                                <td>@myAllocation.Year2Wk1Allocated</td>
-                                <td>@myAllocation.Year2Wk2Allocated</td>
-                                <td>@myAllocation.Year2Wk3Allocated</td>
-                                <td>@myAllocation.Year2Wk4Allocated</td>
-                                <td>@myAllocation.Year2Wk5Allocated</td>
-                                <td>@myAllocation.Year2Wk6Allocated</td>
-                                <td></td>
-                                <td class="Year3"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="Year4"></td>
-                                <td></td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td></td>
-                                <td class="Year5"></td>
-                                <td></td>
-                                 <td class="ServiceContr"><i class="fa fa-check"></i></td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk1Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk2Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk3Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk4Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk5Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk6Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B1Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B2Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B3Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B4Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B5Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B6Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B7Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B1Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B2Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B3Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B4Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B5Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B6Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B7Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B1Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B2Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B3Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B4Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B5Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B6Allocated</td>
+                                <td class="ServiceContr">
+                                    @{
+                                        switch (myAllocation.ServiceContractReceived)
+                                        {
+                                            case 0:
+                                                <i class="fa fa-remove"></i>
+                                                break;
+
+                                            case 1:
+                                                <i class="fa fa-check"></i>
+                                                break;
+
+                                            case 2:
+                                                <span>n/a</span>
+                                                break;
+                                        }
+                                    }
+                                </td>
                             </tr>
                         }
                     </tbody>

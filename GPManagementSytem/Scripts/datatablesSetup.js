@@ -12,4 +12,9 @@
             { targets: [-1], orderable: false } // -1 is the last column
         ]
     });
+
+    $('#ataglance').DataTable({
+        "order": [],
+        "pageLength": 25
+    });
 });

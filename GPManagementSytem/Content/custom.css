@@ -298,6 +298,13 @@ p.logout {
     background-color: #f9df9c;
 }
 
+.Year2 {
+    color: #858796;
+    background-color: #f8cbad;
+    padding: 5px;
+}
+
+
 .Year4 {
     color: #858796;
     background-color: #ffe699;
@@ -370,8 +377,8 @@ th.Year5 {
     padding-top: 15px;
 }
 
-table.myAllocations {
-
+table.myAllocations thead th {
+    padding: 0;
 }
 
 .form-control-allocation {

@@ -175,8 +175,9 @@ namespace GPManagementSytem.Controllers
             var myAllocation = _allocationService.GetById(id);
 
             AllocationViewModel allocationViewModel = BuildAddAllocation(myAllocation.PracticeId);
+            List<Practices> myPractices = _practiceService.GetAll();
 
-            allocationViewModel = ParseAllocationViewModelEDIT(allocationViewModel, myAllocation);
+            allocationViewModel = ParseAllocationViewModelEDIT(allocationViewModel, myAllocation, myPractices);
 
             return View(allocationViewModel);
         }
@@ -225,7 +226,20 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult AtAGlance()
         {
-            return View();
+            var academicYear = AcademicYearDD();
+
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myPractices = _practiceService.GetAll();
+
+            List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
+
+            foreach (var allocation in myAllocation)
+            {
+                allocationViewModel.Add(ParseAllocationViewModelEDIT(new AllocationViewModel(), allocation, myPractices));
+
+            }
+
+            return View(allocationViewModel);
         }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)
@@ -294,8 +308,16 @@ namespace GPManagementSytem.Controllers
             return allocation;
         }
 
-        private AllocationViewModel ParseAllocationViewModelEDIT(AllocationViewModel allocationViewModel, Allocations myAllocation)
+        private AllocationViewModel ParseAllocationViewModelEDIT(AllocationViewModel allocationViewModel, Allocations myAllocation, List<Practices> myPractices)
         {
+            var getPractice = myPractices.Where(x => x.Id == myAllocation.PracticeId);
+
+            if (getPractice != null)
+            {
+                allocationViewModel.Surgery = getPractice.FirstOrDefault().Surgery;
+                allocationViewModel.Postcode = getPractice.FirstOrDefault().Postcode;
+            } 
+
             allocationViewModel.AllocationId = myAllocation.Id;
             allocationViewModel.PracticeId = myAllocation.PracticeId;
             allocationViewModel.Year2Wk1Requested = myAllocation.Year2Wk1Requested;

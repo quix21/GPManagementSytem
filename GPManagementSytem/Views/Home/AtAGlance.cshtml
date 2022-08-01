@@ -1,6 +1,8 @@
-﻿@model IEnumerable<GPManagementSytem.ViewModel.AllocationViewModel>
+﻿@using GPManagementSytem.ViewModel
+@model IEnumerable<GPManagementSytem.ViewModel.AllocationViewModel>
 @{
     ViewBag.Title = "At A Glance";
+
 }
 
 <h1>@ViewBag.Title</h1>
@@ -9,292 +11,131 @@
         <div class="card-header py-3"></div>
         <div class="card-body">
 
-
-                <table class="table table-hover" id="simpleManage">
+            <div>
+                <table class="table table-hover myAllocations">
                     <thead>
                         <tr>
                             <th>Practice Name</th>
                             <th>Postcode</th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr 2 - All Wks </span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk1Allocated) </span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk1 </span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk2Allocated) </span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk2</span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk3Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk3</span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk4Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk4</span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk5Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk5</span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk6Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year2">Yr2 Wk6</span></div>
+                                <div><span class="Year2">@Html.LabelFor(model => Model.First().Year3B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr 3 - All Blks </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B2Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B1 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B3Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B2 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B4Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B3 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B5Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B4 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B6Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B5 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B7Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B6 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year4B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year3">Yr3 B7 </span></div>
+                                <div><span class="Year3">@Html.LabelFor(model => Model.First().Year4B2Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr 4 - All Blks </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B3Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B1 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B4Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B2 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B5Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B3 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B6Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B4 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B7Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B5 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B1Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B6 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B2Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B7 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B3Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year4">Yr4 B8 </span></div>
+                                <div><span class="Year4">@Html.LabelFor(model => Model.First().Year5B4Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year5">Yr 5 - All Blks </span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B5Allocated)</span></div>
                             </th>
                             <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B1 </span></div>
+                                <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B6Allocated) </span></div>
                             </th>
-                            <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B2 </span></div>
-                            </th>
-                            <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B3 </span></div>
-                            </th>
-                            <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B4 </span></div>
-                            </th>
-                            <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B5 </span></div>
-                            </th>
-                            <th class="rotated-text">
-                                <div><span class="Year5">Yr5 B6 </span></div>
-                            </th>
-                            <th class="rotated-text">
+                             <th class="rotated-text">
                                 <div><span class="ServiceContr">Service Contract Recd </span></div>
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody class="glance">
-                        <tr>
-                            <td>Betws-y-Coed Surgery</td>
-                            <td>LL24 0BP</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year3"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year4"><i class="fa fa-check"></i></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td></td>
-                            <td class="Year5"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="ServiceContr"><i class="fa fa-check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Bodnant Medical Centre</td>
-                            <td>LL57 2HH</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year3"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year4"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year5"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="ServiceContr">n/a</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fa fa-file-text-o" data-bs-toggle="popover" data-bs-content="Didn’t take students 20/21. Taking Cadiff 21/22" data-bs-placement="top" style="padding-right: 5px;"></i>Bodreinallt Surgery</td>
-                            <td>LL32 8AT<br></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year3"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year4"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year5"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="ServiceContr">n/a</td>
-                        </tr>
-                        <tr>
-                            <td>Bronyffynon<br> Surgery<br></td>
-                            <td>LL16 3TF<br></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year3"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year4"></td>
-                            <td></td>
-                            <td>x</td>
-                            <td>x</td>
-                            <td>x</td>
-                            <td>x</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td></td>
-                            <td class="Year5"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="ServiceContr"><i class="fa fa-check"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Cadwgan<br> Surgery<br></td>
-                            <td>LL29 9NP<br></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year3"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="Year4"><i class="fa fa-check"></i></td>
-                            <td></td>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>1</td>
-                            <td>x</td>
-                            <td></td>
-                            <td class="Year5"></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="ServiceContr"><i class="fa fa-check"></i></td>
-                        </tr>
+                        @foreach (var myAllocation in Model)
+                        {
+                            <tr>
+                                <td>@myAllocation.Surgery</td>
+                                <td>@myAllocation.Postcode</td>
+                                <td>@myAllocation.Year2Wk1Allocated</td>
+                                <td>@myAllocation.Year2Wk2Allocated</td>
+                                <td>@myAllocation.Year2Wk3Allocated</td>
+                                <td>@myAllocation.Year2Wk4Allocated</td>
+                                <td>@myAllocation.Year2Wk5Allocated</td>
+                                <td>@myAllocation.Year2Wk6Allocated</td>
+                                <td></td>
+                                <td class="Year3"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="Year4"></td>
+                                <td></td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td></td>
+                                <td class="Year5"></td>
+                                <td></td>
+                                 <td class="ServiceContr"><i class="fa fa-check"></i></td>
+                            </tr>
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
@@ -305,22 +146,6 @@
                         </tr>
                     </tfoot>
                 </table>
-            
-            <div class="row">
-                <div class="col-md-6 align-self-center">
-                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                </div>
-                <div class="col-md-6">
-                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         </div>
     </div>

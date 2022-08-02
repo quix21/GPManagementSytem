@@ -14,7 +14,7 @@
     });
 
     $('#ataglance').DataTable({
-        "order": [],
+        ordering: false,
         "pageLength": 25
     });
 });

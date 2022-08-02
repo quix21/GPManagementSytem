@@ -2,9 +2,15 @@
 using GPManagementSytem.Security;
 using GPManagementSytem.Services;
 using GPManagementSytem.ViewModel;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -378,6 +384,84 @@ namespace GPManagementSytem.Controllers
             allocationViewModel.ServiceContractReceived = myAllocation.ServiceContractReceived;
 
             return allocationViewModel;
+        }
+
+        public void DownloadAtAGlance()
+        {
+
+            CreateWorkbook();
+        }
+
+
+        public void CreateWorkbook()
+        {
+            List<string> wsNames = new List<string>();
+            wsNames.Add("Assigned");
+
+            //Create Excel object
+            
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage ep = new ExcelPackage();
+
+            createWorksheet(wsNames[0].ToString(), ep);
+
+            string fileName = "AtAGlance-" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm") + ".xlsx";
+
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment;  filename=" + fileName);
+            Response.BinaryWrite(ep.GetAsByteArray());
+            Response.End();
+
+        }
+
+        private ExcelWorksheet createWorksheet( string wsName, ExcelPackage ep)
+        {
+            var academicYear = AcademicYearDD();
+
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myPractices = _practiceService.GetAll();
+
+            List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
+
+            foreach (var allocation in myAllocation)
+            {
+                allocationViewModel.Add(ParseAllocationViewModelEDIT(new AllocationViewModel(), allocation, myPractices));
+
+            }
+
+
+            ExcelWorksheet worksheet = ep.Workbook.Worksheets.Add(wsName);
+
+            var format = new ExcelTextFormat();
+            format.Delimiter = ';';
+            format.TextQualifier = '"';
+            format.DataTypes = new[] { eDataTypes.String };
+
+            worksheet.Cells["A2"].LoadFromText("Practice Name");
+            worksheet.Cells["B2"].LoadFromText("Postcode");
+            worksheet.Cells["C2"].LoadFromText("Year2Wk1Allocated");
+            worksheet.Cells["D2"].LoadFromText("Year2Wk2Allocated");
+            worksheet.Cells["E2"].LoadFromText("Year2Wk3Allocated");
+
+            worksheet.Cells["F2"].LoadFromText(GetAttributeDisplayName(typeof(AllocationViewModel).GetProperty("Year2Wk4Allocated")));
+
+            var year2Cell = worksheet.Cells["C2:F2"];
+            year2Cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#f8cbad");
+            year2Cell.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year2Cell.Style.Font.Bold = true;
+            year2Cell.Style.TextRotation = 90;
+
+            return worksheet;
+        }
+
+        private string GetAttributeDisplayName(PropertyInfo property)
+        {
+            var atts = property.GetCustomAttributes(
+                typeof(DisplayNameAttribute), true);
+            if (atts.Length == 0)
+                return property.Name;
+            return (atts[0] as DisplayNameAttribute).DisplayName;
         }
 
         public string AcademicYearDD()

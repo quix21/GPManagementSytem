@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -17,8 +18,10 @@ namespace GPManagementSytem.ViewModel
         public string Year2Wk2Requested { get; set; }
         public string Year2Wk2Allocated { get; set; }
         public string Year2Wk3Requested { get; set; }
+        [DisplayName("Year 2 Week 3 Allocated")]
         public string Year2Wk3Allocated { get; set; }
         public string Year2Wk4Requested { get; set; }
+        //[DisplayName("Year 2 Week 4 Allocated")]
         public string Year2Wk4Allocated { get; set; }
         public string Year2Wk5Requested { get; set; }
         public string Year2Wk5Allocated { get; set; }

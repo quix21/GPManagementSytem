@@ -21,7 +21,7 @@ namespace GPManagementSytem.ViewModel
         [DisplayName("Year 2 Week 3 Allocated")]
         public string Year2Wk3Allocated { get; set; }
         public string Year2Wk4Requested { get; set; }
-        //[DisplayName("Year 2 Week 4 Allocated")]
+        [DisplayName("Year 2 Week 4 Allocated")]
         public string Year2Wk4Allocated { get; set; }
         public string Year2Wk5Requested { get; set; }
         public string Year2Wk5Allocated { get; set; }

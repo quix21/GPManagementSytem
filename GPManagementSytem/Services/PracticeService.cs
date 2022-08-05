@@ -24,7 +24,7 @@ namespace GPManagementSytem.Services
 
         public List<Practices> GetAll()
         {
-            return AllNoTracking().ToList();
+            return AllNoTracking().OrderBy(x => x.Surgery).ToList();
         }
 
         public Practices GetById(int id)

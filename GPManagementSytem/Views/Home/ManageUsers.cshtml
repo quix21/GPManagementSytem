@@ -1,0 +1,58 @@
+﻿@model IEnumerable<GPManagementSytem.ViewModel.UserViewModel>
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <button class="btn btn-success" type="button" onclick="location.href='@Url.Action("AddUser", "Home")'">Add User</button>
+        </div>
+        <div class="card-body">
+
+            <table class="table my-0 hover" id="simpleManage">
+                <thead>
+                    <tr>
+                        <th>First name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>User Type</th>
+                        <th>Account Enabled</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var myUser in Model)
+                    {
+
+                        <tr>
+
+                            <td> @myUser.Firstname</td>
+                            <td> @myUser.Surname</td>
+                            <td> @myUser.Email</td>
+                            <td> @myUser.UserType</td>
+                            <td> @(myUser.IsActive ? "Yes" : "No")</td>
+                            <td style="background: #ffffff;"><button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("EditUser", "Home", new { id = myUser.Id })'">edit</button></td>
+                        </tr>
+
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+
+                        <th>First name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>User Type</th>
+                        <th>Account Enabled</th>
+                        <th></th>
+
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,107 @@
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.Models.Users
+@{
+
+    var practiceDD = new SelectList(ViewBag.Practices, "Value", "Text");
+    var userTypeDD = new SelectList(ViewBag.UserTypes, "Value", "Text");
+
+    ViewBag.Title = "Edit User";
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    if (!ViewData.ModelState.IsValid)
+    {
+        @Html.ValidationSummary(false, "The following errors were found:", new { @class = "alert alert-danger" }, "h4")
+    }
+    @Html.HiddenFor(model => model.Id)
+    <div id="error" style="display:none"></div>
+    <div class="mwsError alert alert-danger">This person cannot be found in the MWS directory</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.Firstname)</span>
+
+                    @Html.EditorFor(model => model.Firstname,
+new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "First name" } }
+)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.Surname)</span>
+                    @Html.EditorFor(model => model.Surname,
+new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Surname" } }
+)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.Username)</span>
+                    @Html.EditorFor(model => model.Username,
+new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Username" } }
+)
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.Email)</span>
+                    @Html.EditorFor(model => model.Email,
+new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Email" } }
+)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.UserType)</span>
+                    @Html.DropDownListFor(model => model.UserType, userTypeDD, "--- Select User Type ---", new { Class = "form-select" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">@Html.LabelFor(model => model.PracticeId)</span>
+                    @Html.DropDownListFor(model => model.PracticeId, practiceDD, "--- Select Practice ---", new { Class = "form-select" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.IsActive)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.IsActive, "true", new { @class = "btn-check", @id = "true", @checked = "true" })
+                        <label class="btn btn-outline-info" for="true">Yes</label>
+                        @Html.RadioButtonFor(model => model.IsActive, "false", new { @class = "btn-check", @id = "false" })
+                        <label class="btn btn-outline-info" for="false">No</label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-primary btn-success" type="submit">Update</button>
+            </div>
+        </div>
+    </div>
+}
+

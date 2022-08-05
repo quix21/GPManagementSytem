@@ -215,7 +215,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\ActionLinkEntendedMethods.cs" />
+    <Compile Include="Helper\ListExtensions.cs" />
     <Compile Include="Models\Allocations.cs" />
+    <Compile Include="Models\MyEnumModel.cs" />
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="SessionManagement\ISessionManager.cs" />
     <Compile Include="SessionManagement\SessionManager.cs" />
     <Compile Include="ViewModel\AllocationViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
@@ -257,7 +260,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -277,6 +282,8 @@
     <Content Include="Views\Home\EditPractice.cshtml" />
     <Content Include="Views\Home\AddPractice.cshtml" />
     <Content Include="Views\Home\AtAGlance.cshtml" />
+    <Content Include="Views\Home\ManageUsers.cshtml" />
+    <Content Include="Views\Home\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

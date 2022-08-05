@@ -301,7 +301,7 @@ p.logout {
 .Year2 {
     color: #858796;
     background-color: #f8cbad;
-    padding: 6px;
+    padding: 7px;
 }
 
 .Year3 {
@@ -318,19 +318,19 @@ p.logout {
 .Year4 {
     color: #858796;
     background-color: #ffe699;
-    padding: 6px;
+    padding: 7px;
 }
 
 .Year5 {
     color: #858796;
     background-color: #c6e0b4;
-    padding: 6px;
+    padding: 7px;
     
 }
 
 .ServiceContract {
     background-color: #e73c3c;
-    padding: 6px;
+    padding: 7px;
 }
 
 @media (min-width: 768px) {

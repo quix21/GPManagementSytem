@@ -118,6 +118,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.Year3 = user.Year3;
             entityToUpdate.Year4 = user.Year4;
             entityToUpdate.Year5 = user.Year5;
+            entityToUpdate.PracticeId = user.PracticeId;
             entityToUpdate.DateCreated = user.DateCreated;
             entityToUpdate.DateUpdated = user.DateUpdated;
             entityToUpdate.UpdatedBy = user.UpdatedBy;

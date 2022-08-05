@@ -1,4 +1,5 @@
-﻿using GPManagementSytem.Models;
+﻿using GPManagementSytem.Helper;
+using GPManagementSytem.Models;
 using GPManagementSytem.Security;
 using GPManagementSytem.Services;
 using GPManagementSytem.ViewModel;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -21,11 +23,13 @@ namespace GPManagementSytem.Controllers
     {
         private readonly IPracticeService _practiceService;
         private readonly IAllocationService _allocationService;
+        private readonly IUserService _userService;
 
-        public HomeController(IPracticeService practiceService, IAllocationService allocationService)
+        public HomeController(IPracticeService practiceService, IAllocationService allocationService, IUserService userService)
         {
             _practiceService = practiceService;
             _allocationService = allocationService;
+            _userService = userService;
         }
 
         public ActionResult AddPractice()
@@ -246,6 +250,76 @@ namespace GPManagementSytem.Controllers
             }
 
             return View(allocationViewModel);
+        }
+
+        public ActionResult ManageUsers()
+        {
+            var myUsers = _userService.GetAll();
+
+            List<UserViewModel> userViewModel = new List<UserViewModel>(0);
+
+            foreach (var user in myUsers)
+            {
+                userViewModel.Add(new UserViewModel
+                {
+                    Firstname = user.Firstname,
+                    Surname= user.Surname,
+                    Email = user.Email,
+                    UserType = Enum.GetName(typeof(UserTypes), user.UserType).ToString(),
+                    IsActive = user.IsActive,
+                    Id = user.Id
+                });
+            }
+
+            return View(userViewModel);
+        }
+
+        public ActionResult EditUser(int id)
+        {
+            var myUser = _userService.GetById(id);
+
+            ViewBag.Practices = _practiceService.GetAll().ToSelectList(nameof(Practices.Id), nameof(Practices.Surgery));
+
+
+            List<MyEnumModel> userTypes = new List<MyEnumModel>(0);
+
+            foreach (var value in Enum.GetValues(typeof(UserTypes)))
+            {
+                Debug.WriteLine((int)value + " " + value);
+                userTypes.Add(new MyEnumModel
+                {
+                    Id = (int)value,
+                    Value = value.ToString()
+                });
+            }
+
+            ViewBag.UserTypes = userTypes.ToSelectList(nameof(MyEnumModel.Id), nameof(MyEnumModel.Value));
+
+                //List<UserTypes> userTypes = Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList();
+                //List<UserTypes> userTypes = EnumToList<UserTypes>();
+
+            return View(myUser);
+        }
+
+        public static List<T> EnumToList<T>()
+        {
+            Type enumType = typeof(T);
+
+            // You can't use type constraints on value types, so have to check & throw error.
+            if (enumType.BaseType != typeof(Enum))
+                throw new ArgumentException("T must be of type System.Enum type");
+
+            Array enumValArray = Enum.GetValues(enumType);
+
+            List<T> enumValList = new List<T>(enumValArray.Length);
+
+            foreach (int val in enumValArray)
+            {
+                enumValList.Add((T)Enum.Parse(enumType, val.ToString()));
+                
+            }
+
+            return enumValList;
         }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)
@@ -557,7 +631,7 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 27].Value = allocation.Year5B5Allocated;
                 worksheet.Cells[rowCounter, 28].Value = allocation.Year5B6Allocated;
 
-                worksheet.Cells[rowCounter, 29].Value = allocation.ServiceContractReceived;
+                worksheet.Cells[rowCounter, 29].Value = ShowServiceContract(allocation.ServiceContractReceived);
 
                 rowCounter++;
             }
@@ -567,18 +641,40 @@ namespace GPManagementSytem.Controllers
             return worksheet;
         }
 
-        private ExcelRange DoCentre(int rowCounter, ExcelWorksheet worksheet)
+        private string ShowServiceContract(int serviceContractStatus)
         {
-            string myRange = "A" + rowCounter + ":R" + rowCounter;
+            string showService = "";
 
-            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#dff4fb");
+            switch (serviceContractStatus)
+            {
+                case 0:
+                    showService = "No";
+                    break;
 
-            var myCell = worksheet.Cells[myRange];
-            myCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            myCell.Style.Fill.BackgroundColor.SetColor(colFromHex);
+                case 1:
+                    showService = "Yes";
+                    break;
 
-            return myCell;
+                case 2:
+                    showService = "n/a";
+                    break;
+            }
+
+            return showService;
         }
+
+        //private ExcelRange DoCentre(int rowCounter, ExcelWorksheet worksheet)
+        //{
+        //    string myRange = "A" + rowCounter + ":R" + rowCounter;
+
+        //    Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#dff4fb");
+
+        //    var myCell = worksheet.Cells[myRange];
+        //    myCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+        //    myCell.Style.Fill.BackgroundColor.SetColor(colFromHex);
+
+        //    return myCell;
+        //}
 
         private string GetAttributeDisplayName(string getProperty)
         {

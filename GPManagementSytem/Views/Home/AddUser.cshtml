@@ -5,7 +5,7 @@
     var practiceDD = new SelectList(ViewBag.Practices, "Value", "Text");
     var userTypeDD = new SelectList(ViewBag.UserTypes, "Value", "Text");
 
-    ViewBag.Title = "Edit User";
+    ViewBag.Title = "Add User";
 }
 
 <h1>@ViewBag.Title</h1>
@@ -14,8 +14,6 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
-
-    @Html.HiddenFor(model => model.Id)
 
     <div class="container">
         <div class="row">
@@ -95,7 +93,7 @@ new { htmlAttributes = new { @class = "form-control", type = "text", placeholder
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <button class="btn btn-primary btn-success" type="submit">Update</button>
+                <button class="btn btn-primary btn-success" type="submit">Add</button>
             </div>
         </div>
     </div>

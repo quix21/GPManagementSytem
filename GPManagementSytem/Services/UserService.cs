@@ -63,6 +63,31 @@ namespace GPManagementSytem.Services
             return myUser;
         }
 
+        public Users LoginUserPractice(string uname, string pwd, bool isImpersonate = false)
+        {
+            Users myUser = null;
+
+            myUser = AllNoTracking().Where(x => x.Username == uname && x.IsActive == true).FirstOrDefault();
+
+            if (myUser != null)
+            {
+                if (!isImpersonate)
+                {
+                    if (myUser.Pwd == pwd)
+                    {
+                        return myUser;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+            }
+
+            return myUser;
+        }
+
         private bool AuthenticateMWS(string username, string password)
         {
             //authenticate against MWS

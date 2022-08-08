@@ -64,6 +64,49 @@ namespace GPManagementSytem.Controllers
             return View();
         }
 
+        public ActionResult PracticeLogin()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult PracticeLogin(FormCollection fc)
+        {
+            var username = fc["username"];
+            var password = fc["password"];
+
+            var isUser = _userService.LoginUserPractice(username, password, isImpersonate);
+
+            if (isUser != null)
+            {
+                SignInRemember(username, true);
+                Session["UserId"] = isUser.Id;
+
+
+                SessionManager.SetLoggedInUser(isUser);
+
+                logger.Info("Login successful for Practice user: " + isUser.Username);
+
+                return this.RedirectToAction("EditPractice", "Home", new { id = isUser.PracticeId});
+            }
+            else
+            {
+                ModelState.AddModelError("user", "Login details invalid");
+
+                logger.Info("Login failed for: " + username);
+            }
+
+            //TODO - audit logging
+
+            return View();
+        }
+
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
         private void SignInRemember(string userName, bool isPersistent = false)
         {
             // Clear any lingering authencation data

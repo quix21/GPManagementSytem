@@ -18,6 +18,7 @@ namespace GPManagementSytem.App_Start
     using GPManagementSytem.Database;
     using GPManagementSytem.Services;
     using GPManagementSytem.SessionManagement;
+    using GPManagementSytem.Email;
 
     public static class NinjectWebCommon
     {
@@ -82,8 +83,9 @@ namespace GPManagementSytem.App_Start
             //kernel.BindFilter<RoleAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<RoleAuthorizeAttribute>();
             //kernel.BindFilter<RoleAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<RoleAuthorizeAttribute>();
 
-            //kernel.Bind<IMailSender>().To<MailSender>();
             kernel.Bind<IDatabaseEntities>().To<DatabaseEntities>();
+            kernel.Bind<IMailServerService>().To<MailServerService>();
+            kernel.Bind<IMailSender>().To<MailSender>();
 
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IPracticeService>().To<PracticeService>();

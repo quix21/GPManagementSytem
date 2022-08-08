@@ -67,6 +67,9 @@
     <Reference Include="Google.Protobuf, Version=3.19.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.19.4\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.43.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.43\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="K4os.Compression.LZ4, Version=1.2.6.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
       <HintPath>..\packages\K4os.Compression.LZ4.1.2.6\lib\net46\K4os.Compression.LZ4.dll</HintPath>
     </Reference>
@@ -211,6 +214,8 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Database\DatabaseEntities.cs" />
     <Compile Include="Database\IDatabaseEntities.cs" />
+    <Compile Include="Email\IMailSender.cs" />
+    <Compile Include="Email\MailSender.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -224,8 +229,10 @@
     <Compile Include="Security\CheckAuthorisation.cs" />
     <Compile Include="Services\AllocationService.cs" />
     <Compile Include="Services\IAllocationService.cs" />
+    <Compile Include="Services\IMailServerService.cs" />
     <Compile Include="Services\IPracticeService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\MailServerService.cs" />
     <Compile Include="Services\PracticeService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SessionManagement\ISessionManager.cs" />
@@ -284,6 +291,10 @@
     <Content Include="Views\Home\AtAGlance.cshtml" />
     <Content Include="Views\Home\ManageUsers.cshtml" />
     <Content Include="Views\Home\EditUser.cshtml" />
+    <Content Include="Views\Home\AddUser.cshtml" />
+    <Content Include="Views\Login\PracticeLogin.cshtml" />
+    <Content Include="Views\Home\EditPracticeExt.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

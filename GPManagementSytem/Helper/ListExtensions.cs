@@ -13,6 +13,8 @@ namespace GPManagementSytem.Helper
         {
             List<SelectListItem> selectListItems = new List<SelectListItem>();
 
+            selectListItems.Add(new SelectListItem { Text = " -- Please Select -- ", Value = "0" });
+
             list.ForEach(item =>
             {
                 selectListItems.Add(new SelectListItem

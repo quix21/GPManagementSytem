@@ -278,48 +278,125 @@ namespace GPManagementSytem.Controllers
         {
             var myUser = _userService.GetById(id);
 
-            ViewBag.Practices = _practiceService.GetAll().ToSelectList(nameof(Practices.Id), nameof(Practices.Surgery));
+            PrepareUserViewBag();
 
+            return View(myUser);
+        }
 
-            List<MyEnumModel> userTypes = new List<MyEnumModel>(0);
+        [HttpPost]
+        public ActionResult EditUser(Users user)
+        {
+            var myUser = _userService.GetById(user.Id);
 
-            foreach (var value in Enum.GetValues(typeof(UserTypes)))
+            if (ModelState.IsValid)
             {
-                Debug.WriteLine((int)value + " " + value);
-                userTypes.Add(new MyEnumModel
+                myUser.Firstname = user.Firstname;
+                myUser.Surname = user.Surname;
+                myUser.Email = user.Email;
+                myUser.Username = user.Username;
+                myUser.UserType = user.UserType;
+                myUser.PracticeId = user.PracticeId;
+
+                //myUser.Pwd = user.Pwd;
+                myUser.IsActive = user.IsActive;
+                myUser.DateUpdated = DateTime.Now;
+                //myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.EditUser(myUser);
+
+                return RedirectToAction("ManageUsers", "Home");
+            }
+            else
+            {
+                return View(myUser);
+            }
+        }
+
+        public ActionResult AddUser()
+        {
+            PrepareUserViewBag();
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddUser(Users user)
+        {
+            if (user.UserType == (int)UserTypes.Practice && user.PracticeId == 0)
+            {
+                ModelState.AddModelError("practiceid", "Please select the correct practice for this user");
+            }
+
+            if (user.UserType == (int)UserTypes.Practice)
+            {
+                if (user.Username != user.Email)
+                {
+                    ModelState.AddModelError("username", "Please ensure that username and email address match for Practice users");
+                }
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                Users myUser = new Users();
+
+                myUser.Firstname = user.Firstname;
+                myUser.Surname = user.Surname;
+                myUser.Email = user.Email;
+                myUser.Username = user.Username;
+                myUser.UserType = user.UserType;
+                myUser.PracticeId = user.PracticeId;
+
+                //Password generation only required for external/practice users
+                if (user.UserType == (int)UserTypes.Practice)
+                {
+                    myUser.Pwd = GeneratePassword();
+                }
+
+                myUser.IsActive = user.IsActive;
+                myUser.DateCreated = DateTime.Now;
+                //myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(myUser);
+
+                return RedirectToAction("ManageUsers", "Home");
+            }
+            else
+            {
+                PrepareUserViewBag();
+
+                return View();
+            }
+        }
+
+        private string GeneratePassword()
+        {
+            var myPwd = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Second.ToString();
+
+            return myPwd;
+        }
+
+        public void PrepareUserViewBag()
+        {
+            ViewBag.Practices = _practiceService.GetAll().ToSelectList(nameof(Practices.Id), nameof(Practices.Surgery));
+            ViewBag.UserTypes = EnumToList<UserTypes>().ToSelectList(nameof(MyEnumModel.Id), nameof(MyEnumModel.Value));
+        }
+
+        public List<MyEnumModel> EnumToList<T>()
+        {
+            List<MyEnumModel> myTypes = new List<MyEnumModel>(0);
+
+            foreach (var value in Enum.GetValues(typeof(T)))
+            {
+                myTypes.Add(new MyEnumModel
                 {
                     Id = (int)value,
                     Value = value.ToString()
                 });
             }
 
-            ViewBag.UserTypes = userTypes.ToSelectList(nameof(MyEnumModel.Id), nameof(MyEnumModel.Value));
-
-                //List<UserTypes> userTypes = Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList();
-                //List<UserTypes> userTypes = EnumToList<UserTypes>();
-
-            return View(myUser);
-        }
-
-        public static List<T> EnumToList<T>()
-        {
-            Type enumType = typeof(T);
-
-            // You can't use type constraints on value types, so have to check & throw error.
-            if (enumType.BaseType != typeof(Enum))
-                throw new ArgumentException("T must be of type System.Enum type");
-
-            Array enumValArray = Enum.GetValues(enumType);
-
-            List<T> enumValList = new List<T>(enumValArray.Length);
-
-            foreach (int val in enumValArray)
-            {
-                enumValList.Add((T)Enum.Parse(enumType, val.ToString()));
-                
-            }
-
-            return enumValList;
+            return myTypes;
         }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)

@@ -11,6 +11,7 @@ namespace GPManagementSytem.Services
         List<Users> GetAll();
         Users GetById(int id);
         Users GetByUsername(string userName);
+        Users GetByUsernamePracticeOnly(string userName);
         Users LoginUser(string uname, string pwd, bool isImpersonate = false);
         Users LoginUserPractice(string uname, string pwd, bool isImpersonate = false);
         Users AddUser(Users user);

@@ -38,6 +38,11 @@ namespace GPManagementSytem.Services
             return AllNoTracking().Where(x => x.Username.ToLower() == userName.ToLower()).FirstOrDefault();
         }
 
+        public Users GetByUsernamePracticeOnly(string userName)
+        {
+            return AllNoTracking().Where(x => x.Username.ToLower() == userName.ToLower() && x.UserType == (int)UserTypes.Practice).FirstOrDefault();
+        }
+
         public Users LoginUser(string uname, string pwd, bool isImpersonate = false)
         {
             Users myUser = null;

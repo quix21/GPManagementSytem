@@ -26,5 +26,12 @@ namespace GPManagementSytem.Controllers
             get { return _databaseEntities; }
             private set { _databaseEntities = value; }
         }
+
+        public string GeneratePassword()
+        {
+            var myPwd = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Second.ToString();
+
+            return myPwd;
+        }
     }
 }

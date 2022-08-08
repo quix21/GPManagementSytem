@@ -2,6 +2,7 @@
 using GPManagementSytem.Models;
 using GPManagementSytem.Security;
 using GPManagementSytem.Services;
+using GPManagementSytem.SessionManagement;
 using GPManagementSytem.ViewModel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -19,13 +20,13 @@ using System.Web.Mvc;
 namespace GPManagementSytem.Controllers
 {
     //[CheckAuthorisation]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IPracticeService _practiceService;
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
 
-        public HomeController(IPracticeService practiceService, IAllocationService allocationService, IUserService userService)
+        public HomeController(IPracticeService practiceService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager)
         {
             _practiceService = practiceService;
             _allocationService = allocationService;
@@ -370,12 +371,7 @@ namespace GPManagementSytem.Controllers
             }
         }
 
-        private string GeneratePassword()
-        {
-            var myPwd = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Second.ToString();
 
-            return myPwd;
-        }
 
         public void PrepareUserViewBag()
         {

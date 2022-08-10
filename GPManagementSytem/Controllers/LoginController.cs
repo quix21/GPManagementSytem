@@ -96,7 +96,7 @@ namespace GPManagementSytem.Controllers
 
                 logger.Info("Login successful for Practice user: " + isUser.Username);
 
-                return this.RedirectToAction("EditPractice", "Home", new { id = isUser.PracticeId});
+                return this.RedirectToAction("EditPracticeExternal", "Home", new { id = isUser.PracticeId});
             }
             else
             {

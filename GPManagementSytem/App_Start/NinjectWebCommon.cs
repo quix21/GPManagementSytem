@@ -89,6 +89,7 @@ namespace GPManagementSytem.App_Start
 
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IPracticeService>().To<PracticeService>();
+            kernel.Bind<IPracticeExternalService>().To<PracticeExternalService>();
             kernel.Bind<IAllocationService>().To<AllocationService>();
         }
 

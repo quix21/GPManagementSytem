@@ -12,6 +12,7 @@ namespace GPManagementSytem.Database
     {
         public IDbSet<Users> Users { get; set; }
         public IDbSet<Practices> Practices { get; set; }
+        public IDbSet<PracticesExternal> PracticesExternal { get; set; }
         public IDbSet<Allocations> Allocations { get; set; }
 
         public override int SaveChanges()

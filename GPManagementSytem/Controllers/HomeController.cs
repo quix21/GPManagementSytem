@@ -78,7 +78,7 @@ namespace GPManagementSytem.Controllers
             }
         }
 
-        public ActionResult EditPractice(int id)
+        public ActionResult EditPracticeExternal(int id)
         {
             var academicYear = AcademicYearDD();
 
@@ -102,6 +102,17 @@ namespace GPManagementSytem.Controllers
             return View(myPractice);
         }
 
+        public ActionResult EditPractice(int id)
+        {
+            var academicYear = AcademicYearDD();
+
+            var myPractice = _practiceService.GetById(id);
+
+            myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+
+            return View(myPractice);
+        }
+
         [HttpPost]
         public ActionResult EditPractice(Practices practice)
         {
@@ -109,26 +120,7 @@ namespace GPManagementSytem.Controllers
 
             if (ModelState.IsValid)
             {
-                switch (practice.PracticeStatusGroup)
-                {
-                    case 1:
-                        practice.Active = 1;
-                        practice.Disabled = 0;
-                        practice.Queried = 0;
-                        break;
-
-                    case 2:
-                        practice.Active = 0;
-                        practice.Disabled = 1;
-                        practice.Queried = 0;
-                        break;
-
-                    case 3:
-                        practice.Active = 0;
-                        practice.Disabled = 0;
-                        practice.Queried = 1;
-                        break;
-                }
+                ManagePracticeStatusGroupPOST(practice);
 
                 practice.DateUpdated = DateTime.Now;
                 practice.UpdatedBy = 1;
@@ -155,7 +147,7 @@ namespace GPManagementSytem.Controllers
 
             //check if allocation exists for PracticeId AND academic year
             var doesAllocationExist = _allocationService.GetByPracticeAndYear(id, academicYear);
-            
+
             if (doesAllocationExist != null)
             {
                 return RedirectToAction("EditAllocation", new { id = doesAllocationExist.Id });
@@ -264,7 +256,7 @@ namespace GPManagementSytem.Controllers
                 userViewModel.Add(new UserViewModel
                 {
                     Firstname = user.Firstname,
-                    Surname= user.Surname,
+                    Surname = user.Surname,
                     Email = user.Email,
                     UserType = Enum.GetName(typeof(UserTypes), user.UserType).ToString(),
                     IsActive = user.IsActive,
@@ -469,7 +461,7 @@ namespace GPManagementSytem.Controllers
             {
                 allocationViewModel.Surgery = getPractice.FirstOrDefault().Surgery;
                 allocationViewModel.Postcode = getPractice.FirstOrDefault().Postcode;
-            } 
+            }
 
             allocationViewModel.AllocationId = myAllocation.Id;
             allocationViewModel.PracticeId = myAllocation.PracticeId;
@@ -546,7 +538,7 @@ namespace GPManagementSytem.Controllers
             wsNames.Add("Assigned");
 
             //Create Excel object
-            
+
             //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage ep = new ExcelPackage();
 
@@ -561,7 +553,7 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        private ExcelWorksheet createWorksheet( string wsName, ExcelPackage ep)
+        private ExcelWorksheet createWorksheet(string wsName, ExcelPackage ep)
         {
             var academicYear = AcademicYearDD();
 
@@ -588,7 +580,7 @@ namespace GPManagementSytem.Controllers
             worksheet.Cells["B2"].LoadFromText("Postcode");
             worksheet.Cells["C2"].LoadFromText(GetAttributeDisplayName("Year2Wk1Allocated"));
             worksheet.Cells["D2"].LoadFromText(GetAttributeDisplayName("Year2Wk2Allocated"));
-            worksheet.Cells["E2"].LoadFromText(GetAttributeDisplayName("Year2Wk3Allocated")); 
+            worksheet.Cells["E2"].LoadFromText(GetAttributeDisplayName("Year2Wk3Allocated"));
             worksheet.Cells["F2"].LoadFromText(GetAttributeDisplayName("Year2Wk4Allocated"));
             worksheet.Cells["G2"].LoadFromText(GetAttributeDisplayName("Year2Wk5Allocated"));
             worksheet.Cells["H2"].LoadFromText(GetAttributeDisplayName("Year2Wk6Allocated"));
@@ -712,6 +704,54 @@ namespace GPManagementSytem.Controllers
 
 
             return worksheet;
+        }
+
+        private int ManagePracticeStatusGroupGET(Practices myPractice)
+        {
+            int myPSG = 0;
+
+            if (myPractice.Active == 1)
+            {
+                myPSG = 1;
+            }
+
+            if (myPractice.Disabled == 1)
+            {
+                myPSG = 2;
+            }
+
+            if (myPractice.Queried == 1)
+            {
+                myPSG = 3;
+            }
+
+            return myPSG;
+        }
+
+        private Practices ManagePracticeStatusGroupPOST(Practices practice)
+        {
+            switch (practice.PracticeStatusGroup)
+            {
+                case 1:
+                    practice.Active = 1;
+                    practice.Disabled = 0;
+                    practice.Queried = 0;
+                    break;
+
+                case 2:
+                    practice.Active = 0;
+                    practice.Disabled = 1;
+                    practice.Queried = 0;
+                    break;
+
+                case 3:
+                    practice.Active = 0;
+                    practice.Disabled = 0;
+                    practice.Queried = 1;
+                    break;
+            }
+
+            return practice;
         }
 
         private string ShowServiceContract(int serviceContractStatus)

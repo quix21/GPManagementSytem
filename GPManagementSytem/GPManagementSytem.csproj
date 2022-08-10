@@ -294,7 +294,6 @@
     <Content Include="Views\Home\EditUser.cshtml" />
     <Content Include="Views\Home\AddUser.cshtml" />
     <Content Include="Views\Login\PracticeLogin.cshtml" />
-    <Content Include="Views\Home\EditPracticeExt.cshtml" />
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\PasswordReset.cshtml" />
   </ItemGroup>

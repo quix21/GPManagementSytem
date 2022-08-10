@@ -16,6 +16,7 @@
     <div class="validation-summary-errors" id="inclusion-errors"></div>
 
     <div id="error" style="display:none"></div>
+
     <h4>Main Details</h4>
     <div class="container">
         <div class="row">
@@ -45,7 +46,7 @@
                 <div class="input-group">
                     <span class="input-group-text-radio">@Html.LabelFor(model => model.NewPractice)</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true", @checked = "true" })
+                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true" })
                         <label class="btn btn-outline-info" for="true">Yes</label>
                         @Html.RadioButtonFor(model => model.NewPractice, "false", new { @class = "btn-check", @id = "false" })
                         <label class="btn btn-outline-info" for="false">No</label>
@@ -98,8 +99,7 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.Fax)</span>
-                    @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+
                 </div>
             </div>
         </div>
@@ -172,6 +172,18 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.AdditionalEmails)</span>
+                    @Html.TextAreaFor(model => model.AdditionalEmails,
+new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="container">
         <div class="row">
@@ -185,7 +197,7 @@
                 <div class="input-group">
                     <span class="input-group-text-radio">Practice Status</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active", @checked = "true" })
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
                         <label class="btn btn-outline-info" for="active">Active</label>
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
                         <label class="btn btn-outline-info" for="disabled">Disabled</label>
@@ -216,22 +228,22 @@
             </div>
             <div class="col-md-4">
                 <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.SurgeryNotInUse)</span>
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.SurgeryInUse)</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.SurgeryNotInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
+                        @Html.RadioButtonFor(model => model.SurgeryInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
                         <label class="btn btn-outline-info" for="NotInUseTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.SurgeryNotInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse", @checked = "true" })
+                        @Html.RadioButtonFor(model => model.SurgeryInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse" })
                         <label class="btn btn-outline-info" for="NotInUseFalse">No</label>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.DoNotContactSurgery)</span>
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.ContactSurgery)</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.DoNotContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
+                        @Html.RadioButtonFor(model => model.ContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
                         <label class="btn btn-outline-info" for="NoContactTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.DoNotContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse", @checked = "true" })
+                        @Html.RadioButtonFor(model => model.ContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse" })
                         <label class="btn btn-outline-info" for="NoContactFalse">No</label>
                     </div>
                 </div>

@@ -58,7 +58,7 @@ namespace GPManagementSytem.Services
             }
 
             entityToUpdate.Surgery = practice.Surgery;
-            entityToUpdate.SurgeryNotInUse = practice.SurgeryNotInUse;
+            entityToUpdate.SurgeryInUse = practice.SurgeryInUse;
             entityToUpdate.GP1 = practice.GP1;
             entityToUpdate.GP1Email = practice.GP1Email;
             entityToUpdate.Address1 = practice.Address1;
@@ -75,8 +75,9 @@ namespace GPManagementSytem.Services
             entityToUpdate.GP3Email = practice.GP3Email;
             entityToUpdate.GP4 = practice.GP4;
             entityToUpdate.GP4Email = practice.GP4Email;
+            entityToUpdate.AdditionalEmails = practice.AdditionalEmails;
             entityToUpdate.SupplierNumber = practice.SupplierNumber;
-            entityToUpdate.DoNotContactSurgery = practice.DoNotContactSurgery;
+            entityToUpdate.ContactSurgery = practice.ContactSurgery;
             entityToUpdate.Notes = practice.Notes;
             entityToUpdate.AttachmentsAllocated = practice.AttachmentsAllocated;
             entityToUpdate.UCCTNotes = practice.UCCTNotes;

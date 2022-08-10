@@ -16,7 +16,7 @@ namespace GPManagementSytem.Models
         public int OriginalID { get; set;}
         [Required]
         public string Surgery { get; set; }
-        public bool SurgeryNotInUse { get; set; }
+        public bool SurgeryInUse { get; set; }
         [Required]
         public string GP1 { get; set; }
         public string GP1Email { get; set; }
@@ -40,8 +40,9 @@ namespace GPManagementSytem.Models
         public string GP3Email { get; set; }
         public string GP4 { get; set; }
         public string GP4Email { get; set; }
+        public string AdditionalEmails { get; set; }
         public string SupplierNumber { get; set; }
-        public bool DoNotContactSurgery { get; set; }
+        public bool ContactSurgery { get; set; }
         public string Notes { get; set; }
         public string AttachmentsAllocated { get; set; }
         public int ContractReceived { get; set; }

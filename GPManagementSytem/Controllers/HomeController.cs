@@ -23,12 +23,14 @@ namespace GPManagementSytem.Controllers
     public class HomeController : BaseController
     {
         private readonly IPracticeService _practiceService;
+        private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
 
-        public HomeController(IPracticeService practiceService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager)
         {
             _practiceService = practiceService;
+            _practiceExternalService = practiceExternalService;
             _allocationService = allocationService;
             _userService = userService;
         }
@@ -84,22 +86,40 @@ namespace GPManagementSytem.Controllers
 
             var myPractice = _practiceService.GetById(id);
 
-            if (myPractice.Active == 1)
-            {
-                myPractice.PracticeStatusGroup = 1;
-            }
-
-            if (myPractice.Disabled == 1)
-            {
-                myPractice.PracticeStatusGroup = 2;
-            }
-
-            if (myPractice.Queried == 1)
-            {
-                myPractice.PracticeStatusGroup = 3;
-            }
+            myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
 
             return View(myPractice);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult EditPracticeExternal(Practices practice)
+        {
+            //var myPractice = _practiceService.GetById(practice.Id);
+
+            if (ModelState.IsValid)
+            {
+                ManagePracticeStatusGroupPOST(practice);
+
+                PracticesExternal practicesExternal = ParsePracticeToExternal(practice);
+
+                practicesExternal.RequestedBy = Convert.ToInt32(Session["UserId"].ToString());
+                practicesExternal.DateRequested = DateTime.Now;
+                practicesExternal.ChangesApproved = false;
+
+                _practiceExternalService.AddPractice(practicesExternal);
+
+                return RedirectToAction("PracticeUpdatedThanks");
+            }
+            else
+            {
+                return View(practice);
+            }
+        }
+
+        public ActionResult PracticeUpdatedThanks()
+        {
+            return View();
         }
 
         public ActionResult EditPractice(int id)
@@ -385,6 +405,57 @@ namespace GPManagementSytem.Controllers
             }
 
             return myTypes;
+        }
+
+        private PracticesExternal ParsePracticeToExternal(Practices practice)
+        {
+            PracticesExternal myPracticeExt = new PracticesExternal();
+
+            myPracticeExt.PrimaryId = practice.Id;
+            myPracticeExt.Surgery = practice.Surgery;
+            myPracticeExt.SurgeryInUse = practice.SurgeryInUse;
+            myPracticeExt.GP1 = practice.GP1;
+            myPracticeExt.GP1Email = practice.GP1Email;
+            myPracticeExt.Address1 = practice.Address1;
+            myPracticeExt.Address2 = practice.Address2;
+            myPracticeExt.Town = practice.Town;
+            myPracticeExt.Postcode = practice.Postcode;
+            myPracticeExt.Telephone = practice.Telephone;
+            myPracticeExt.Fax = practice.Fax;
+            myPracticeExt.PracticeManager = practice.PracticeManager;
+            myPracticeExt.PMEmail = practice.PMEmail;
+            myPracticeExt.GP2 = practice.GP2;
+            myPracticeExt.GP2Email = practice.GP2Email;
+            myPracticeExt.Website = practice.Website;
+            myPracticeExt.GP3 = practice.GP3;
+            myPracticeExt.GP3Email = practice.GP3Email;
+            myPracticeExt.GP4 = practice.GP4;
+            myPracticeExt.GP4Email = practice.GP4Email;
+            myPracticeExt.AdditionalEmails = practice.AdditionalEmails;
+            myPracticeExt.SupplierNumber = practice.SupplierNumber;
+            myPracticeExt.ContactSurgery = practice.ContactSurgery;
+            myPracticeExt.Notes = practice.Notes;
+            myPracticeExt.AttachmentsAllocated = practice.AttachmentsAllocated;
+            myPracticeExt.UCCTNotes = practice.UCCTNotes;
+            myPracticeExt.QualityVisitDateR1 = practice.QualityVisitDateR1;
+            myPracticeExt.QualityVisitNotes = practice.QualityVisitNotes;
+            myPracticeExt.Active = practice.Active;
+            myPracticeExt.Disabled = practice.Disabled;
+            myPracticeExt.Queried = practice.Queried;
+            myPracticeExt.ListSize = practice.ListSize;
+            myPracticeExt.NewPractice = practice.NewPractice;
+            myPracticeExt.AcademicYear = practice.AcademicYear;
+            myPracticeExt.QualityVisitDate = practice.QualityVisitDate;
+            myPracticeExt.OKToProceed = practice.OKToProceed;
+            myPracticeExt.DataReviewDate = practice.DataReviewDate;
+            myPracticeExt.TutorTrainingGPName = practice.TutorTrainingGPName;
+            myPracticeExt.TutorTrainingDate = practice.TutorTrainingDate;
+            myPracticeExt.DateCreated = practice.DateCreated;
+            myPracticeExt.DateUpdated = practice.DateUpdated;
+            myPracticeExt.UpdatedBy = practice.UpdatedBy;
+
+
+            return myPracticeExt;
         }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)

@@ -63,6 +63,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.GP1Email = practice.GP1Email;
             entityToUpdate.Address1 = practice.Address1;
             entityToUpdate.Address2 = practice.Address2;
+            entityToUpdate.Town = practice.Town;
             entityToUpdate.Postcode = practice.Postcode;
             entityToUpdate.Telephone = practice.Telephone;
             entityToUpdate.Fax = practice.Fax;

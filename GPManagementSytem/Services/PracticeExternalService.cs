@@ -69,6 +69,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.GP1Email = practice.GP1Email;
             entityToUpdate.Address1 = practice.Address1;
             entityToUpdate.Address2 = practice.Address2;
+            entityToUpdate.Town = practice.Town;
             entityToUpdate.Postcode = practice.Postcode;
             entityToUpdate.Telephone = practice.Telephone;
             entityToUpdate.Fax = practice.Fax;
@@ -111,7 +112,7 @@ namespace GPManagementSytem.Services
 
             if (existingEntity == null)
             {
-                _databaseEntities.Practices.Add(entityToUpdate);
+                _databaseEntities.PracticesExternal.Add(entityToUpdate);
             }
 
             Save();

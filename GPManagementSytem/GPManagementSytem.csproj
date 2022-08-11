@@ -300,6 +300,7 @@
     <Content Include="Views\Login\ResetPassword.cshtml" />
     <Content Include="Views\Login\PasswordReset.cshtml" />
     <Content Include="Views\Home\EditPracticeExternal.cshtml" />
+    <Content Include="Views\Home\PracticeUpdatedThanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

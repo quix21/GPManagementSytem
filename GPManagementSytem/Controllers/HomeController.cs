@@ -91,6 +91,23 @@ namespace GPManagementSytem.Controllers
             return View(myPractice);
         }
 
+        public ActionResult ApprovePracticeChanges(int id)
+        {
+            var academicYear = AcademicYearDD();
+
+            var changedPractice = _practiceExternalService.GetById(id);
+            var currentPractice = _practiceService.GetById(changedPractice.PrimaryId);
+
+            ApprovePracticeChangesViewModel bothModels = new ApprovePracticeChangesViewModel();
+
+            bothModels.originalRecord = currentPractice;
+            bothModels.changedRecord = changedPractice;
+
+            //myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+
+            return View(bothModels);
+        }
+
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult EditPracticeExternal(Practices practice)
@@ -157,6 +174,13 @@ namespace GPManagementSytem.Controllers
         public ActionResult ManagePractices()
         {
             List<Practices> myPractices = _practiceService.GetAll();
+
+            return View(myPractices);
+        }
+
+        public ActionResult ManagePracticesExternal()
+        {
+            List<PracticesExternal> myPractices = _practiceExternalService.GetAllPending();
 
             return View(myPractices);
         }
@@ -847,19 +871,6 @@ namespace GPManagementSytem.Controllers
             return showService;
         }
 
-        //private ExcelRange DoCentre(int rowCounter, ExcelWorksheet worksheet)
-        //{
-        //    string myRange = "A" + rowCounter + ":R" + rowCounter;
-
-        //    Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#dff4fb");
-
-        //    var myCell = worksheet.Cells[myRange];
-        //    myCell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        //    myCell.Style.Fill.BackgroundColor.SetColor(colFromHex);
-
-        //    return myCell;
-        //}
-
         private string GetAttributeDisplayName(string getProperty)
         {
             PropertyInfo property = typeof(AllocationViewModel).GetProperty(getProperty);
@@ -870,6 +881,32 @@ namespace GPManagementSytem.Controllers
                 return property.Name;
             return (atts[0] as DisplayNameAttribute).DisplayName;
         }
+
+        //public ApprovePracticeChangesViewModel ManagePracticeChanges(Practices original, PracticesExternal changed)
+        //{
+
+        //    Type type = typeof(Practices);
+        //    PropertyInfo[] properties = type.GetProperties();
+
+        //    List<string> practiceFields = new List<string>();
+
+        //    foreach (PropertyInfo info in properties)
+        //    {
+        //        var fieldName = info.Name;
+
+        //        if (fieldName != "Id")
+        //        {
+        //            practiceFields.Add(fieldName);
+        //        }
+        //    }
+
+        //    foreach (var practiceField in practiceFields)
+        //    {
+
+        //    }
+
+        //    return myModel;
+        //}
 
         public string AcademicYearDD()
         {

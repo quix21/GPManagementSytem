@@ -74,5 +74,6 @@ namespace GPManagementSytem.Models
 
         [NotMapped]
         public int PracticeStatusGroup { get; set; }
+
     }
 }

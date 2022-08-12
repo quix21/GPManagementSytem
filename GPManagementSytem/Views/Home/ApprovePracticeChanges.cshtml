@@ -1,0 +1,315 @@
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.ViewModel.ApprovePracticeChangesViewModel
+@{
+    ViewBag.Title = "Approve Practice Changes";
+
+    var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary()
+
+    <div class="validation-summary-errors" id="inclusion-errors"></div>
+
+    <div id="error" style="display:none"></div>
+    @Html.HiddenFor(model => model.changedRecord.Id)
+    <h4>Main Details</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Surgery)</span>
+                    @if (Model.originalRecord.Surgery != Model.changedRecord.Surgery)
+                    {
+                        @Html.EditorFor(model => model.changedRecord.Surgery, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.changedRecord.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.changedRecord.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.SupplierNumber)</span>
+                    @Html.EditorFor(model => model.changedRecord.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.NewPractice)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "true", new { @class = "btn-check", @id = "true" })
+                        <label class="btn btn-outline-info" for="true">Yes</label>
+                        @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "false", new { @class = "btn-check", @id = "false" })
+                        <label class="btn btn-outline-info" for="false">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address1)</span>
+                    @Html.EditorFor(model => model.changedRecord.Address1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address2)</span>
+                    @Html.EditorFor(model => model.changedRecord.Address2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Town)</span>
+                    @Html.EditorFor(model => model.changedRecord.Town, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Postcode)</span>
+                    @Html.EditorFor(model => model.changedRecord.Postcode, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Telephone)</span>
+                    @Html.EditorFor(model => model.changedRecord.Telephone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PracticeManager)</span>
+                    @if (Model.originalRecord.PracticeManager != Model.changedRecord.PracticeManager)
+                    {
+                        @Html.EditorFor(model => model.changedRecord.PracticeManager, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        @Html.EditorFor(model => model.changedRecord.PracticeManager, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PMEmail)</span>
+                    @Html.EditorFor(model => model.changedRecord.PMEmail, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1Email)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP1Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2Email)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP2Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
+                    @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.AdditionalEmails)</span>
+                    @Html.TextAreaFor(model => model.changedRecord.AdditionalEmails,
+new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.ListSize)</span>
+                    @Html.EditorFor(model => model.changedRecord.ListSize, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text-radio">Practice Status</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
+                        <label class="btn btn-outline-info" for="active">Active</label>
+                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
+                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
+                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
+                        <label class="btn btn-outline-info" for="queried">Queried</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <h4>Other Details</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.TutorTrainingGPName)</span>
+                    @Html.EditorFor(model => model.changedRecord.TutorTrainingGPName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.SurgeryInUse)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.changedRecord.SurgeryInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
+                        <label class="btn btn-outline-info" for="NotInUseTrue">Yes</label>
+                        @Html.RadioButtonFor(model => model.changedRecord.SurgeryInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse" })
+                        <label class="btn btn-outline-info" for="NotInUseFalse">No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.ContactSurgery)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.changedRecord.ContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
+                        <label class="btn btn-outline-info" for="NoContactTrue">Yes</label>
+                        @Html.RadioButtonFor(model => model.changedRecord.ContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse" })
+                        <label class="btn btn-outline-info" for="NoContactFalse">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Notes)</span>
+                    @Html.TextAreaFor(model => model.changedRecord.Notes,
+                 new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.UCCTNotes)</span>
+                    @Html.TextAreaFor(model => model.changedRecord.UCCTNotes,
+                 new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.QualityVisitNotes)</span>
+                    @Html.TextAreaFor(model => model.changedRecord.QualityVisitNotes,
+                 new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+}

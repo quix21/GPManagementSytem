@@ -241,6 +241,7 @@
     <Compile Include="SessionManagement\ISessionManager.cs" />
     <Compile Include="SessionManagement\SessionManager.cs" />
     <Compile Include="ViewModel\AllocationViewModel.cs" />
+    <Compile Include="ViewModel\ApprovePracticeChangesViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +302,8 @@
     <Content Include="Views\Login\PasswordReset.cshtml" />
     <Content Include="Views\Home\EditPracticeExternal.cshtml" />
     <Content Include="Views\Home\PracticeUpdatedThanks.cshtml" />
+    <Content Include="Views\Home\ManagePracticesExternal.cshtml" />
+    <Content Include="Views\Home\ApprovePracticeChanges.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

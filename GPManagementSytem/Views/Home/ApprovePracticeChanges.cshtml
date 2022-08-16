@@ -81,8 +81,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address1)</span>
-                    @Html.EditorFor(model => model.changedRecord.Address1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.Address1 != Model.changedRecord.Address1)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Address1"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.Address1)</span>
+                        @Html.EditorFor(model => model.changedRecord.Address1, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address1)</span>
+                        @Html.EditorFor(model => model.changedRecord.Address1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">

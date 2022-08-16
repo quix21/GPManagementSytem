@@ -439,6 +439,7 @@ th.Year5 {
         border-right: 1px solid #c6e0b4;
     }
 
-    .fieldChanged {
-        background-color: #ff6f6f;
-    }
+.fieldChanged {
+    /*background-color: #ff6f6f;*/
+    border: 2px solid #ff6f6f !important;
+}

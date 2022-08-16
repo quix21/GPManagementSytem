@@ -4,6 +4,8 @@
     ViewBag.Title = "Approve Practice Changes";
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
+
+    string showPSG = "";
 }
 
 <h1>@ViewBag.Title</h1>
@@ -22,15 +24,19 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Surgery)</span>
                     @if (Model.originalRecord.Surgery != Model.changedRecord.Surgery)
                     {
+                        <span class="input-group-text">
+                            <i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Surgery"></i>&nbsp; @Html.LabelFor(model => model.changedRecord.Surgery)
+                        </span>
                         @Html.EditorFor(model => model.changedRecord.Surgery, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
                     }
                     else
                     {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Surgery)</span>
                         @Html.EditorFor(model => model.changedRecord.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text" } })
                     }
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -45,8 +51,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.SupplierNumber)</span>
-                    @Html.EditorFor(model => model.changedRecord.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.SupplierNumber != Model.changedRecord.SupplierNumber)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.SupplierNumber"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.SupplierNumber)</span>
+                        @Html.EditorFor(model => model.changedRecord.SupplierNumber, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.SupplierNumber)</span>
+                        @Html.EditorFor(model => model.changedRecord.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -116,13 +131,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PracticeManager)</span>
                     @if (Model.originalRecord.PracticeManager != Model.changedRecord.PracticeManager)
                     {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.PracticeManager"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.PracticeManager)</span>
                         @Html.EditorFor(model => model.changedRecord.PracticeManager, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
                     }
                     else
                     {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PracticeManager)</span>
                         @Html.EditorFor(model => model.changedRecord.PracticeManager, new { htmlAttributes = new { @class = "form-control", type = "text" } })
                     }
 
@@ -210,14 +226,54 @@ new { @class = "form-control fullTextArea", @rows = 3 })
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text-radio">Practice Status</span>
+                    
+                        @if (Model.originalRecord.PracticeStatusGroup != Model.changedRecord.PracticeStatusGroup)
+                        {
+
+
+                            switch (Model.originalRecord.PracticeStatusGroup)
+                            {
+                                case 1:
+                                    showPSG = "Active";
+                                    break;
+
+                                case 2:
+                                    showPSG = "Disabled";
+                                    break;
+
+                                case 3:
+                                    showPSG = "Queried";
+                                    break;
+                            }
+                        
+                    <span class="input-group-text-radio"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@showPSG"></i>&nbsp;Practice Status</span>
+                    }
+                    else
+                    {
+                        <span class="input-group-text-radio">Practice Status</span>
+                    }
+
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @if (Model.originalRecord.PracticeStatusGroup != Model.changedRecord.PracticeStatusGroup)
+                    {
                         @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
-                        <label class="btn btn-outline-info" for="active">Active</label>
+                        <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 1) {<text>fieldChanged</text> }  " for="active">Active</label>
                         @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
-                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
-                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
-                        <label class="btn btn-outline-info" for="queried">Queried</label>
+                            <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 2) {<text>fieldChanged</text> }" for="disabled">Disabled</label>
+                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
+                            <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 3) {<text>fieldChanged</text> }" for="queried">Queried</label>
+                        }
+                        else
+                        {
+                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
+                            <label class="btn btn-outline-info" for="active">Active</label>
+                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
+                            <label class="btn btn-outline-info" for="disabled">Disabled</label>
+                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
+                            <label class="btn btn-outline-info" for="queried">Queried</label>
+                        }
+
+
                     </div>
                 </div>
             </div>

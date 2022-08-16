@@ -100,10 +100,13 @@ namespace GPManagementSytem.Controllers
 
             ApprovePracticeChangesViewModel bothModels = new ApprovePracticeChangesViewModel();
 
+            currentPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(currentPractice);
+            changedPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(currentPractice, changedPractice);
+
             bothModels.originalRecord = currentPractice;
             bothModels.changedRecord = changedPractice;
 
-            //myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+
 
             return View(bothModels);
         }
@@ -801,7 +804,7 @@ namespace GPManagementSytem.Controllers
             return worksheet;
         }
 
-        private int ManagePracticeStatusGroupGET(Practices myPractice)
+        private int ManagePracticeStatusGroupGET(Practices myPractice, PracticesExternal practicesExternal = null)
         {
             int myPSG = 0;
 
@@ -818,6 +821,24 @@ namespace GPManagementSytem.Controllers
             if (myPractice.Queried == 1)
             {
                 myPSG = 3;
+            }
+
+            if (practicesExternal != null)
+            {
+                if (practicesExternal.Active == 1)
+                {
+                    myPSG = 1;
+                }
+
+                if (practicesExternal.Disabled == 1)
+                {
+                    myPSG = 2;
+                }
+
+                if (practicesExternal.Queried == 1)
+                {
+                    myPSG = 3;
+                }
             }
 
             return myPSG;

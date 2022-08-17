@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-group">
+                @*<div class="input-group">
                     <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.NewPractice)</span>
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                         @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "true", new { @class = "btn-check", @id = "true" })
@@ -73,7 +73,7 @@
                         @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "false", new { @class = "btn-check", @id = "false" })
                         <label class="btn btn-outline-info" for="false">No</label>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -96,8 +96,17 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address2)</span>
-                    @Html.EditorFor(model => model.changedRecord.Address2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.Address2 != Model.changedRecord.Address2)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Address2"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.Address2)</span>
+                        @Html.EditorFor(model => model.changedRecord.Address2, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Address2)</span>
+                        @Html.EditorFor(model => model.changedRecord.Address2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -107,14 +116,32 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Town)</span>
-                    @Html.EditorFor(model => model.changedRecord.Town, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.Town != Model.changedRecord.Town)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Town"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.Town)</span>
+                        @Html.EditorFor(model => model.changedRecord.Town, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Town)</span>
+                        @Html.EditorFor(model => model.changedRecord.Town, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Postcode)</span>
-                    @Html.EditorFor(model => model.changedRecord.Postcode, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.Postcode != Model.changedRecord.Postcode)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Postcode"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.Postcode)</span>
+                        @Html.EditorFor(model => model.changedRecord.Postcode, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Postcode)</span>
+                        @Html.EditorFor(model => model.changedRecord.Postcode, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -124,8 +151,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Telephone)</span>
-                    @Html.EditorFor(model => model.changedRecord.Telephone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.Telephone != Model.changedRecord.Telephone)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.Telephone"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.Telephone)</span>
+                        @Html.EditorFor(model => model.changedRecord.Telephone, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Telephone)</span>
+                        @Html.EditorFor(model => model.changedRecord.Telephone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -155,8 +191,17 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PMEmail)</span>
-                    @Html.EditorFor(model => model.changedRecord.PMEmail, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.PMEmail != Model.changedRecord.PMEmail)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.PMEmail"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.PMEmail)</span>
+                        @Html.EditorFor(model => model.changedRecord.PMEmail, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.PMEmail)</span>
+                        @Html.EditorFor(model => model.changedRecord.PMEmail, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -166,14 +211,32 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP1 != Model.changedRecord.GP1)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP1"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP1)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP1, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1Email)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP1Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP1Email != Model.changedRecord.GP1Email)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP1Email"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP1Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP1Email, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP1Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP1Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -183,14 +246,32 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP2 != Model.changedRecord.GP2)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP2"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP2)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP2, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2Email)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP2Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP2Email != Model.changedRecord.GP2Email)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP2Email"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP2Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP2Email, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP2Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP2Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -200,14 +281,32 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP3 != Model.changedRecord.GP3)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP3"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP3)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
-                    @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.GP3Email != Model.changedRecord.GP3Email)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP3Email"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
+                        @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
         </div>
@@ -216,9 +315,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.AdditionalEmails)</span>
-                    @Html.TextAreaFor(model => model.changedRecord.AdditionalEmails,
-new { @class = "form-control fullTextArea", @rows = 3 })
+                    @if (Model.originalRecord.AdditionalEmails != Model.changedRecord.AdditionalEmails)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.AdditionalEmails"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.AdditionalEmails)</span>
+                        @Html.TextAreaFor(model => model.changedRecord.AdditionalEmails,
+    new { @class = "form-control fullTextArea fieldChanged", @rows = 3 })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.AdditionalEmails)</span>
+                        @Html.TextAreaFor(model => model.changedRecord.AdditionalEmails,
+    new { @class = "form-control fullTextArea", @rows = 3 })
+                    }
+
                 </div>
             </div>
         </div>
@@ -229,12 +338,21 @@ new { @class = "form-control fullTextArea", @rows = 3 })
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.ListSize)</span>
-                    @Html.EditorFor(model => model.changedRecord.ListSize, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    @if (Model.originalRecord.ListSize != Model.changedRecord.ListSize)
+                    {
+                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.ListSize"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.ListSize)</span>
+                        @Html.EditorFor(model => model.changedRecord.ListSize, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
+                    }
+                    else
+                    {
+                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.ListSize)</span>
+                        @Html.EditorFor(model => model.changedRecord.ListSize, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                    }
+
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-group">
+                @*<div class="input-group">
                     
                         @if (Model.originalRecord.PracticeStatusGroup != Model.changedRecord.PracticeStatusGroup)
                         {
@@ -284,13 +402,13 @@ new { @class = "form-control fullTextArea", @rows = 3 })
 
 
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
 
 
-    <div class="container">
+    @*<div class="container">
         <div class="row">
             <div class="col-md-12">
                 <hr>
@@ -363,7 +481,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -373,7 +491,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Confirm Changes</button></div>
             <div class="col-md-6"></div>
         </div>
     </div>

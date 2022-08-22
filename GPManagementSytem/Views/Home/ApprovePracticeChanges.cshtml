@@ -277,40 +277,7 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    @if (Model.originalRecord.GP3 != Model.changedRecord.GP3)
-                    {
-                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP3"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP3)</span>
-                        @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
-                    }
-                    else
-                    {
-                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3)</span>
-                        @Html.EditorFor(model => model.changedRecord.GP3, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                    }
 
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    @if (Model.originalRecord.GP3Email != Model.changedRecord.GP3Email)
-                    {
-                    <span class="input-group-text"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@Model.originalRecord.GP3Email"></i>&nbsp;@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
-                        @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control fieldChanged", type = "text" } })
-                    }
-                    else
-                    {
-                        <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.GP3Email)</span>
-                        @Html.EditorFor(model => model.changedRecord.GP3Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                    }
-
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

@@ -443,3 +443,7 @@ th.Year5 {
     /*background-color: #ff6f6f;*/
     border: 2px solid #ff6f6f !important;
 }
+
+.mainPractices {
+    font-size: 0.75rem;   
+}

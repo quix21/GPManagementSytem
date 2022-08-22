@@ -158,22 +158,6 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.GP3)</span>
-                    @Html.EditorFor(model => model.GP3, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.GP3Email)</span>
-                    @Html.EditorFor(model => model.GP3Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
             <div class="col-md-12">
                 <div class="input-group">
                     <span class="input-group-text">@Html.LabelFor(model => model.AdditionalEmails)</span>
@@ -200,9 +184,9 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
                         <label class="btn btn-outline-info" for="active">Active</label>
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
-                        <label class="btn btn-outline-info" for="disabled">Disabled</label>
+                        <label class="btn btn-outline-info" for="disabled">Withdrawn</label>
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
-                        <label class="btn btn-outline-info" for="queried">Queried</label>
+                        <label class="btn btn-outline-info" for="queried">Archived</label>
                     </div>
                 </div>
             </div>
@@ -226,17 +210,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                     @Html.EditorFor(model => model.TutorTrainingGPName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.SurgeryInUse)</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.SurgeryInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
-                        <label class="btn btn-outline-info" for="NotInUseTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.SurgeryInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse" })
-                        <label class="btn btn-outline-info" for="NotInUseFalse">No</label>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text-radio">@Html.LabelFor(model => model.ContactSurgery)</span>
@@ -257,17 +231,6 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                 <div class="input-group">
                     <span class="input-group-text">@Html.LabelFor(model => model.Notes)</span>
                     @Html.TextAreaFor(model => model.Notes,
-                 new { @class = "form-control fullTextArea", @rows = 3 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.UCCTNotes)</span>
-                    @Html.TextAreaFor(model => model.UCCTNotes,
                  new { @class = "form-control fullTextArea", @rows = 3 })
                 </div>
             </div>

@@ -14,15 +14,16 @@
         <div class="card-body">
 
             <div>
-                <table class="table table-hover" id="simpleManage">
+                <table class="table table-hover mainPractices" id="simpleManage">
                     <thead>
                         <tr>
                             <th>Surgery</th>
                             <th>Address 1</th>
                             <th>Telephone</th>
                             <th>Main GP</th>
+                            <th style="width: 180px">GP Email</th>
                             <th>Practice Manager</th>
-                            <th style="width: 280px">Practice Manager Email</th>
+                            <th style="width: 180px">Practice Manager Email</th>
                             <th style="width: 100px">Actions</th>
                         </tr>
                     </thead>
@@ -30,16 +31,17 @@
                         @foreach (var myPractice in Model)
 
                         {
-                            <tr>
+                        <tr>
 
-                                <td>@myPractice.Surgery</td>
-                                <td>@myPractice.Address1</td>
-                                <td>@myPractice.Telephone</td>
-                                <td>@myPractice.GP1</td>
-                                <td>@myPractice.PracticeManager</td>
-                                <td>@myPractice.PMEmail</td>
-                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button> | <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
-                            </tr>
+                            <td>@myPractice.Surgery</td>
+                            <td>@myPractice.Address1</td>
+                            <td>@myPractice.Telephone</td>
+                            <td>@myPractice.GP1</td>
+                            <td>@myPractice.GP1Email</td>
+                            <td>@myPractice.PracticeManager</td>
+                            <td>@myPractice.PMEmail</td>
+                            <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button> | <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
+                        </tr>
 
 
                         }
@@ -51,6 +53,7 @@
                             <th>Address 1</th>
                             <th>Telephone</th>
                             <th>Main GP</th>
+                            <th style="width: 180px">GP Email</th>
                             <th>Practice Manager</th>
                             <th>Practice Manager Email</th>
                             <th>Actions</th>

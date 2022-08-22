@@ -26,7 +26,7 @@ namespace GPManagementSytem.Controllers
 
         public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender) : base(sessionManager)
+        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService) : base(sessionManager, practiceExternalService)
         {
             _userService = userService;
             _mailSender = mailSender;
@@ -52,6 +52,7 @@ namespace GPManagementSytem.Controllers
             {
                 SignInRemember(username, true);
                 Session["UserId"] = isUser.Id;
+                Session["IsAdmin"] = true;
 
 
                 SessionManager.SetLoggedInUser(isUser);
@@ -90,7 +91,7 @@ namespace GPManagementSytem.Controllers
             {
                 SignInRemember(username, true);
                 Session["UserId"] = isUser.Id;
-
+                Session["IsAdmin"] = false;
 
                 SessionManager.SetLoggedInUser(isUser);
 

@@ -23,14 +23,14 @@ namespace GPManagementSytem.Controllers
     public class HomeController : BaseController
     {
         private readonly IPracticeService _practiceService;
-        private readonly IPracticeExternalService _practiceExternalService;
+        //private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager, practiceExternalService)
         {
             _practiceService = practiceService;
-            _practiceExternalService = practiceExternalService;
+            //_practiceExternalService = practiceExternalService;
             _allocationService = allocationService;
             _userService = userService;
         }
@@ -84,11 +84,27 @@ namespace GPManagementSytem.Controllers
         {
             var academicYear = AcademicYearDD();
 
-            var myPractice = _practiceService.GetById(id);
+            //check if there are previous change requests pending
+            var changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id);
 
-            myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+            if (changesPending != null)
+            {
+                return RedirectToAction("ApprovalPending");
+            }
+            else
+            {
+                var myPractice = _practiceService.GetById(id);
 
-            return View(myPractice);
+                myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+
+                return View(myPractice);
+            }
+
+        }
+
+        public ActionResult ApprovalPending()
+        {
+            return View();
         }
 
         public ActionResult ApprovePracticeChanges(int id)
@@ -106,9 +122,43 @@ namespace GPManagementSytem.Controllers
             bothModels.originalRecord = currentPractice;
             bothModels.changedRecord = changedPractice;
 
-
-
             return View(bothModels);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApprovePracticeChanges(ApprovePracticeChangesViewModel approvePracticeChangesViewModel)
+        {
+            //approvePracticeChangesViewModel.originalRecord = _practiceService.GetById(approvePracticeChangesViewModel.originalRecord.Id);
+
+
+            if (ModelState.IsValid)
+            {
+                var updatedPractice = ParseApprovePracticesViewModel(approvePracticeChangesViewModel);
+
+                 //update original practice record
+                updatedPractice.DateUpdated = DateTime.Now;
+                updatedPractice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _practiceService.EditPractice(ManagePracticeStatusGroupPOST(updatedPractice));
+
+                //update practiceexternal record and mark as approved
+                var practiceExternal = approvePracticeChangesViewModel.changedRecord;
+                practiceExternal.DateApproved = DateTime.Now;
+                practiceExternal.ApprovedBy = Convert.ToInt32(Session["UserId"].ToString());
+                practiceExternal.ChangesApproved = true;
+
+                _practiceExternalService.EditPractice(practiceExternal);
+
+
+                return RedirectToAction("ManagePracticesExternal");
+            }
+            else
+            {
+                var academicYear = AcademicYearDD();
+
+                return View(approvePracticeChangesViewModel);
+            }
         }
 
         [ValidateAntiForgeryToken]
@@ -623,6 +673,51 @@ namespace GPManagementSytem.Controllers
             return allocationViewModel;
         }
 
+        private Practices ParseApprovePracticesViewModel(ApprovePracticeChangesViewModel approvePracticeChangesViewModel)
+        {
+            approvePracticeChangesViewModel.originalRecord.Surgery = approvePracticeChangesViewModel.changedRecord.Surgery;
+
+            approvePracticeChangesViewModel.originalRecord.SurgeryInUse = approvePracticeChangesViewModel.changedRecord.SurgeryInUse;
+            approvePracticeChangesViewModel.originalRecord.GP1 = approvePracticeChangesViewModel.changedRecord.GP1;
+            approvePracticeChangesViewModel.originalRecord.GP1Email = approvePracticeChangesViewModel.changedRecord.GP1Email;
+            approvePracticeChangesViewModel.originalRecord.Address1 = approvePracticeChangesViewModel.changedRecord.Address1;
+            approvePracticeChangesViewModel.originalRecord.Address2 = approvePracticeChangesViewModel.changedRecord.Address2;
+            approvePracticeChangesViewModel.originalRecord.Town = approvePracticeChangesViewModel.changedRecord.Town;
+            approvePracticeChangesViewModel.originalRecord.Postcode = approvePracticeChangesViewModel.changedRecord.Postcode;
+            approvePracticeChangesViewModel.originalRecord.Telephone = approvePracticeChangesViewModel.changedRecord.Telephone;
+            approvePracticeChangesViewModel.originalRecord.Fax = approvePracticeChangesViewModel.changedRecord.Fax;
+            approvePracticeChangesViewModel.originalRecord.PracticeManager = approvePracticeChangesViewModel.changedRecord.PracticeManager;
+            approvePracticeChangesViewModel.originalRecord.PMEmail = approvePracticeChangesViewModel.changedRecord.PMEmail;
+            approvePracticeChangesViewModel.originalRecord.GP2 = approvePracticeChangesViewModel.changedRecord.GP2;
+            approvePracticeChangesViewModel.originalRecord.GP2Email = approvePracticeChangesViewModel.changedRecord.GP2Email;
+            approvePracticeChangesViewModel.originalRecord.Website = approvePracticeChangesViewModel.changedRecord.Website;
+            approvePracticeChangesViewModel.originalRecord.GP3 = approvePracticeChangesViewModel.changedRecord.GP3;
+            approvePracticeChangesViewModel.originalRecord.GP3Email = approvePracticeChangesViewModel.changedRecord.GP3Email;
+            approvePracticeChangesViewModel.originalRecord.GP4 = approvePracticeChangesViewModel.changedRecord.GP4;
+            approvePracticeChangesViewModel.originalRecord.GP4Email = approvePracticeChangesViewModel.changedRecord.GP4Email;
+            approvePracticeChangesViewModel.originalRecord.AdditionalEmails = approvePracticeChangesViewModel.changedRecord.AdditionalEmails;
+            approvePracticeChangesViewModel.originalRecord.SupplierNumber = approvePracticeChangesViewModel.changedRecord.SupplierNumber;
+            approvePracticeChangesViewModel.originalRecord.ContactSurgery = approvePracticeChangesViewModel.changedRecord.ContactSurgery;
+            approvePracticeChangesViewModel.originalRecord.Notes = approvePracticeChangesViewModel.changedRecord.Notes;
+            approvePracticeChangesViewModel.originalRecord.AttachmentsAllocated = approvePracticeChangesViewModel.changedRecord.AttachmentsAllocated;
+            approvePracticeChangesViewModel.originalRecord.UCCTNotes = approvePracticeChangesViewModel.changedRecord.UCCTNotes;
+            approvePracticeChangesViewModel.originalRecord.QualityVisitDateR1 = approvePracticeChangesViewModel.changedRecord.QualityVisitDateR1;
+            approvePracticeChangesViewModel.originalRecord.QualityVisitNotes = approvePracticeChangesViewModel.changedRecord.QualityVisitNotes;
+            approvePracticeChangesViewModel.originalRecord.Active = approvePracticeChangesViewModel.changedRecord.Active;
+            approvePracticeChangesViewModel.originalRecord.Disabled = approvePracticeChangesViewModel.changedRecord.Disabled;
+            approvePracticeChangesViewModel.originalRecord.Queried = approvePracticeChangesViewModel.changedRecord.Queried;
+            approvePracticeChangesViewModel.originalRecord.ListSize = approvePracticeChangesViewModel.changedRecord.ListSize;
+            approvePracticeChangesViewModel.originalRecord.NewPractice = approvePracticeChangesViewModel.changedRecord.NewPractice;
+            approvePracticeChangesViewModel.originalRecord.AcademicYear = approvePracticeChangesViewModel.changedRecord.AcademicYear;
+            approvePracticeChangesViewModel.originalRecord.QualityVisitDate = approvePracticeChangesViewModel.changedRecord.QualityVisitDate;
+            approvePracticeChangesViewModel.originalRecord.OKToProceed = approvePracticeChangesViewModel.changedRecord.OKToProceed;
+            approvePracticeChangesViewModel.originalRecord.DataReviewDate = approvePracticeChangesViewModel.changedRecord.DataReviewDate;
+            approvePracticeChangesViewModel.originalRecord.TutorTrainingGPName = approvePracticeChangesViewModel.changedRecord.TutorTrainingGPName;
+            approvePracticeChangesViewModel.originalRecord.TutorTrainingDate = approvePracticeChangesViewModel.changedRecord.TutorTrainingDate;
+
+            return approvePracticeChangesViewModel.originalRecord;
+        }
+
         public void DownloadAtAGlance()
         {
 
@@ -902,32 +997,6 @@ namespace GPManagementSytem.Controllers
                 return property.Name;
             return (atts[0] as DisplayNameAttribute).DisplayName;
         }
-
-        //public ApprovePracticeChangesViewModel ManagePracticeChanges(Practices original, PracticesExternal changed)
-        //{
-
-        //    Type type = typeof(Practices);
-        //    PropertyInfo[] properties = type.GetProperties();
-
-        //    List<string> practiceFields = new List<string>();
-
-        //    foreach (PropertyInfo info in properties)
-        //    {
-        //        var fieldName = info.Name;
-
-        //        if (fieldName != "Id")
-        //        {
-        //            practiceFields.Add(fieldName);
-        //        }
-        //    }
-
-        //    foreach (var practiceField in practiceFields)
-        //    {
-
-        //    }
-
-        //    return myModel;
-        //}
 
         public string AcademicYearDD()
         {

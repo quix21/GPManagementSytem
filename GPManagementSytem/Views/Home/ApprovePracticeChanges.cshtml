@@ -19,6 +19,8 @@
 
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.changedRecord.Id)
+    @*@Html.HiddenFor(model => model.originalRecord.Id)*@
+    @Html.HiddenFor(model => model.originalRecord);
     <h4>Main Details</h4>
     <div class="container">
         <div class="row">

@@ -1,4 +1,5 @@
 ﻿using GPManagementSytem.Database;
+using GPManagementSytem.Services;
 using GPManagementSytem.SessionManagement;
 
 using System;
@@ -13,11 +14,13 @@ namespace GPManagementSytem.Controllers
     {
         private DatabaseEntities _databaseEntities;
         public readonly ISessionManager SessionManager;
+        public readonly IPracticeExternalService _practiceExternalService;
 
-        public BaseController(ISessionManager sessionManager)
+        public BaseController(ISessionManager sessionManager, IPracticeExternalService practiceExternalService)
         {
             databaseEntities = new DatabaseEntities();
             SessionManager = sessionManager;
+            _practiceExternalService = practiceExternalService;
         }
 
 
@@ -32,6 +35,20 @@ namespace GPManagementSytem.Controllers
             var myPwd = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Second.ToString();
 
             return myPwd;
+        }
+
+        public void ShowChangesPendingCount()
+        {
+            int showCount = _practiceExternalService.GetAllPending().Count();
+
+            ViewData["changesCount"] = showCount;
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            ShowChangesPendingCount();
         }
     }
 }

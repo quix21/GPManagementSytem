@@ -447,3 +447,7 @@ th.Year5 {
 .mainPractices {
     font-size: 0.75rem;   
 }
+
+section.mainText {
+    margin-left: 25px;
+}

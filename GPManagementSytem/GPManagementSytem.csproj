@@ -304,6 +304,7 @@
     <Content Include="Views\Home\PracticeUpdatedThanks.cshtml" />
     <Content Include="Views\Home\ManagePracticesExternal.cshtml" />
     <Content Include="Views\Home\ApprovePracticeChanges.cshtml" />
+    <Content Include="Views\Home\ApprovalPending.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

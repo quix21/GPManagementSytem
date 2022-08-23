@@ -129,8 +129,39 @@ namespace GPManagementSytem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ApprovePracticeChanges(ApprovePracticeChangesViewModel approvePracticeChangesViewModel)
         {
-            //approvePracticeChangesViewModel.originalRecord = _practiceService.GetById(approvePracticeChangesViewModel.originalRecord.Id);
+            approvePracticeChangesViewModel.originalRecord = _practiceService.GetById(approvePracticeChangesViewModel.originalRecord.Id);
 
+
+            //ignore these model state errors
+            if (ModelState.ContainsKey("originalRecord.Surgery"))
+            {
+                ModelState["originalRecord.Surgery"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.GP1"))
+            {
+                ModelState["originalRecord.GP1"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.Address1"))
+            {
+                ModelState["originalRecord.Address1"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.Town"))
+            {
+                ModelState["originalRecord.Town"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.Postcode"))
+            {
+                ModelState["originalRecord.Postcode"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.Telephone"))
+            {
+                ModelState["originalRecord.Telephone"].Errors.Clear();
+            }
 
             if (ModelState.IsValid)
             {
@@ -140,7 +171,7 @@ namespace GPManagementSytem.Controllers
                 updatedPractice.DateUpdated = DateTime.Now;
                 updatedPractice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
-                _practiceService.EditPractice(ManagePracticeStatusGroupPOST(updatedPractice));
+                _practiceService.EditPractice(updatedPractice);
 
                 //update practiceexternal record and mark as approved
                 var practiceExternal = approvePracticeChangesViewModel.changedRecord;
@@ -677,7 +708,7 @@ namespace GPManagementSytem.Controllers
         {
             approvePracticeChangesViewModel.originalRecord.Surgery = approvePracticeChangesViewModel.changedRecord.Surgery;
 
-            approvePracticeChangesViewModel.originalRecord.SurgeryInUse = approvePracticeChangesViewModel.changedRecord.SurgeryInUse;
+            //approvePracticeChangesViewModel.originalRecord.SurgeryInUse = approvePracticeChangesViewModel.changedRecord.SurgeryInUse;
             approvePracticeChangesViewModel.originalRecord.GP1 = approvePracticeChangesViewModel.changedRecord.GP1;
             approvePracticeChangesViewModel.originalRecord.GP1Email = approvePracticeChangesViewModel.changedRecord.GP1Email;
             approvePracticeChangesViewModel.originalRecord.Address1 = approvePracticeChangesViewModel.changedRecord.Address1;
@@ -685,35 +716,35 @@ namespace GPManagementSytem.Controllers
             approvePracticeChangesViewModel.originalRecord.Town = approvePracticeChangesViewModel.changedRecord.Town;
             approvePracticeChangesViewModel.originalRecord.Postcode = approvePracticeChangesViewModel.changedRecord.Postcode;
             approvePracticeChangesViewModel.originalRecord.Telephone = approvePracticeChangesViewModel.changedRecord.Telephone;
-            approvePracticeChangesViewModel.originalRecord.Fax = approvePracticeChangesViewModel.changedRecord.Fax;
+            //approvePracticeChangesViewModel.originalRecord.Fax = approvePracticeChangesViewModel.changedRecord.Fax;
             approvePracticeChangesViewModel.originalRecord.PracticeManager = approvePracticeChangesViewModel.changedRecord.PracticeManager;
             approvePracticeChangesViewModel.originalRecord.PMEmail = approvePracticeChangesViewModel.changedRecord.PMEmail;
             approvePracticeChangesViewModel.originalRecord.GP2 = approvePracticeChangesViewModel.changedRecord.GP2;
             approvePracticeChangesViewModel.originalRecord.GP2Email = approvePracticeChangesViewModel.changedRecord.GP2Email;
-            approvePracticeChangesViewModel.originalRecord.Website = approvePracticeChangesViewModel.changedRecord.Website;
-            approvePracticeChangesViewModel.originalRecord.GP3 = approvePracticeChangesViewModel.changedRecord.GP3;
-            approvePracticeChangesViewModel.originalRecord.GP3Email = approvePracticeChangesViewModel.changedRecord.GP3Email;
-            approvePracticeChangesViewModel.originalRecord.GP4 = approvePracticeChangesViewModel.changedRecord.GP4;
-            approvePracticeChangesViewModel.originalRecord.GP4Email = approvePracticeChangesViewModel.changedRecord.GP4Email;
+            //approvePracticeChangesViewModel.originalRecord.Website = approvePracticeChangesViewModel.changedRecord.Website;
+            //approvePracticeChangesViewModel.originalRecord.GP3 = approvePracticeChangesViewModel.changedRecord.GP3;
+            //approvePracticeChangesViewModel.originalRecord.GP3Email = approvePracticeChangesViewModel.changedRecord.GP3Email;
+            //approvePracticeChangesViewModel.originalRecord.GP4 = approvePracticeChangesViewModel.changedRecord.GP4;
+            //approvePracticeChangesViewModel.originalRecord.GP4Email = approvePracticeChangesViewModel.changedRecord.GP4Email;
             approvePracticeChangesViewModel.originalRecord.AdditionalEmails = approvePracticeChangesViewModel.changedRecord.AdditionalEmails;
             approvePracticeChangesViewModel.originalRecord.SupplierNumber = approvePracticeChangesViewModel.changedRecord.SupplierNumber;
-            approvePracticeChangesViewModel.originalRecord.ContactSurgery = approvePracticeChangesViewModel.changedRecord.ContactSurgery;
-            approvePracticeChangesViewModel.originalRecord.Notes = approvePracticeChangesViewModel.changedRecord.Notes;
-            approvePracticeChangesViewModel.originalRecord.AttachmentsAllocated = approvePracticeChangesViewModel.changedRecord.AttachmentsAllocated;
-            approvePracticeChangesViewModel.originalRecord.UCCTNotes = approvePracticeChangesViewModel.changedRecord.UCCTNotes;
-            approvePracticeChangesViewModel.originalRecord.QualityVisitDateR1 = approvePracticeChangesViewModel.changedRecord.QualityVisitDateR1;
-            approvePracticeChangesViewModel.originalRecord.QualityVisitNotes = approvePracticeChangesViewModel.changedRecord.QualityVisitNotes;
-            approvePracticeChangesViewModel.originalRecord.Active = approvePracticeChangesViewModel.changedRecord.Active;
-            approvePracticeChangesViewModel.originalRecord.Disabled = approvePracticeChangesViewModel.changedRecord.Disabled;
-            approvePracticeChangesViewModel.originalRecord.Queried = approvePracticeChangesViewModel.changedRecord.Queried;
+            //approvePracticeChangesViewModel.originalRecord.ContactSurgery = approvePracticeChangesViewModel.changedRecord.ContactSurgery;
+            //approvePracticeChangesViewModel.originalRecord.Notes = approvePracticeChangesViewModel.changedRecord.Notes;
+            //approvePracticeChangesViewModel.originalRecord.AttachmentsAllocated = approvePracticeChangesViewModel.changedRecord.AttachmentsAllocated;
+            //approvePracticeChangesViewModel.originalRecord.UCCTNotes = approvePracticeChangesViewModel.changedRecord.UCCTNotes;
+            //approvePracticeChangesViewModel.originalRecord.QualityVisitDateR1 = approvePracticeChangesViewModel.changedRecord.QualityVisitDateR1;
+            //approvePracticeChangesViewModel.originalRecord.QualityVisitNotes = approvePracticeChangesViewModel.changedRecord.QualityVisitNotes;
+            //approvePracticeChangesViewModel.originalRecord.Active = approvePracticeChangesViewModel.changedRecord.Active;
+            //approvePracticeChangesViewModel.originalRecord.Disabled = approvePracticeChangesViewModel.changedRecord.Disabled;
+            //approvePracticeChangesViewModel.originalRecord.Queried = approvePracticeChangesViewModel.changedRecord.Queried;
             approvePracticeChangesViewModel.originalRecord.ListSize = approvePracticeChangesViewModel.changedRecord.ListSize;
-            approvePracticeChangesViewModel.originalRecord.NewPractice = approvePracticeChangesViewModel.changedRecord.NewPractice;
-            approvePracticeChangesViewModel.originalRecord.AcademicYear = approvePracticeChangesViewModel.changedRecord.AcademicYear;
-            approvePracticeChangesViewModel.originalRecord.QualityVisitDate = approvePracticeChangesViewModel.changedRecord.QualityVisitDate;
-            approvePracticeChangesViewModel.originalRecord.OKToProceed = approvePracticeChangesViewModel.changedRecord.OKToProceed;
-            approvePracticeChangesViewModel.originalRecord.DataReviewDate = approvePracticeChangesViewModel.changedRecord.DataReviewDate;
-            approvePracticeChangesViewModel.originalRecord.TutorTrainingGPName = approvePracticeChangesViewModel.changedRecord.TutorTrainingGPName;
-            approvePracticeChangesViewModel.originalRecord.TutorTrainingDate = approvePracticeChangesViewModel.changedRecord.TutorTrainingDate;
+            //approvePracticeChangesViewModel.originalRecord.NewPractice = approvePracticeChangesViewModel.changedRecord.NewPractice;
+            //approvePracticeChangesViewModel.originalRecord.AcademicYear = approvePracticeChangesViewModel.changedRecord.AcademicYear;
+            //approvePracticeChangesViewModel.originalRecord.QualityVisitDate = approvePracticeChangesViewModel.changedRecord.QualityVisitDate;
+            //approvePracticeChangesViewModel.originalRecord.OKToProceed = approvePracticeChangesViewModel.changedRecord.OKToProceed;
+            //approvePracticeChangesViewModel.originalRecord.DataReviewDate = approvePracticeChangesViewModel.changedRecord.DataReviewDate;
+            //approvePracticeChangesViewModel.originalRecord.TutorTrainingGPName = approvePracticeChangesViewModel.changedRecord.TutorTrainingGPName;
+            //approvePracticeChangesViewModel.originalRecord.TutorTrainingDate = approvePracticeChangesViewModel.changedRecord.TutorTrainingDate;
 
             return approvePracticeChangesViewModel.originalRecord;
         }

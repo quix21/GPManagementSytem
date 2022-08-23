@@ -255,9 +255,24 @@ namespace GPManagementSytem.Controllers
             }
         }
 
-        public ActionResult ManagePractices()
+        public ActionResult ManagePractices(int practiceStatus = 0)
         {
             List<Practices> myPractices = _practiceService.GetAll();
+
+            switch (practiceStatus)
+            {
+                case 1:
+                    myPractices = myPractices.Where(x => x.Active == 1).ToList();
+                    break;
+
+                case 2:
+                    myPractices = myPractices.Where(x => x.Disabled == 1).ToList();
+                    break;
+
+                case 3:
+                    myPractices = myPractices.Where(x => x.Queried == 1).ToList();
+                    break;
+            }
 
             return View(myPractices);
         }

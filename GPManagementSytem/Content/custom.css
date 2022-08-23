@@ -218,7 +218,7 @@ p.logout {
 .btn-link {
     padding: 0;
     padding-bottom: 3px;
-    font-size: 85%;
+    font-size: 100%;
     border: none;
     /*color: #212529;*/
 }
@@ -451,3 +451,34 @@ th.Year5 {
 section.mainText {
     margin-left: 25px;
 }
+
+.managePracticeSubMenu {
+    background-color: #c9dbed;
+    margin-left: calc(var(--bs-gutter-x) / 0);
+    margin-right: calc(var(--bs-gutter-x) / 0);
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+a.subMenuLink {
+    color: #0e0d0d;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: bold;
+}
+
+    a.subMenuLink:focus,
+    a.subMenuLink:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    a.subMenuLink.active {
+        color: #fff;
+    }
+
+    a.subMenuLink:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px
+    }

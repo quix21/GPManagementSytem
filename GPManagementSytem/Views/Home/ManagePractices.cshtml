@@ -3,10 +3,31 @@
 @{
     ViewBag.Title = "Manage Practices";
 
+    int getStatus = 0;
 
+    if (Request.QueryString["practiceStatus"] != null)
+    {
+        getStatus = Convert.ToInt32(Request.QueryString["practiceStatus"].ToString());
+    }
 }
 
 <h1>@ViewBag.Title</h1>
+<div class="container">
+    <div class="row managePracticeSubMenu">
+        <div class="col-md-3">
+            <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 1 })" class="subMenuLink @if (getStatus == 1) { <text>active</text>} ">Show Active Only</a>
+        </div>
+        <div class="col-md-3">
+            <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 2 })" class="subMenuLink @if (getStatus == 2) { <text>active</text>} ">Show Withdrawn Only</a>
+        </div>
+        <div class="col-md-3">
+            <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 3 })" class="subMenuLink @if (getStatus == 3) { <text>active</text>}" >Show Archived Only</a>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
 
     <div class="card shadow">
@@ -31,17 +52,17 @@
                         @foreach (var myPractice in Model)
 
                         {
-                        <tr>
+                            <tr>
 
-                            <td>@myPractice.Surgery</td>
-                            <td>@myPractice.Address1</td>
-                            <td>@myPractice.Telephone</td>
-                            <td>@myPractice.GP1</td>
-                            <td>@myPractice.GP1Email</td>
-                            <td>@myPractice.PracticeManager</td>
-                            <td>@myPractice.PMEmail</td>
-                            <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button> | <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
-                        </tr>
+                                <td>@myPractice.Surgery</td>
+                                <td>@myPractice.Address1</td>
+                                <td>@myPractice.Telephone</td>
+                                <td>@myPractice.GP1</td>
+                                <td>@myPractice.GP1Email</td>
+                                <td>@myPractice.PracticeManager</td>
+                                <td>@myPractice.PMEmail</td>
+                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("EditPractice", "Home", new { id = myPractice.Id })'">edit</button> | <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocation</button></td>
+                            </tr>
 
 
                         }
@@ -65,5 +86,3 @@
         </div>
     </div>
 </div>
-
-

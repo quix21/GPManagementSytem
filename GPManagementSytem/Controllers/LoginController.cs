@@ -1,4 +1,6 @@
 ﻿using GPManagementSytem.Email;
+using GPManagementSytem.Helper;
+using GPManagementSytem.Models;
 using GPManagementSytem.Services;
 using GPManagementSytem.SessionManagement;
 using log4net;
@@ -153,6 +155,19 @@ namespace GPManagementSytem.Controllers
         }
 
         public ActionResult PasswordReset()
+        {
+            return View();
+        }
+
+        public ActionResult RegisterPractice()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateGoogleCaptcha]
+        public ActionResult RegisterPractice(Practices practice)
         {
             return View();
         }

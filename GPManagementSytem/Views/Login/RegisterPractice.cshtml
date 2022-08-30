@@ -1,0 +1,204 @@
+﻿@using GPManagementSytem.Models
+@using GPManagementSytem.Helper
+@model GPManagementSytem.Models.Practices
+@{
+    ViewBag.Title = "Register Practice";
+
+    var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary()
+
+    <div class="validation-summary-errors" id="inclusion-errors"></div>
+
+    <div id="error" style="display:none"></div>
+
+    <h4>Main Details</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Surgery)</span>
+                    @Html.EditorFor(model => model.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    @*<span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.SupplierNumber)</span>
+                    @Html.EditorFor(model => model.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Address1)</span>
+                    @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Address2)</span>
+                    @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Town)</span>
+                    @Html.EditorFor(model => model.Town, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Postcode)</span>
+                    @Html.EditorFor(model => model.Postcode, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Telephone)</span>
+                    @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.PracticeManager)</span>
+                    @Html.EditorFor(model => model.PracticeManager, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.PMEmail)</span>
+                    @Html.EditorFor(model => model.PMEmail, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.GP1)</span>
+                    @Html.EditorFor(model => model.GP1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.GP1Email)</span>
+                    @Html.EditorFor(model => model.GP1Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.GP2)</span>
+                    @Html.EditorFor(model => model.GP2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.GP2Email)</span>
+                    @Html.EditorFor(model => model.GP2Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.AdditionalEmails)</span>
+                    @Html.TextAreaFor(model => model.AdditionalEmails,
+new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.ListSize)</span>
+                    @Html.EditorFor(model => model.ListSize, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.GoogleCaptcha()
+                @Html.InvalidGoogleCaptchaLabel("Captcha is not valid !")
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Register</button></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+}

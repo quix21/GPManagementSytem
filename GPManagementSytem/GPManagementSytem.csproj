@@ -220,7 +220,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\ActionLinkEntendedMethods.cs" />
+    <Compile Include="Helper\GoogleCaptchaHelper.cs" />
+    <Compile Include="Helper\InvalidGoogleCaptchaHelper.cs" />
     <Compile Include="Helper\ListExtensions.cs" />
+    <Compile Include="Helper\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Allocations.cs" />
     <Compile Include="Models\MyEnumModel.cs" />
     <Compile Include="Models\Practices.cs" />
@@ -228,6 +231,7 @@
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\CheckAuthorisation.cs" />
+    <Compile Include="Security\SiteSettings.cs" />
     <Compile Include="Services\AllocationService.cs" />
     <Compile Include="Services\IAllocationService.cs" />
     <Compile Include="Services\IMailServerService.cs" />
@@ -305,6 +309,8 @@
     <Content Include="Views\Home\ManagePracticesExternal.cshtml" />
     <Content Include="Views\Home\ApprovePracticeChanges.cshtml" />
     <Content Include="Views\Home\ApprovalPending.cshtml" />
+    <Content Include="Views\Login\RegisterPractice.cshtml" />
+    <Content Include="Views\Login\RegisterThanks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

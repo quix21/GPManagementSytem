@@ -28,17 +28,32 @@
                     </thead>
                     <tbody>
                         @foreach (var myPractice in Model)
-
                         {
+                            bool newReg = false;
+
+                            if (myPractice.RequestedBy == 0 && myPractice.ChangesApproved == false)
+                            {
+                                newReg = true;
+                            }
+
                             <tr>
 
-                                <td>@myPractice.Surgery</td>
+                                <td>@if (newReg) {<text><i class="bi bi-flag-fill"></i></text> } @myPractice.Surgery</td>
                                 <td>@myPractice.Address1</td>
                                 <td>@myPractice.Telephone</td>
                                 <td>@myPractice.GP1</td>
                                 <td>@myPractice.PracticeManager</td>
                                 <td>@myPractice.PMEmail</td>
-                                <td><button class="btn btn-link" type="button" onclick="location.href='@Url.Action("ApprovePracticeChanges", "Home", new { id = myPractice.Id })'">edit</button></td>
+                                <td>
+                                    @if (newReg)
+                                    {
+                                        <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("ApprovePracticeRegistration", "Home", new { id = myPractice.Id })'">approve registration</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("ApprovePracticeChanges", "Home", new { id = myPractice.Id })'">approve changes</button>
+                                    }
+                                </td>
                             </tr>
 
 

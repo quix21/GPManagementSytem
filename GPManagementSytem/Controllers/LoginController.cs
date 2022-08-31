@@ -161,6 +161,8 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult RegisterPractice()
         {
+            var academicYear = AcademicYearDD();
+
             return View();
         }
 
@@ -168,6 +170,35 @@ namespace GPManagementSytem.Controllers
         [ValidateAntiForgeryToken]
         [ValidateGoogleCaptcha]
         public ActionResult RegisterPractice(Practices practice)
+        {
+            if (ModelState.IsValid)
+            {             
+
+                PracticesExternal practicesExternal = ParsePracticeToExternal(practice);
+
+                practicesExternal.Active = 1;
+                practicesExternal.Queried = 0;
+                practicesExternal.Disabled = 0;
+                practicesExternal.NewPractice = true;
+                practicesExternal.ContactSurgery = true;
+
+                practicesExternal.RequestedBy = 0;
+                practicesExternal.DateRequested = DateTime.Now;
+                practicesExternal.ChangesApproved = false;
+
+                _practiceExternalService.AddPractice(practicesExternal);
+
+                return RedirectToAction("RegisterThanks");
+            }
+            else
+            {
+                return View(practice);
+            }
+
+
+        }
+
+        public ActionResult RegisterThanks()
         {
             return View();
         }

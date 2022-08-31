@@ -311,6 +311,7 @@
     <Content Include="Views\Home\ApprovalPending.cshtml" />
     <Content Include="Views\Login\RegisterPractice.cshtml" />
     <Content Include="Views\Login\RegisterThanks.cshtml" />
+    <Content Include="Views\Home\ApprovePracticeRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

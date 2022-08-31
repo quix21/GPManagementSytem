@@ -1,8 +1,7 @@
 ﻿@using GPManagementSytem.Models
-@using GPManagementSytem.Helper
-@model GPManagementSytem.Models.Practices
+@model GPManagementSytem.Models.PracticesExternal
 @{
-    ViewBag.Title = "Register Practice";
+    ViewBag.Title = "Approve Practice Registration";
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
 }
@@ -17,7 +16,7 @@
     <div class="validation-summary-errors" id="inclusion-errors"></div>
 
     <div id="error" style="display:none"></div>
-
+    @Html.HiddenFor(model => model.Id)
     <h4>Main Details</h4>
     <div class="container">
         <div class="row">
@@ -44,7 +43,15 @@
                 </div>
             </div>
             <div class="col-md-6">
-
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.NewPractice)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true" })
+                        <label class="btn btn-outline-info" for="true">Yes</label>
+                        @Html.RadioButtonFor(model => model.NewPractice, "false", new { @class = "btn-check", @id = "false" })
+                        <label class="btn btn-outline-info" for="false">No</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -171,18 +178,17 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                 </div>
             </div>
             <div class="col-md-6">
-
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                @Html.GoogleCaptcha()
-                @Html.InvalidGoogleCaptchaLabel("Captcha is not valid !")
-            </div>
-            <div class="col-md-6">
-
+                <div class="input-group">
+                    <span class="input-group-text-radio">Practice Status</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
+                        <label class="btn btn-outline-info" for="active">Active</label>
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
+                        <label class="btn btn-outline-info" for="disabled">Withdrawn</label>
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
+                        <label class="btn btn-outline-info" for="queried">Archived</label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -195,9 +201,62 @@ new { @class = "form-control fullTextArea", @rows = 3 })
             </div>
         </div>
     </div>
+    <h4>Other Details</h4>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Register</button></div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.TutorTrainingGPName)</span>
+                    @Html.EditorFor(model => model.TutorTrainingGPName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text-radio">@Html.LabelFor(model => model.ContactSurgery)</span>
+                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
+                        @Html.RadioButtonFor(model => model.ContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
+                        <label class="btn btn-outline-info" for="NoContactTrue">Yes</label>
+                        @Html.RadioButtonFor(model => model.ContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse" })
+                        <label class="btn btn-outline-info" for="NoContactFalse">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Notes)</span>
+                    @Html.TextAreaFor(model => model.Notes,
+                 new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.QualityVisitNotes)</span>
+                    @Html.TextAreaFor(model => model.QualityVisitNotes,
+                 new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
             <div class="col-md-6"></div>
         </div>
     </div>

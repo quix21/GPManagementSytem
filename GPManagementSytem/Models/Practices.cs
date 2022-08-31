@@ -30,8 +30,10 @@ namespace GPManagementSytem.Models
         [Required]
         public string Telephone { get; set; }
         public string Fax { get; set; }
+        [Required]
         public string PracticeManager { get; set; }
         [DisplayFormat(ConvertEmptyStringToNull = false)]
+        [Required]
         public string PMEmail { get; set; }
         public string GP2 { get; set; }
         public string GP2Email { get; set; }

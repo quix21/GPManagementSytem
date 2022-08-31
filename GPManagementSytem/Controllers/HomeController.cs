@@ -107,6 +107,83 @@ namespace GPManagementSytem.Controllers
             return View();
         }
 
+        public ActionResult ApprovePracticeRegistration(int id)
+        {
+            var academicYear = AcademicYearDD();
+
+            var regPractice = _practiceExternalService.GetById(id);
+
+            Practices blankPractice = new Practices();
+
+            regPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(blankPractice, regPractice);
+
+            return View(regPractice);
+        }
+
+        [HttpPost]
+        public ActionResult ApprovePracticeRegistration(PracticesExternal myPractice)
+        {
+            if (ModelState.IsValid)
+            {
+                var thisPractice = ParsePracticesExternalForRegistration(myPractice);
+
+                //update original practice record
+                thisPractice.DateCreated = DateTime.Now;
+                thisPractice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                var newPractice = _practiceService.AddPractice(thisPractice);
+
+                //create user 
+                Users newUser = new Users();
+
+                string firstName = "";
+                string surname = "";
+
+                string[] getNames = newPractice.PracticeManager.Split(' ').ToArray();
+
+                if (getNames.Length >=2)
+                {
+                    firstName = getNames[0].ToString();
+                    surname = getNames[1].ToString();
+                }
+
+                newUser.Firstname = firstName;
+                newUser.Surname = surname;
+                newUser.Email = newPractice.PMEmail;
+                newUser.Username = newPractice.PMEmail;
+                newUser.Pwd = GeneratePassword();
+                newUser.UserType = 2;
+                newUser.PracticeId = newPractice.Id;
+                newUser.Year2 = false;
+                newUser.Year3 = false;
+                newUser.Year4 = false;
+                newUser.Year5 = false;
+                newUser.IsActive = true;
+                newUser.DateCreated = DateTime.Now;
+                newUser.DateUpdated = DateTime.Now;
+                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(newUser);
+
+                //update practiceexternal record and mark as approved
+                myPractice.PrimaryId = newPractice.Id;
+                myPractice.DateApproved = DateTime.Now;
+                myPractice.ApprovedBy = Convert.ToInt32(Session["UserId"].ToString());
+                myPractice.ChangesApproved = true;
+
+                _practiceExternalService.EditPractice(myPractice);
+
+
+                return RedirectToAction("ManagePracticesExternal");
+            }
+            else
+            {
+                var academicYear = AcademicYearDD();
+
+                return View(myPractice);
+            }
+        }
+
         public ActionResult ApprovePracticeChanges(int id)
         {
             var academicYear = AcademicYearDD();
@@ -161,6 +238,16 @@ namespace GPManagementSytem.Controllers
             if (ModelState.ContainsKey("originalRecord.Telephone"))
             {
                 ModelState["originalRecord.Telephone"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.PracticeManager"))
+            {
+                ModelState["originalRecord.PracticeManager"].Errors.Clear();
+            }
+
+            if (ModelState.ContainsKey("originalRecord.PMEmail"))
+            {
+                ModelState["originalRecord.PMEmail"].Errors.Clear();
             }
 
             if (ModelState.IsValid)
@@ -530,56 +617,7 @@ namespace GPManagementSytem.Controllers
             return myTypes;
         }
 
-        private PracticesExternal ParsePracticeToExternal(Practices practice)
-        {
-            PracticesExternal myPracticeExt = new PracticesExternal();
 
-            myPracticeExt.PrimaryId = practice.Id;
-            myPracticeExt.Surgery = practice.Surgery;
-            myPracticeExt.SurgeryInUse = practice.SurgeryInUse;
-            myPracticeExt.GP1 = practice.GP1;
-            myPracticeExt.GP1Email = practice.GP1Email;
-            myPracticeExt.Address1 = practice.Address1;
-            myPracticeExt.Address2 = practice.Address2;
-            myPracticeExt.Town = practice.Town;
-            myPracticeExt.Postcode = practice.Postcode;
-            myPracticeExt.Telephone = practice.Telephone;
-            myPracticeExt.Fax = practice.Fax;
-            myPracticeExt.PracticeManager = practice.PracticeManager;
-            myPracticeExt.PMEmail = practice.PMEmail;
-            myPracticeExt.GP2 = practice.GP2;
-            myPracticeExt.GP2Email = practice.GP2Email;
-            myPracticeExt.Website = practice.Website;
-            myPracticeExt.GP3 = practice.GP3;
-            myPracticeExt.GP3Email = practice.GP3Email;
-            myPracticeExt.GP4 = practice.GP4;
-            myPracticeExt.GP4Email = practice.GP4Email;
-            myPracticeExt.AdditionalEmails = practice.AdditionalEmails;
-            myPracticeExt.SupplierNumber = practice.SupplierNumber;
-            myPracticeExt.ContactSurgery = practice.ContactSurgery;
-            myPracticeExt.Notes = practice.Notes;
-            myPracticeExt.AttachmentsAllocated = practice.AttachmentsAllocated;
-            myPracticeExt.UCCTNotes = practice.UCCTNotes;
-            myPracticeExt.QualityVisitDateR1 = practice.QualityVisitDateR1;
-            myPracticeExt.QualityVisitNotes = practice.QualityVisitNotes;
-            myPracticeExt.Active = practice.Active;
-            myPracticeExt.Disabled = practice.Disabled;
-            myPracticeExt.Queried = practice.Queried;
-            myPracticeExt.ListSize = practice.ListSize;
-            myPracticeExt.NewPractice = practice.NewPractice;
-            myPracticeExt.AcademicYear = practice.AcademicYear;
-            myPracticeExt.QualityVisitDate = practice.QualityVisitDate;
-            myPracticeExt.OKToProceed = practice.OKToProceed;
-            myPracticeExt.DataReviewDate = practice.DataReviewDate;
-            myPracticeExt.TutorTrainingGPName = practice.TutorTrainingGPName;
-            myPracticeExt.TutorTrainingDate = practice.TutorTrainingDate;
-            myPracticeExt.DateCreated = practice.DateCreated;
-            myPracticeExt.DateUpdated = practice.DateUpdated;
-            myPracticeExt.UpdatedBy = practice.UpdatedBy;
-
-
-            return myPracticeExt;
-        }
 
         private Allocations ParseAllocationViewModelADD(AllocationViewModel allocationViewModel, Allocations allocation)
         {
@@ -762,6 +800,38 @@ namespace GPManagementSytem.Controllers
             //approvePracticeChangesViewModel.originalRecord.TutorTrainingDate = approvePracticeChangesViewModel.changedRecord.TutorTrainingDate;
 
             return approvePracticeChangesViewModel.originalRecord;
+        }
+
+        private Practices ParsePracticesExternalForRegistration(PracticesExternal practices)
+        {
+            Practices newPractice = new Practices();
+
+            newPractice.Surgery = practices.Surgery;
+            newPractice.GP1 = practices.GP1;
+            newPractice.GP1Email = practices.GP1Email;
+            newPractice.Address1 = practices.Address1;
+            newPractice.Address2 = practices.Address2;
+            newPractice.Town = practices.Town;
+            newPractice.Postcode = practices.Postcode;
+            newPractice.Telephone = practices.Telephone;
+            newPractice.PracticeManager = practices.PracticeManager;
+            newPractice.PMEmail = practices.PMEmail;
+            newPractice.GP2 = practices.GP2;
+            newPractice.GP2Email = practices.GP2Email;
+            newPractice.AdditionalEmails = practices.AdditionalEmails;
+            newPractice.SupplierNumber = practices.SupplierNumber;
+            newPractice.ContactSurgery = practices.ContactSurgery;
+            newPractice.Notes = practices.Notes;
+            newPractice.QualityVisitNotes = practices.QualityVisitNotes;
+            newPractice.Active = practices.Active;
+            newPractice.Disabled = practices.Disabled;
+            newPractice.Queried = practices.Queried;
+            newPractice.ListSize = practices.ListSize;
+            newPractice.NewPractice = practices.NewPractice;
+            newPractice.AcademicYear = practices.AcademicYear;
+
+
+            return newPractice;
         }
 
         public void DownloadAtAGlance()
@@ -1044,29 +1114,5 @@ namespace GPManagementSytem.Controllers
             return (atts[0] as DisplayNameAttribute).DisplayName;
         }
 
-        public string AcademicYearDD()
-        {
-            List<SelectListItem> myList = new List<SelectListItem>();
-
-            int thisYear = DateTime.Now.Year;
-
-            var getThisYear = DateTime.Now.Year.ToString();
-            var getNextYear = (thisYear + 1).ToString();
-            var getLastYear = (thisYear - 1).ToString();
-            var getYearAfter = (thisYear + 2).ToString();
-
-            string showThisYear = getLastYear + " - " + getThisYear;
-            string showNextYear = getThisYear + " - " + getNextYear;
-
-
-            //myList.Add(new SelectListItem { Value = getLastYear, Text = getLastYear });
-            myList.Add(new SelectListItem { Value = showThisYear, Text = showThisYear, Selected = true });
-            myList.Add(new SelectListItem { Value = showNextYear, Text = showNextYear });
-
-            
-            ViewData["AcademicYearDD"] = myList;
-
-            return showThisYear;
-        }
     }
 }

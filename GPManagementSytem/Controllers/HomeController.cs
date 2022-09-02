@@ -85,7 +85,9 @@ namespace GPManagementSytem.Controllers
             var academicYear = AcademicYearDD();
 
             //check if there are previous change requests pending
-            var changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id);
+            PracticesExternal changesPending = new PracticesExternal();
+
+            changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id).FirstOrDefault();
 
             if (changesPending != null)
             {
@@ -134,6 +136,8 @@ namespace GPManagementSytem.Controllers
                 var newPractice = _practiceService.AddPractice(thisPractice);
 
                 //create user 
+                //TODO - check for existing email in users table
+
                 Users newUser = new Users();
 
                 string firstName = "";

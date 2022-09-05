@@ -2,11 +2,16 @@
 using GPManagementSytem.Models;
 using GPManagementSytem.Services;
 using GPManagementSytem.SessionManagement;
-
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
@@ -68,6 +73,193 @@ namespace GPManagementSytem.Controllers
             ViewData["AcademicYearDD"] = myList;
 
             return showThisYear;
+        }
+
+        //public string BuildEmail(User cu, List<UserEmail> ulist, int getType)
+        //{
+        //    var myMail = dbAccess.GetEmailByType(getType);
+
+        //    var subject = myMail.Subject + " - " + Session["StudyName"].ToString();
+        //    string getURL = string.Format("{0}://{1}{2}", "https", Request.Url.Authority, Url.Content("~"));
+
+        //    var content = "";
+
+        //    var decName = "";
+        //    var decEmail = "";
+
+        //    if (cu != null)
+        //    {
+        //        decName = _encryptionManager.Decrypt256(cu.Name);
+        //        decEmail = _encryptionManager.Decrypt256(cu.Email);
+        //    }
+
+        //    string getSendCode = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Minute.ToString();
+
+        //    switch (getType)
+        //    {
+        //        case 1:
+
+        //            //StringBuilder sb = new StringBuilder();
+        //            //sb.Append(String.Format("<p>" + @Strings.DearName + " {0},</p>", decName));
+        //            //sb.Append(String.Format("<p>" + Strings.EmailDetailsStored + " </p>"
+        //            //+ "<ul><li><strong>" + Strings.StudyID + "</strong>: {0}</li><li><strong>" + Strings.Name + "</strong>: {1}</li><li><strong>" + Strings.EmailAddress + "</strong>: {2}</li><li><strong>" + Strings.WebsiteURL + "</strong>: {3}</li></ul>",
+        //            cu.StudyId, decName, decEmail, getURL));
+        //            sb.Append(myMail.Body);
+        //            content = sb.ToString();
+        //            SendEmail(decEmail, subject, content, getType, cu.Id, getSendCode);
+
+        //            break;
+
+        //    }
+
+        //    return getSendCode;
+
+        //}
+
+        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, string getSendCode, string myAttachment = null)
+        {
+            var mail = new MailMessage();
+
+            string textBody = ConvertHtml(body);
+
+            using (var SmtpServer = new SmtpClient(WebConfigurationManager.AppSettings["SmtpServer"]))
+            {
+                mail.From = new MailAddress(WebConfigurationManager.AppSettings["adminFromEmail"],
+                                            WebConfigurationManager.AppSettings["adminFromDisplay"]);
+
+                mail.IsBodyHtml = true;
+                mail.To.Add(emailAddress);
+                mail.ReplyToList.Add(WebConfigurationManager.AppSettings["mailFromEmail"]);
+                mail.Subject = subject;
+                //mail.Body = body;
+
+                mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(textBody, new ContentType("text/plain")));
+                mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html")));
+
+                if (myAttachment != null)
+                {
+                    Attachment attachment = new Attachment(myAttachment);
+                    mail.Attachments.Add(attachment);
+                    //logger.Info("File attached to email: " + myAttachment);
+                }
+
+                SmtpServer.Port = 587;
+                //SmtpServer.Port = 25;
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["SmtpUsername"],
+                                                                          WebConfigurationManager.AppSettings["SmtpPassword"]);
+
+                mail.Sender = new MailAddress(WebConfigurationManager.AppSettings["mailFromEmail"],
+                                            WebConfigurationManager.AppSettings["mailFromDisplay"]);
+
+                try
+                {
+                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["SendEmails"]))
+                    {
+                        SmtpServer.Send(mail);
+
+                        //write email log 
+                        DoEmailLog(getSendCode, typeId, userId);
+                    }
+                }
+                catch (Exception e)
+                {
+                    //logger.Error("Send email error: " + getCurrentUser().Id);
+                    //logger.Error(e);
+                }
+
+            }
+        }
+
+        public void ConvertTo(HtmlNode node, TextWriter outText)
+        {
+            string html;
+            switch (node.NodeType)
+            {
+                case HtmlNodeType.Comment:
+                    // don't output comments
+                    break;
+
+                case HtmlNodeType.Document:
+                    ConvertContentTo(node, outText);
+                    break;
+
+                case HtmlNodeType.Text:
+                    // script and style must not be output
+                    string parentName = node.ParentNode.Name;
+                    if ((parentName == "script") || (parentName == "style"))
+                        break;
+
+                    // get text
+                    html = ((HtmlTextNode)node).Text;
+
+                    // is it in fact a special closing node output as text?
+                    if (HtmlNode.IsOverlappedClosingElement(html))
+                        break;
+
+                    // check the text is meaningful and not a bunch of whitespaces
+                    if (html.Trim().Length > 0)
+                    {
+                        outText.Write(HtmlEntity.DeEntitize(html));
+                    }
+                    break;
+
+                case HtmlNodeType.Element:
+                    switch (node.Name)
+                    {
+                        case "p":
+                            // treat paragraphs as crlf
+                            outText.Write("\r\n");
+                            break;
+                    }
+
+                    if (node.HasChildNodes)
+                    {
+                        ConvertContentTo(node, outText);
+                    }
+                    break;
+            }
+        }
+
+        public string ConvertText(string path)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.Load(path);
+
+            StringWriter sw = new StringWriter();
+            ConvertTo(doc.DocumentNode, sw);
+            sw.Flush();
+            return sw.ToString();
+        }
+
+        public string ConvertHtml(string html)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            StringWriter sw = new StringWriter();
+            ConvertTo(doc.DocumentNode, sw);
+            sw.Flush();
+            return sw.ToString();
+        }
+
+        private void ConvertContentTo(HtmlNode node, TextWriter outText)
+        {
+            foreach (HtmlNode subnode in node.ChildNodes)
+            {
+                ConvertTo(subnode, outText);
+            }
+        }
+
+        public void DoEmailLog(string sendCode, int typeId, int userId)
+        {
+            //var esl = new EmailSentLog();
+            //esl.SendCode = sendCode;
+            //esl.EmailTemplateId = typeId;
+            //esl.DateSent = DateTime.Now;
+            //esl.SentBy = getCurrentUser().Id;
+            //esl.SentTo = userId;
+            //dbAccess.AddEmailSentLog(esl);
         }
 
         public PracticesExternal ParsePracticeToExternal(Practices practice)

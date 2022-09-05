@@ -13,6 +13,7 @@ namespace GPManagementSytem.Database
         IDbSet<Practices> Practices { get; set; }
         IDbSet<PracticesExternal> PracticesExternal { get; set; }
         IDbSet<Allocations> Allocations { get; set; }
+        IDbSet<Signupsendlog> SignupSendLog { get; set; }
 
         int SaveChanges();
     }

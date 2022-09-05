@@ -1,0 +1,72 @@
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.Models.Signupsendlog
+@{
+    /**/
+
+
+    var sendTypesDD= new SelectList(ViewBag.SendTypes, "Value", "Text");
+    //var userTypeDD = new SelectList(ViewBag.UserTypes, "Value", "Text");
+
+    ViewBag.Title = "Send Sign Up Email";
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">Send to</span>
+                    @Html.DropDownListFor(model => model.SendList, sendTypesDD, new { Class = "form-select" })
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text smallLabel">Subject</span>
+                    @Html.EditorFor(model => model.Subject,
+    new { htmlAttributes = new { @class = "form-control", type = "text" } }
+    )
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">Email content</span>
+                    @*@Html.TextAreaFor(model => model.AdditionalEmails,
+new { @class = "form-control fullTextArea", @rows = 3 })*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">Upload attachment</span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-primary btn-success" type="submit">Send</button>
+            </div>
+        </div>
+    </div>
+}
+

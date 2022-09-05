@@ -597,7 +597,23 @@ namespace GPManagementSytem.Controllers
             }
         }
 
+        public ActionResult SendSignUpInvite()
+        {
+            ViewBag.SendTypes = SignupEmailSendTypes();
 
+            return View();
+        }
+
+        public List<SelectListItem> SignupEmailSendTypes()
+        {
+            List<SelectListItem> li = new List<SelectListItem>();
+
+            li.Add(new SelectListItem { Text = "Select", Value = "0" });
+            li.Add(new SelectListItem { Text = "All practices", Value = "1" });
+            li.Add(new SelectListItem { Text = "Practices yet to respond", Value = "2" });
+
+            return li;
+        }
 
         public void PrepareUserViewBag()
         {

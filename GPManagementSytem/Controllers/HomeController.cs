@@ -26,13 +26,17 @@ namespace GPManagementSytem.Controllers
         //private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
+        private readonly IEmailTemplateService _emailTemplateService;
+        private readonly ISignupSendLogService _signupSendLogService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, ISessionManager sessionManager) : base(sessionManager, practiceExternalService)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager) : base(sessionManager, practiceExternalService)
         {
             _practiceService = practiceService;
             //_practiceExternalService = practiceExternalService;
             _allocationService = allocationService;
             _userService = userService;
+            _emailTemplateService = emailTemplateService;
+            _signupSendLogService = signupSendLogService;
         }
 
         public ActionResult AddPractice()
@@ -599,9 +603,11 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult SendSignUpInvite()
         {
+            var getTemplate = _emailTemplateService.GetById((int)EmailTypes.SignUpInvite);
+
             ViewBag.SendTypes = SignupEmailSendTypes();
 
-            return View();
+            return View(getTemplate);
         }
 
         public List<SelectListItem> SignupEmailSendTypes()

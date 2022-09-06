@@ -15,6 +15,7 @@ namespace GPManagementSytem.Database
         public IDbSet<PracticesExternal> PracticesExternal { get; set; }
         public IDbSet<Allocations> Allocations { get; set; }
         public IDbSet<Signupsendlog> SignupSendLog { get; set; }
+        public IDbSet<EmailTemplates> EmailTemplates { get; set; }
 
         public override int SaveChanges()
         {

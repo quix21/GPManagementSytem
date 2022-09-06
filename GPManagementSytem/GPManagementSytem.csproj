@@ -227,6 +227,7 @@
     <Compile Include="Helper\ListExtensions.cs" />
     <Compile Include="Helper\ValidateGoogleCaptchaAttribute.cs" />
     <Compile Include="Models\Allocations.cs" />
+    <Compile Include="Models\EmailTemplates.cs" />
     <Compile Include="Models\MyEnumModel.cs" />
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\PracticesExternal.cs" />
@@ -236,7 +237,9 @@
     <Compile Include="Security\CheckAuthorisation.cs" />
     <Compile Include="Security\SiteSettings.cs" />
     <Compile Include="Services\AllocationService.cs" />
+    <Compile Include="Services\EmailTemplateService.cs" />
     <Compile Include="Services\IAllocationService.cs" />
+    <Compile Include="Services\IEmailTemplateService.cs" />
     <Compile Include="Services\IMailServerService.cs" />
     <Compile Include="Services\IPracticeExternalService.cs" />
     <Compile Include="Services\IPracticeService.cs" />

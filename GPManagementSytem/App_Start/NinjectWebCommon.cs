@@ -92,6 +92,7 @@ namespace GPManagementSytem.App_Start
             kernel.Bind<IPracticeExternalService>().To<PracticeExternalService>();
             kernel.Bind<IAllocationService>().To<AllocationService>();
             kernel.Bind<ISignupSendLogService>().To<SignupSendLogService>();
+            kernel.Bind<IEmailTemplateService>().To<EmailTemplateService>();
         }
 
     }

@@ -20,9 +20,6 @@ namespace GPManagementSytem.Models
         public DateTime DateActionTaken { get; set; }
         public int SentBy { get; set; }
 
-        [NotMapped]
-        public int SendList { get; set; }
-        public string Subject { get; set; }
-        public string Bodytext { get; set; }
+
     }
 }

@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -608,6 +609,53 @@ namespace GPManagementSytem.Controllers
             ViewBag.SendTypes = SignupEmailSendTypes();
 
             return View(getTemplate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendSignUpInvite(EmailTemplates emailTemplates, HttpPostedFileBase attachmentFileUpload, string Command)
+        {
+            if (ModelState.IsValid)
+            {
+                var myEmail = _emailTemplateService.GetById(emailTemplates.Id);
+                 
+
+                if (Command == "Send Preview Email")
+                {
+                    return this.RedirectToAction("SendSignUpInvite", "Home");
+                }
+
+                return RedirectToAction("InviteSent", "Home");
+            }
+            else
+            {
+                ViewBag.SendTypes = SignupEmailSendTypes();
+
+                return View(emailTemplates);
+
+            }
+
+        }
+
+        public string UploadDocument(HttpPostedFileBase fileToUpload)
+        {
+            string uploadFolder = Server.MapPath("~/Content/EmailAttachments/");
+            string guid = Guid.NewGuid().ToString();
+
+            string fileType = Path.GetExtension(fileToUpload.FileName);
+            string fileName = Path.GetFileNameWithoutExtension(fileToUpload.FileName);
+            string uniqueFileName = fileName + fileType + "-" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
+
+            if (System.IO.File.Exists(uniqueFilePath))
+            {
+                uniqueFileName = guid + "-" + fileName + fileType;
+                uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
+            }
+
+            fileToUpload.SaveAs(uniqueFilePath);
+
+            return uniqueFileName;
         }
 
         public List<SelectListItem> SignupEmailSendTypes()

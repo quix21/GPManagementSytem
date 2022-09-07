@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,9 @@ namespace GPManagementSytem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int EmailTypeId { get; set; }
+        [Required]
         public string Subject { get; set; }
+        [Required]
         public string Body { get; set; }
         public string AttachmentName { get; set; }
         public DateTime DateUpdated { get; set; }

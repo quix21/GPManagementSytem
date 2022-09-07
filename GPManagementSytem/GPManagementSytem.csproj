@@ -324,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\EmailAttachments\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -23,6 +24,8 @@ namespace GPManagementSytem.Controllers
     //[CheckAuthorisation]
     public class HomeController : BaseController
     {
+        public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
+
         private readonly IPracticeService _practiceService;
         //private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
@@ -613,12 +616,31 @@ namespace GPManagementSytem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendSignUpInvite(EmailTemplates emailTemplates, HttpPostedFileBase attachmentFileUpload, string Command)
+        public ActionResult SendSignUpInvite(EmailTemplates emailTemplates, HttpPostedFileBase attachmentFile, string Command, FormCollection fc)
         {
             if (ModelState.IsValid)
             {
                 var myEmail = _emailTemplateService.GetById(emailTemplates.Id);
-                 
+
+                //remove reference to file attachment then delete file from file system
+                if (fc["removeAttachment"] != null)
+                {
+                    emailTemplates.AttachmentName = null;
+
+                    DeleteAttachment(myEmail.AttachmentName);
+                }
+
+                myEmail = emailTemplates;
+
+                if (attachmentFile != null)
+                {
+                    myEmail.AttachmentName = UploadDocument(attachmentFile);
+                }
+                
+                myEmail.DateUpdated = DateTime.Now;
+                //myEmail.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _emailTemplateService.EditEmailTemplate(myEmail);
 
                 if (Command == "Send Preview Email")
                 {
@@ -639,12 +661,12 @@ namespace GPManagementSytem.Controllers
 
         public string UploadDocument(HttpPostedFileBase fileToUpload)
         {
-            string uploadFolder = Server.MapPath("~/Content/EmailAttachments/");
+            string uploadFolder = Server.MapPath(getAttachmentPath);
             string guid = Guid.NewGuid().ToString();
 
             string fileType = Path.GetExtension(fileToUpload.FileName);
             string fileName = Path.GetFileNameWithoutExtension(fileToUpload.FileName);
-            string uniqueFileName = fileName + fileType + "-" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            string uniqueFileName = fileName + "-" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileType;
             string uniqueFilePath = Path.Combine(uploadFolder, uniqueFileName);
 
             if (System.IO.File.Exists(uniqueFilePath))
@@ -656,6 +678,15 @@ namespace GPManagementSytem.Controllers
             fileToUpload.SaveAs(uniqueFilePath);
 
             return uniqueFileName;
+        }
+
+        public void DeleteAttachment(string atttachmentName)
+        {
+            string fileLocation = Server.MapPath(getAttachmentPath) + atttachmentName;
+            if (System.IO.File.Exists(fileLocation))
+            {
+                System.IO.File.Delete(fileLocation);
+            }
         }
 
         public List<SelectListItem> SignupEmailSendTypes()

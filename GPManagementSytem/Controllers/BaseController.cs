@@ -22,6 +22,8 @@ namespace GPManagementSytem.Controllers
         public readonly ISessionManager SessionManager;
         public readonly IPracticeExternalService _practiceExternalService;
 
+        public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
+
         public BaseController(ISessionManager sessionManager, IPracticeExternalService practiceExternalService)
         {
             databaseEntities = new DatabaseEntities();
@@ -75,48 +77,36 @@ namespace GPManagementSytem.Controllers
             return showThisYear;
         }
 
-        //public string BuildEmail(User cu, List<UserEmail> ulist, int getType)
-        //{
-        //    var myMail = dbAccess.GetEmailByType(getType);
+        public string BuildEmail(Users cu, List<Users> ulist, EmailTemplates getType)
+        {
+            var myMail = getType;
+            int getEmailType = getType.EmailTypeId;
 
-        //    var subject = myMail.Subject + " - " + Session["StudyName"].ToString();
-        //    string getURL = string.Format("{0}://{1}{2}", "https", Request.Url.Authority, Url.Content("~"));
+            var subject = myMail.Subject;
+            string getURL = string.Format("{0}://{1}{2}", "https", Request.Url.Authority, Url.Content("~"));
+            string GuidToIndentify = Guid.NewGuid().ToString();
+            getURL = getURL + "/" + GuidToIndentify;
 
-        //    var content = "";
+            var content = "";
 
-        //    var decName = "";
-        //    var decEmail = "";
+            string getSendCode = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Minute.ToString();
 
-        //    if (cu != null)
-        //    {
-        //        decName = _encryptionManager.Decrypt256(cu.Name);
-        //        decEmail = _encryptionManager.Decrypt256(cu.Email);
-        //    }
+            switch (getEmailType)
+            {
+                case 1:
 
-        //    string getSendCode = Guid.NewGuid().ToString().Substring(0, 8) + DateTime.Now.Minute.ToString();
+                    content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL);
+                    SendEmail(cu.Email, subject, content, getEmailType, cu.Id, getSendCode, GuidToIndentify, getType.AttachmentName);
 
-        //    switch (getType)
-        //    {
-        //        case 1:
+                    break;
 
-        //            //StringBuilder sb = new StringBuilder();
-        //            //sb.Append(String.Format("<p>" + @Strings.DearName + " {0},</p>", decName));
-        //            //sb.Append(String.Format("<p>" + Strings.EmailDetailsStored + " </p>"
-        //            //+ "<ul><li><strong>" + Strings.StudyID + "</strong>: {0}</li><li><strong>" + Strings.Name + "</strong>: {1}</li><li><strong>" + Strings.EmailAddress + "</strong>: {2}</li><li><strong>" + Strings.WebsiteURL + "</strong>: {3}</li></ul>",
-        //            cu.StudyId, decName, decEmail, getURL));
-        //            sb.Append(myMail.Body);
-        //            content = sb.ToString();
-        //            SendEmail(decEmail, subject, content, getType, cu.Id, getSendCode);
+            }
 
-        //            break;
+            return getSendCode;
 
-        //    }
+        }
 
-        //    return getSendCode;
-
-        //}
-
-        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, string getSendCode, string myAttachment = null)
+        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, string getSendCode, string GuidToIndentify, string myAttachment = null)
         {
             var mail = new MailMessage();
 
@@ -124,12 +114,12 @@ namespace GPManagementSytem.Controllers
 
             using (var SmtpServer = new SmtpClient(WebConfigurationManager.AppSettings["SmtpServer"]))
             {
-                mail.From = new MailAddress(WebConfigurationManager.AppSettings["adminFromEmail"],
-                                            WebConfigurationManager.AppSettings["adminFromDisplay"]);
+                mail.From = new MailAddress(WebConfigurationManager.AppSettings["adminEmail"],
+                                            WebConfigurationManager.AppSettings["adminName"]);
 
                 mail.IsBodyHtml = true;
                 mail.To.Add(emailAddress);
-                mail.ReplyToList.Add(WebConfigurationManager.AppSettings["mailFromEmail"]);
+                mail.ReplyToList.Add(emailAddress);
                 mail.Subject = subject;
                 //mail.Body = body;
 
@@ -138,7 +128,11 @@ namespace GPManagementSytem.Controllers
 
                 if (myAttachment != null)
                 {
-                    Attachment attachment = new Attachment(myAttachment);
+                    string uploadFolder = Server.MapPath(getAttachmentPath);
+
+                    string getAttachment = uploadFolder + myAttachment;
+
+                    Attachment attachment = new Attachment(getAttachment);
                     mail.Attachments.Add(attachment);
                     //logger.Info("File attached to email: " + myAttachment);
                 }
@@ -149,8 +143,8 @@ namespace GPManagementSytem.Controllers
                 SmtpServer.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["SmtpUsername"],
                                                                           WebConfigurationManager.AppSettings["SmtpPassword"]);
 
-                mail.Sender = new MailAddress(WebConfigurationManager.AppSettings["mailFromEmail"],
-                                            WebConfigurationManager.AppSettings["mailFromDisplay"]);
+                mail.Sender = new MailAddress(WebConfigurationManager.AppSettings["adminEmail"],
+                                            WebConfigurationManager.AppSettings["adminName"]);
 
                 try
                 {
@@ -260,6 +254,23 @@ namespace GPManagementSytem.Controllers
             //esl.SentBy = getCurrentUser().Id;
             //esl.SentTo = userId;
             //dbAccess.AddEmailSentLog(esl);
+        }
+
+        public string createTemplateEmailBody(string bodytext, string firstname, string nochangeurl)
+        {
+            string body = string.Empty;
+
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Templates/signup_email.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+
+            body = body.Replace("{firstname}", firstname);
+            body = body.Replace("{bodytext}", bodytext);
+            body = body.Replace("{nochangeurl}", nochangeurl);
+
+            return body;
+
         }
 
         public PracticesExternal ParsePracticeToExternal(Practices practice)

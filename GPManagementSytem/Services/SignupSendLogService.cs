@@ -65,6 +65,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.SendCode = signupsendlog.SendCode;
             entityToUpdate.AcademicYear = signupsendlog.AcademicYear;
             entityToUpdate.PracticeId = signupsendlog.PracticeId;
+            entityToUpdate.Guid = signupsendlog.Guid;
             entityToUpdate.NoChangesClicked = signupsendlog.NoChangesClicked;
             entityToUpdate.DetailsUpdated = signupsendlog.DetailsUpdated;
             entityToUpdate.DateSent = signupsendlog.DateSent;

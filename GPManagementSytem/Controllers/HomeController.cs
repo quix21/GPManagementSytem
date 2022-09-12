@@ -24,8 +24,6 @@ namespace GPManagementSytem.Controllers
     //[CheckAuthorisation]
     public class HomeController : BaseController
     {
-        public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
-
         private readonly IPracticeService _practiceService;
         //private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
@@ -638,16 +636,25 @@ namespace GPManagementSytem.Controllers
                 }
                 
                 myEmail.DateUpdated = DateTime.Now;
-                //myEmail.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+                myEmail.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
                 _emailTemplateService.EditEmailTemplate(myEmail);
 
+                //TODO - get email list. All PMemails from practices if ListType = 1, all from SignUpSendLog where NoChanges AND DetailsUpdated is false
+
                 if (Command == "Send Preview Email")
                 {
+                    var myAdmin = _userService.GetById(Convert.ToInt32(Session["UserId"].ToString()));
+
+                    BuildEmail(myAdmin, null, myEmail);
                     return this.RedirectToAction("SendSignUpInvite", "Home");
                 }
+                else
+                {
+                    return RedirectToAction("InviteSent", "Home");
+                }
 
-                return RedirectToAction("InviteSent", "Home");
+                
             }
             else
             {
@@ -657,6 +664,11 @@ namespace GPManagementSytem.Controllers
 
             }
 
+        }
+
+        public ActionResult InviteSent()
+        {
+            return View();
         }
 
         public string UploadDocument(HttpPostedFileBase fileToUpload)

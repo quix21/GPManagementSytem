@@ -1,7 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "Invite Sent";
+
+    var getSendCode = Request.QueryString["getSendCode"];
+    var sendCount = ViewData["SendCount"];
 }
 
-<h2>@ViewBag.Title</h2>
+<h1>@ViewBag.Title</h1>
+<p>This email was sent to @sendCount people.</p>
+<p>Click here to view the send list.</p>
 

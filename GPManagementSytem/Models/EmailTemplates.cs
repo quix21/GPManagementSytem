@@ -27,6 +27,7 @@ namespace GPManagementSytem.Models
         public int UpdatedBy { get; set; }
 
         [NotMapped]
+        [Required]
         public int SendList { get; set; }
     }
 }

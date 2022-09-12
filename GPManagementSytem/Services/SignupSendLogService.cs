@@ -37,6 +37,11 @@ namespace GPManagementSytem.Services
             return AllNoTracking().Where(x => x.PracticeId == practiceId).OrderByDescending(x => x.DateSent).ToList();
         }
 
+        public List<Signupsendlog> GetBySendCode(string sendCode)
+        {
+            return AllNoTracking().Where(x => x.SendCode == sendCode).ToList();
+        }
+
         public Signupsendlog AddSignupSendLog(Signupsendlog signupsendlog)
         {
             return UpdateSignupSendLog(signupsendlog);

@@ -29,16 +29,16 @@ namespace GPManagementSytem.Controllers
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
         private readonly IEmailTemplateService _emailTemplateService;
-        private readonly ISignupSendLogService _signupSendLogService;
+        //private readonly ISignupSendLogService _signupSendLogService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager) : base(sessionManager, practiceExternalService)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager) : base(sessionManager, practiceExternalService, signupSendLogService)
         {
             _practiceService = practiceService;
             //_practiceExternalService = practiceExternalService;
             _allocationService = allocationService;
             _userService = userService;
             _emailTemplateService = emailTemplateService;
-            _signupSendLogService = signupSendLogService;
+            //_signupSendLogService = signupSendLogService;
         }
 
         public ActionResult AddPractice()
@@ -640,7 +640,19 @@ namespace GPManagementSytem.Controllers
 
                 _emailTemplateService.EditEmailTemplate(myEmail);
 
-                //TODO - get email list. All PMemails from practices if ListType = 1, all from SignUpSendLog where NoChanges AND DetailsUpdated is false
+                List<Users> Sendlist = new List<Users>(0);
+
+                switch (emailTemplates.SendList)
+                {
+                    case 1:
+                        Sendlist = _userService.GetAllPracticeUsers();
+                        break;
+
+                    case 2:
+                        Sendlist = GetUsersFromSendListLog();
+                        break;
+                }
+
 
                 if (Command == "Send Preview Email")
                 {
@@ -651,7 +663,8 @@ namespace GPManagementSytem.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("InviteSent", "Home");
+                    
+                    return RedirectToAction("InviteSent", "Home", new {getSendCode = BuildEmail(null, Sendlist, myEmail) });
                 }
 
                 
@@ -666,9 +679,29 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public ActionResult InviteSent()
+        public ActionResult InviteSent(string getSendCode)
         {
+            //TODO - show list/count of emails sent?
+            ViewData["SendCount"] = _signupSendLogService.GetBySendCode(getSendCode).Count();
+
             return View();
+        }
+
+        public List<Users> GetUsersFromSendListLog()
+        {
+            List<Users> myUsers = new List<Users>();
+            List<Users> getUsers = _userService.GetAllPracticeUsers();
+
+            var getSendLog = _signupSendLogService.GetAllNoActivity(AcademicYearDD());
+
+            foreach (var sendlog in getSendLog)
+            {
+                var thisUser = getUsers.Where(x => x.PracticeId == sendlog.PracticeId).FirstOrDefault();
+
+                myUsers.Add(thisUser);
+            }
+
+            return myUsers;
         }
 
         public string UploadDocument(HttpPostedFileBase fileToUpload)
@@ -705,7 +738,7 @@ namespace GPManagementSytem.Controllers
         {
             List<SelectListItem> li = new List<SelectListItem>();
 
-            li.Add(new SelectListItem { Text = "Select", Value = "0" });
+            li.Add(new SelectListItem { Text = "Select", Value = "" });
             li.Add(new SelectListItem { Text = "All practices", Value = "1" });
             li.Add(new SelectListItem { Text = "Practices yet to respond", Value = "2" });
 

@@ -21,14 +21,16 @@ namespace GPManagementSytem.Controllers
         private DatabaseEntities _databaseEntities;
         public readonly ISessionManager SessionManager;
         public readonly IPracticeExternalService _practiceExternalService;
+        public readonly ISignupSendLogService _signupSendLogService;
 
         public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
 
-        public BaseController(ISessionManager sessionManager, IPracticeExternalService practiceExternalService)
+        public BaseController(ISessionManager sessionManager, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService)
         {
             databaseEntities = new DatabaseEntities();
             SessionManager = sessionManager;
             _practiceExternalService = practiceExternalService;
+            _signupSendLogService = signupSendLogService;
         }
 
 
@@ -84,8 +86,7 @@ namespace GPManagementSytem.Controllers
 
             var subject = myMail.Subject;
             string getURL = string.Format("{0}://{1}{2}", "https", Request.Url.Authority, Url.Content("~"));
-            string GuidToIndentify = Guid.NewGuid().ToString();
-            getURL = getURL + "/" + GuidToIndentify;
+            string GuidToIndentify = "";
 
             var content = "";
 
@@ -95,9 +96,25 @@ namespace GPManagementSytem.Controllers
             {
                 case 1:
 
-                    content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL);
-                    SendEmail(cu.Email, subject, content, getEmailType, cu.Id, getSendCode, GuidToIndentify, getType.AttachmentName);
+                    //if single user object exists then test email
+                    if (cu != null)
+                    {
+                        content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL);
+                        SendEmail(cu.Email, subject, content, getEmailType, cu.Id, 0, getSendCode, GuidToIndentify, getType.AttachmentName);
+                    }
+                    else
+                    {
+                        foreach (var user in ulist)
+                        {
+                            GuidToIndentify = "";
+                            GuidToIndentify = Guid.NewGuid().ToString();
+                            var buildURL = getURL + "/" + GuidToIndentify;
 
+                            content = createTemplateEmailBody(getType.Body, user.Firstname, buildURL);
+                            SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName);
+                        }
+                    }
+                                       
                     break;
 
             }
@@ -106,7 +123,7 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, string getSendCode, string GuidToIndentify, string myAttachment = null)
+        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, int PracticeId, string getSendCode, string GuidToIndentify, string myAttachment = null)
         {
             var mail = new MailMessage();
 
@@ -153,7 +170,7 @@ namespace GPManagementSytem.Controllers
                         SmtpServer.Send(mail);
 
                         //write email log 
-                        DoEmailLog(getSendCode, typeId, userId);
+                        DoEmailLog(getSendCode, userId, PracticeId, GuidToIndentify);
                     }
                 }
                 catch (Exception e)
@@ -245,15 +262,21 @@ namespace GPManagementSytem.Controllers
             }
         }
 
-        public void DoEmailLog(string sendCode, int typeId, int userId)
+        public void DoEmailLog(string sendCode, int userId, int practiceId, string Guid)
         {
-            //var esl = new EmailSentLog();
-            //esl.SendCode = sendCode;
-            //esl.EmailTemplateId = typeId;
-            //esl.DateSent = DateTime.Now;
-            //esl.SentBy = getCurrentUser().Id;
-            //esl.SentTo = userId;
-            //dbAccess.AddEmailSentLog(esl);
+            var esl = new Signupsendlog();
+            esl.SendCode = sendCode;
+            esl.AcademicYear = AcademicYearDD();
+            esl.UserId = userId;
+            esl.PracticeId = practiceId;
+            esl.Guid = Guid;
+            esl.NoChangesClicked = false;
+            esl.DetailsUpdated = false;
+            esl.DateSent = DateTime.Now;
+            esl.DateActionTaken = null;
+            esl.SentBy = Convert.ToInt32(Session["UserId"].ToString());
+
+            _signupSendLogService.AddSignupSendLog(esl);
         }
 
         public string createTemplateEmailBody(string bodytext, string firstname, string nochangeurl)

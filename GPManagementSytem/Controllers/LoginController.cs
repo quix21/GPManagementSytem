@@ -28,7 +28,7 @@ namespace GPManagementSytem.Controllers
 
         public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService) : base(sessionManager, practiceExternalService)
+        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService) : base(sessionManager, practiceExternalService, signupSendLogService)
         {
             _userService = userService;
             _mailSender = mailSender;

@@ -18,21 +18,20 @@ namespace GPManagementSytem.Controllers
     public class LoginController : BaseController
     {
         private readonly IUserService _userService;
-        private readonly IMailSender _mailSender;
+
         private readonly IPracticeService _practiceService;
 
         private bool isImpersonate = Convert.ToBoolean(ConfigurationManager.AppSettings["isImpersonate"].ToString());
 
-        private string adminEmail = ConfigurationManager.AppSettings["adminEmail"].ToString();
-        private string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
+        //private string adminEmail = ConfigurationManager.AppSettings["adminEmail"].ToString();
+        //private string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
 
 
-        public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService) : base(sessionManager, practiceExternalService, signupSendLogService)
+        public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, signupSendLogService)
         {
             _userService = userService;
-            _mailSender = mailSender;
+
             _practiceService = practiceService;
 
         }
@@ -135,6 +134,8 @@ namespace GPManagementSytem.Controllers
                 string newPassword = GeneratePassword();
 
                 var emailBody = createEmailBody(isUser.Firstname, newPassword);
+
+                
 
                 _mailSender.SendMail(isUser.Username, adminEmail, adminName, "Password reset", emailBody, null, null);
 

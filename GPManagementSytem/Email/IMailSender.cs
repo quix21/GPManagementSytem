@@ -19,7 +19,7 @@ namespace GPManagementSytem.Email
         /// <param name="bcc">The BCC.</param>
         /// <returns>Boolean indicating the email was composed and sent.</returns>
         bool SendMail(string to, string from, string fromname, string subject, string body, string[] cc = null,
-            string[] bcc = null);
+            string[] bcc = null, string attachment = null);
         /// <summary>
         /// Returns a <see cref="MailMessage"/> object.
         /// This does not send the message.
@@ -31,7 +31,7 @@ namespace GPManagementSytem.Email
         /// <param name="cc">The cc.</param>
         /// <param name="bcc">The BCC.</param>
         /// <returns>The message.</returns>
-        MailMessage Mail(string to, string from, string fromname, string subject, string body, string[] cc = null, string[] bcc = null);
+        MailMessage Mail(string to, string from, string fromname, string subject, string body, string[] cc = null, string[] bcc = null, string attachment = null);
         /// <summary>
         /// Sends the mail message.
         /// </summary>

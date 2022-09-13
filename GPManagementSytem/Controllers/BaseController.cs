@@ -1,8 +1,10 @@
 ﻿using GPManagementSytem.Database;
+using GPManagementSytem.Email;
 using GPManagementSytem.Models;
 using GPManagementSytem.Services;
 using GPManagementSytem.SessionManagement;
 using HtmlAgilityPack;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,15 +22,23 @@ namespace GPManagementSytem.Controllers
     {
         private DatabaseEntities _databaseEntities;
         public readonly ISessionManager SessionManager;
+        public readonly IMailSender _mailSender;
         public readonly IPracticeExternalService _practiceExternalService;
         public readonly ISignupSendLogService _signupSendLogService;
 
         public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
 
-        public BaseController(ISessionManager sessionManager, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService)
+        public string adminEmail = ConfigurationManager.AppSettings["adminEmail"].ToString();
+        public string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
+
+
+        public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public BaseController(ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService)
         {
             databaseEntities = new DatabaseEntities();
             SessionManager = sessionManager;
+            _mailSender = mailSender;
             _practiceExternalService = practiceExternalService;
             _signupSendLogService = signupSendLogService;
         }
@@ -125,143 +135,52 @@ namespace GPManagementSytem.Controllers
 
         public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, int PracticeId, string getSendCode, string GuidToIndentify, string myAttachment = null)
         {
-            var mail = new MailMessage();
 
-            string textBody = ConvertHtml(body);
-
-            using (var SmtpServer = new SmtpClient(WebConfigurationManager.AppSettings["SmtpServer"]))
+            if (myAttachment != null)
             {
-                mail.From = new MailAddress(WebConfigurationManager.AppSettings["adminEmail"],
-                                            WebConfigurationManager.AppSettings["adminName"]);
+                string uploadFolder = Server.MapPath(getAttachmentPath);
 
-                mail.IsBodyHtml = true;
-                mail.To.Add(emailAddress);
-                mail.ReplyToList.Add(emailAddress);
-                mail.Subject = subject;
-                //mail.Body = body;
-
-                mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(textBody, new ContentType("text/plain")));
-                mail.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html")));
-
-                if (myAttachment != null)
-                {
-                    string uploadFolder = Server.MapPath(getAttachmentPath);
-
-                    string getAttachment = uploadFolder + myAttachment;
-
-                    Attachment attachment = new Attachment(getAttachment);
-                    mail.Attachments.Add(attachment);
-                    //logger.Info("File attached to email: " + myAttachment);
-                }
-
-                SmtpServer.Port = 587;
-                //SmtpServer.Port = 25;
-                SmtpServer.EnableSsl = true;
-                SmtpServer.Credentials = new System.Net.NetworkCredential(WebConfigurationManager.AppSettings["SmtpUsername"],
-                                                                          WebConfigurationManager.AppSettings["SmtpPassword"]);
-
-                mail.Sender = new MailAddress(WebConfigurationManager.AppSettings["adminEmail"],
-                                            WebConfigurationManager.AppSettings["adminName"]);
-
-                try
-                {
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["SendEmails"]))
-                    {
-                        SmtpServer.Send(mail);
-
-                        //write email log 
-                        DoEmailLog(getSendCode, userId, PracticeId, GuidToIndentify);
-                    }
-                }
-                catch (Exception e)
-                {
-                    //logger.Error("Send email error: " + getCurrentUser().Id);
-                    //logger.Error(e);
-                }
+                string getAttachment = uploadFolder + myAttachment;
 
             }
-        }
 
-        public void ConvertTo(HtmlNode node, TextWriter outText)
-        {
-            string html;
-            switch (node.NodeType)
+            try
             {
-                case HtmlNodeType.Comment:
-                    // don't output comments
-                    break;
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["SendEmails"]))
+                {
+                    _mailSender.SendMail(emailAddress, adminEmail, adminName, subject, body, null, null, GetAttachmentFilePath(myAttachment));
 
-                case HtmlNodeType.Document:
-                    ConvertContentTo(node, outText);
-                    break;
-
-                case HtmlNodeType.Text:
-                    // script and style must not be output
-                    string parentName = node.ParentNode.Name;
-                    if ((parentName == "script") || (parentName == "style"))
-                        break;
-
-                    // get text
-                    html = ((HtmlTextNode)node).Text;
-
-                    // is it in fact a special closing node output as text?
-                    if (HtmlNode.IsOverlappedClosingElement(html))
-                        break;
-
-                    // check the text is meaningful and not a bunch of whitespaces
-                    if (html.Trim().Length > 0)
-                    {
-                        outText.Write(HtmlEntity.DeEntitize(html));
-                    }
-                    break;
-
-                case HtmlNodeType.Element:
-                    switch (node.Name)
-                    {
-                        case "p":
-                            // treat paragraphs as crlf
-                            outText.Write("\r\n");
-                            break;
-                    }
-
-                    if (node.HasChildNodes)
-                    {
-                        ConvertContentTo(node, outText);
-                    }
-                    break;
+                    //write email log 
+                    DoEmailLog(getSendCode, userId, PracticeId, GuidToIndentify);
+                }
             }
-        }
-
-        public string ConvertText(string path)
-        {
-            HtmlDocument doc = new HtmlDocument();
-            doc.Load(path);
-
-            StringWriter sw = new StringWriter();
-            ConvertTo(doc.DocumentNode, sw);
-            sw.Flush();
-            return sw.ToString();
-        }
-
-        public string ConvertHtml(string html)
-        {
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(html);
-
-            StringWriter sw = new StringWriter();
-            ConvertTo(doc.DocumentNode, sw);
-            sw.Flush();
-            return sw.ToString();
-        }
-
-        private void ConvertContentTo(HtmlNode node, TextWriter outText)
-        {
-            foreach (HtmlNode subnode in node.ChildNodes)
+            catch (Exception e)
             {
-                ConvertTo(subnode, outText);
+                logger.Error("Send email error: " + emailAddress);
+                logger.Error(e);
             }
+
         }
 
+        public string GetAttachmentFilePath(string myAttachment)
+        {            
+
+            string uploadFolder = Server.MapPath(getAttachmentPath);
+
+            string getAttachment = uploadFolder + myAttachment;
+
+            if (myAttachment != null)
+            {
+                return getAttachment;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+ 
         public void DoEmailLog(string sendCode, int userId, int practiceId, string Guid)
         {
             var esl = new Signupsendlog();

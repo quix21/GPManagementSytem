@@ -33,9 +33,9 @@ namespace GPManagementSytem.Email
         /// <param name="bcc">The BCC.</param>
         /// <returns>Boolean indicating the email was composed and sent.</returns>
         public bool SendMail(string to, string from, string fromname, string subject, string body, string[] cc = null,
-            string[] bcc = null)
+            string[] bcc = null, string attachment = null)
         {
-            return SendMailMessage(Mail(to, from, fromname, subject, body, cc, bcc));
+            return SendMailMessage(Mail(to, from, fromname, subject, body, cc, bcc, attachment));
         }
         /// <summary>
         /// Returns a <see cref="MailMessage"/> object.
@@ -49,7 +49,7 @@ namespace GPManagementSytem.Email
         /// <param name="cc">The cc.</param>
         /// <param name="bcc">The BCC.</param>
         /// <returns>The message.</returns>
-        public MailMessage Mail(string to, string from, string fromname, string subject, string body, string[] cc = null, string[] bcc = null)
+        public MailMessage Mail(string to, string from, string fromname, string subject, string body, string[] cc = null, string[] bcc = null, string attachment = null)
         {
             var mailMessage = new MailMessage();
             mailMessage.To.Add(to);
@@ -79,6 +79,15 @@ namespace GPManagementSytem.Email
 
             mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(textBody, new ContentType("text/plain")));
             mailMessage.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(body, new ContentType("text/html")));
+
+
+            if (attachment != null)
+            {
+                
+                Attachment myAttachment = new Attachment(attachment);
+                mailMessage.Attachments.Add(myAttachment);
+ 
+            }
 
             mailMessage.Sender = new MailAddress(from, fromname);
 

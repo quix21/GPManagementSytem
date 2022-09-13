@@ -1,4 +1,5 @@
-﻿using GPManagementSytem.Helper;
+﻿using GPManagementSytem.Email;
+using GPManagementSytem.Helper;
 using GPManagementSytem.Models;
 using GPManagementSytem.Security;
 using GPManagementSytem.Services;
@@ -31,7 +32,7 @@ namespace GPManagementSytem.Controllers
         private readonly IEmailTemplateService _emailTemplateService;
         //private readonly ISignupSendLogService _signupSendLogService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager) : base(sessionManager, practiceExternalService, signupSendLogService)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, signupSendLogService)
         {
             _practiceService = practiceService;
             //_practiceExternalService = practiceExternalService;

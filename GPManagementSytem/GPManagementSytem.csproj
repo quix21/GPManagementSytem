@@ -323,6 +323,7 @@
     <Content Include="Views\Home\ApprovePracticeRegistration.cshtml" />
     <Content Include="Views\Home\SendSignUpInvite.cshtml" />
     <Content Include="Views\Home\InviteSent.cshtml" />
+    <Content Include="Views\Login\ConfirmNoChanges.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

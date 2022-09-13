@@ -12,6 +12,7 @@ namespace GPManagementSytem.Services
         List<Signupsendlog> GetAllNoActivity(string academicYear);
         List<Signupsendlog> GetAllByPratice(int practiceId);
         List<Signupsendlog> GetBySendCode(string sendCode);
+        Signupsendlog GetByGuid(string guid);
         Signupsendlog AddSignupSendLog(Signupsendlog signupsendlog);
         Signupsendlog EditSignupSendLog(Signupsendlog signupsendlog);
     }

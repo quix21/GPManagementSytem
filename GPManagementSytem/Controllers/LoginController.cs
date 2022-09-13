@@ -19,6 +19,7 @@ namespace GPManagementSytem.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMailSender _mailSender;
+        private readonly IPracticeService _practiceService;
 
         private bool isImpersonate = Convert.ToBoolean(ConfigurationManager.AppSettings["isImpersonate"].ToString());
 
@@ -28,10 +29,11 @@ namespace GPManagementSytem.Controllers
 
         public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService) : base(sessionManager, practiceExternalService, signupSendLogService)
+        public LoginController(IUserService userService, ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService) : base(sessionManager, practiceExternalService, signupSendLogService)
         {
             _userService = userService;
             _mailSender = mailSender;
+            _practiceService = practiceService;
 
         }
 
@@ -200,6 +202,30 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult RegisterThanks()
         {
+            return View();
+        }
+
+        public ActionResult ConfirmNoChanges(string guid)
+        {
+            var myRecord = _signupSendLogService.GetByGuid(guid);
+
+            bool isConfirmed = false;
+
+            if (myRecord != null)
+            {
+                isConfirmed = true;
+
+                myRecord.NoChangesClicked = true;
+                myRecord.DateActionTaken = DateTime.Now;
+
+                _signupSendLogService.EditSignupSendLog(myRecord);
+
+                ViewBag.PracticeName = _practiceService.GetById(myRecord.PracticeId).Surgery;
+            }
+
+
+            ViewData["IsConfirmed"] = isConfirmed;
+
             return View();
         }
 

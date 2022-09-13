@@ -85,7 +85,7 @@ namespace GPManagementSytem.Controllers
             int getEmailType = getType.EmailTypeId;
 
             var subject = myMail.Subject;
-            string getURL = string.Format("{0}://{1}{2}", "https", Request.Url.Authority, Url.Content("~"));
+            string getURL = string.Format("{0}://{1}{2}", "http", Request.Url.Authority, Url.Content("~"));
             string GuidToIndentify = "";
 
             var content = "";
@@ -108,7 +108,7 @@ namespace GPManagementSytem.Controllers
                         {
                             GuidToIndentify = "";
                             GuidToIndentify = Guid.NewGuid().ToString();
-                            var buildURL = getURL + "/" + GuidToIndentify;
+                            var buildURL = getURL + "Login/ConfirmNoChanges?guid=" + GuidToIndentify;
 
                             content = createTemplateEmailBody(getType.Body, user.Firstname, buildURL);
                             SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName);

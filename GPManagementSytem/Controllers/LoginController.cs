@@ -76,7 +76,7 @@ namespace GPManagementSytem.Controllers
             return View();
         }
 
-        public ActionResult PracticeLogin()
+        public ActionResult PracticeLogin(string guid = null)
         {
             return View();
         }
@@ -87,6 +87,8 @@ namespace GPManagementSytem.Controllers
         {
             var username = fc["username"];
             var password = fc["password"];
+
+            var guid = fc["guid"];
 
             var isUser = _userService.LoginUserPractice(username, password, isImpersonate);
 

@@ -109,7 +109,7 @@ namespace GPManagementSytem.Controllers
                     //if single user object exists then test email
                     if (cu != null)
                     {
-                        content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL);
+                        content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL, getURL);
                         SendEmail(cu.Email, subject, content, getEmailType, cu.Id, 0, getSendCode, GuidToIndentify, getType.AttachmentName);
                     }
                     else
@@ -118,9 +118,10 @@ namespace GPManagementSytem.Controllers
                         {
                             GuidToIndentify = "";
                             GuidToIndentify = Guid.NewGuid().ToString();
-                            var buildURL = getURL + "Login/ConfirmNoChanges?guid=" + GuidToIndentify;
+                            var nochangeURL = getURL + "Login/ConfirmNoChanges?guid=" + GuidToIndentify;
+                            var loginURL = getURL + "Login/PracticeLogin?guid=" + GuidToIndentify;
 
-                            content = createTemplateEmailBody(getType.Body, user.Firstname, buildURL);
+                            content = createTemplateEmailBody(getType.Body, user.Firstname, nochangeURL, loginURL);
                             SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName);
                         }
                     }
@@ -150,8 +151,12 @@ namespace GPManagementSytem.Controllers
                 {
                     _mailSender.SendMail(emailAddress, adminEmail, adminName, subject, body, null, null, GetAttachmentFilePath(myAttachment));
 
-                    //write email log 
-                    DoEmailLog(getSendCode, userId, PracticeId, GuidToIndentify);
+                    //write email log only if not a Preview Email
+                    if (PracticeId !=0)
+                    {
+                        DoEmailLog(getSendCode, userId, PracticeId, GuidToIndentify);
+                    }
+
                 }
             }
             catch (Exception e)
@@ -198,7 +203,7 @@ namespace GPManagementSytem.Controllers
             _signupSendLogService.AddSignupSendLog(esl);
         }
 
-        public string createTemplateEmailBody(string bodytext, string firstname, string nochangeurl)
+        public string createTemplateEmailBody(string bodytext, string firstname, string nochangeurl, string loginurl)
         {
             string body = string.Empty;
 
@@ -210,6 +215,7 @@ namespace GPManagementSytem.Controllers
             body = body.Replace("{firstname}", firstname);
             body = body.Replace("{bodytext}", bodytext);
             body = body.Replace("{nochangeurl}", nochangeurl);
+            body = body.Replace("{loginurl}", loginurl);
 
             return body;
 

@@ -29,7 +29,9 @@ namespace GPManagementSytem.Services
 
         public List<Signupsendlog> GetAllNoActivity(string academicYear)
         {
-            return AllNoTracking().Where(x => x.NoChangesClicked == false && x.DetailsUpdated == false && x.AcademicYear == academicYear).ToList();
+            return AllNoTracking().Where(x => x.AcademicYear == academicYear).ToList();
+
+            //return AllNoTracking().Where(x => x.NoChangesClicked == false && x.DetailsUpdated == false && x.AcademicYear == academicYear).ToList();
         }
 
         public List<Signupsendlog> GetAllByPratice(int practiceId)

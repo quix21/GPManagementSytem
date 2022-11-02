@@ -88,7 +88,7 @@ namespace GPManagementSytem.Controllers
             var username = fc["username"];
             var password = fc["password"];
 
-            var guid = fc["guid"];
+            var sentguid = fc["guid"];
 
             var isUser = _userService.LoginUserPractice(username, password, isImpersonate);
 
@@ -102,7 +102,7 @@ namespace GPManagementSytem.Controllers
 
                 logger.Info("Login successful for Practice user: " + isUser.Username);
 
-                return this.RedirectToAction("EditPracticeExternal", "Home", new { id = isUser.PracticeId});
+                return this.RedirectToAction("EditPracticeExternal", "Home", new { id = isUser.PracticeId, guid = sentguid });
             }
             else
             {

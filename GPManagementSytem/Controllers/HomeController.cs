@@ -87,7 +87,7 @@ namespace GPManagementSytem.Controllers
             }
         }
 
-        public ActionResult EditPracticeExternal(int id)
+        public ActionResult EditPracticeExternal(int id, string guid = null)
         {
             var academicYear = AcademicYearDD();
 
@@ -105,6 +105,7 @@ namespace GPManagementSytem.Controllers
                 var myPractice = _practiceService.GetById(id);
 
                 myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+                ViewBag.Guid = guid;
 
                 return View(myPractice);
             }
@@ -292,9 +293,11 @@ namespace GPManagementSytem.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult EditPracticeExternal(Practices practice)
+        public ActionResult EditPracticeExternal(Practices practice, FormCollection fc)
         {
             //var myPractice = _practiceService.GetById(practice.Id);
+
+            string guid = fc["guid"].ToString();
 
             if (ModelState.IsValid)
             {
@@ -307,6 +310,20 @@ namespace GPManagementSytem.Controllers
                 practicesExternal.ChangesApproved = false;
 
                 _practiceExternalService.AddPractice(practicesExternal);
+
+                //update signupsendlog if edit orginates from signup email
+                if (!String.IsNullOrEmpty(guid))
+                {
+                    var myRecord = _signupSendLogService.GetByGuid(guid);
+
+                    if (myRecord != null)
+                    {
+                        myRecord.DetailsUpdated = true;
+                        myRecord.DateActionTaken = DateTime.Now;
+
+                        _signupSendLogService.EditSignupSendLog(myRecord);
+                    }
+                }
 
                 return RedirectToAction("PracticeUpdatedThanks");
             }
@@ -695,11 +712,38 @@ namespace GPManagementSytem.Controllers
 
             var getSendLog = _signupSendLogService.GetAllNoActivity(AcademicYearDD());
 
-            foreach (var sendlog in getSendLog)
-            {
-                var thisUser = getUsers.Where(x => x.PracticeId == sendlog.PracticeId).FirstOrDefault();
+            //foreach (var sendlog in getSendLog)
+            //{
+            //    var thisUser = getUsers.Where(x => x.PracticeId == sendlog.PracticeId).FirstOrDefault();
 
-                myUsers.Add(thisUser);
+            //    myUsers.Add(thisUser);
+            //}
+
+            foreach (var user in getUsers)
+            {
+                //list all entries for practice. If they don't respond then multiple entries are possible in the send log
+                var sendList = getSendLog.Where(x => x.PracticeId == user.PracticeId);
+
+                bool addToMyUser = true;
+
+                //if any of the entries are true for the academic year then the sign up invite has been actioned. Other updates to practice details can be managed manually at any time by the practice user logging in
+                foreach (var listItem in sendList)
+                {
+                    if (listItem.NoChangesClicked)
+                    {
+                        addToMyUser = false;
+                    }
+
+                    if (listItem.DetailsUpdated)
+                    {
+                        addToMyUser = false;
+                    }
+                }
+
+                if (addToMyUser)
+                {
+                    myUsers.Add(user);
+                }
             }
 
             return myUsers;

@@ -231,6 +231,7 @@
     <Compile Include="Models\MyEnumModel.cs" />
     <Compile Include="Models\Practices.cs" />
     <Compile Include="Models\PracticesExternal.cs" />
+    <Compile Include="Models\QualityVisit.cs" />
     <Compile Include="Models\Signupsendlog.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -243,11 +244,13 @@
     <Compile Include="Services\IMailServerService.cs" />
     <Compile Include="Services\IPracticeExternalService.cs" />
     <Compile Include="Services\IPracticeService.cs" />
+    <Compile Include="Services\IQualityVisitService.cs" />
     <Compile Include="Services\ISignupSendLogService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MailServerService.cs" />
     <Compile Include="Services\PracticeExternalService.cs" />
     <Compile Include="Services\PracticeService.cs" />
+    <Compile Include="Services\QualityVisitService.cs" />
     <Compile Include="Services\SignupSendLogService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SessionManagement\ISessionManager.cs" />

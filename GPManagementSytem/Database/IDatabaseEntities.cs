@@ -16,6 +16,7 @@ namespace GPManagementSytem.Database
         IDbSet<Signupsendlog> SignupSendLog { get; set; }
         IDbSet<EmailTemplates> EmailTemplates { get; set; }
         IDbSet<QualityVisit> QualityVisit { get; set; }
+        IDbSet<SignupDates> SignupDates { get; set; }
 
         int SaveChanges();
     }

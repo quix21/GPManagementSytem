@@ -42,6 +42,18 @@ namespace GPManagementSytem.Controllers
             //_signupSendLogService = signupSendLogService;
         }
 
+        public ActionResult AddSignupDate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSignupDate(SignupDates signupDates)
+        {
+            return View();
+        }
+
         public ActionResult AddPractice()
         {
             var academicYear = AcademicYearDD();
@@ -50,6 +62,7 @@ namespace GPManagementSytem.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddPractice(Practices practice)
         {
             if (ModelState.IsValid)

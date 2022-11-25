@@ -26,20 +26,19 @@ namespace GPManagementSytem.Controllers
     public class HomeController : BaseController
     {
         private readonly IPracticeService _practiceService;
-        //private readonly IPracticeExternalService _practiceExternalService;
         private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
         private readonly IEmailTemplateService _emailTemplateService;
-        //private readonly ISignupSendLogService _signupSendLogService;
+        private readonly ISignupDatesService _signupDatesService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, signupSendLogService)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender, ISignupDatesService signupDatesService) : base(sessionManager, mailSender, practiceExternalService, signupSendLogService)
         {
             _practiceService = practiceService;
-            //_practiceExternalService = practiceExternalService;
             _allocationService = allocationService;
             _userService = userService;
             _emailTemplateService = emailTemplateService;
-            //_signupSendLogService = signupSendLogService;
+            _signupDatesService = signupDatesService;
+
         }
 
         public ActionResult AddSignupDate()
@@ -51,7 +50,33 @@ namespace GPManagementSytem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddSignupDate(SignupDates signupDates)
         {
+            var academicYear = AcademicYearDD();
+
+            signupDates.AcademicYear = academicYear;
+            signupDates.DateUpdated = DateTime.Now;
+
+            _signupDatesService.AddSignupDate(signupDates);
+
             return View();
+        }
+
+        public ActionResult EditSignupDate(int id)
+        {
+            var mySignupDate = _signupDatesService.GetAll().Where(x => x.Id == id).FirstOrDefault();
+
+            return View(mySignupDate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSignupDate(SignupDates signupDates)
+        {
+            signupDates.DateUpdated = DateTime.Now;
+            signupDates.UpdatedBy = 1; //to be updated to login session!!!!
+
+            _signupDatesService.EditSignupDate(signupDates);
+
+            return View(signupDates);
         }
 
         public ActionResult AddPractice()

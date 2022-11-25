@@ -330,6 +330,7 @@
     <Content Include="Views\Home\InviteSent.cshtml" />
     <Content Include="Views\Login\ConfirmNoChanges.cshtml" />
     <Content Include="Views\Home\AddSignupDate.cshtml" />
+    <Content Include="Views\Home\EditSignupDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

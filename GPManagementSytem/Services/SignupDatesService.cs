@@ -27,6 +27,11 @@ namespace GPManagementSytem.Services
             return AllNoTracking().ToList();
         }
 
+        public SignupDates GetByAcademicYear(string year)
+        {
+            return AllNoTracking().Where(x => x.AcademicYear == year).FirstOrDefault();
+        }
+
         public SignupDates AddSignupDate(SignupDates signupDates)
         {
             return UpdateSignupDates(signupDates);

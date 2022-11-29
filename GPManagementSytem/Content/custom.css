@@ -439,6 +439,18 @@ th.Year5 {
         border-right: 1px solid #c6e0b4;
     }
 
+.containerExternal {
+    margin-left: 20px;
+}
+
+.NumberRequestedTable {
+    width: 50%;
+}
+
+.AllocationExtTable {
+    width: 50%;
+}
+
 .fieldChanged {
     /*background-color: #ff6f6f;*/
     border: 2px solid #ff6f6f !important;

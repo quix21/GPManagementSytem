@@ -258,6 +258,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="SessionManagement\ISessionManager.cs" />
     <Compile Include="SessionManagement\SessionManager.cs" />
+    <Compile Include="ViewModel\AllocationExternalViewModel.cs" />
     <Compile Include="ViewModel\AllocationViewModel.cs" />
     <Compile Include="ViewModel\ApprovePracticeChangesViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Login\ConfirmNoChanges.cshtml" />
     <Content Include="Views\Home\AddSignupDate.cshtml" />
     <Content Include="Views\Home\EditSignupDate.cshtml" />
+    <Content Include="Views\Home\AddAllocationExternal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

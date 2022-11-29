@@ -1,0 +1,175 @@
+﻿@using GPManagementSytem.Models
+@model GPManagementSytem.ViewModel.AllocationExternalViewModel
+@{
+                /**/
+
+                ViewBag.Title = "Signup";
+
+                var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
+                var getGuid = ViewBag.Guid;
+}
+
+<h1>@ViewBag.Title</h1>
+<hr class="main">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    @Html.ValidationSummary()
+
+    <div class="validation-summary-errors" id="inclusion-errors"></div>
+
+    <div id="error" style="display:none"></div>
+    @Html.HiddenFor(model => model.allocations.PracticeId)
+    <input type="hidden" name="guid" id="guid" value="@getGuid" />
+    <h4>Main Details</h4>
+    <div class="containerExternal">
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover AllocationExtTable">
+                    <tr>
+                        <td>Week 1 @(Model.signupDates.Year2Wk1From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Week 2 @(Model.signupDates.Year2Wk2From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Week 3 @(Model.signupDates.Year2Wk3From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk3Requested" name="Year2Wk3Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Week 4 @(Model.signupDates.Year2Wk4From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk4Requested" name="Year2Wk4Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Week 5 @(Model.signupDates.Year2Wk5From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk5Requested" name="Year2Wk5Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Week 6 @(Model.signupDates.Year2Wk6From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year2Wk6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk6Requested" name="Year2Wk6Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <table class="table NumberRequestedTable">
+                    <tr>
+                        <td>Number of students requested:</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                2&nbsp; <input class="form-check-input" type="checkbox" id="Year2Requested2" name="Year2Requested2" value="2">
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">Week 1: up to</span>
+                        @Model.signupDates.Year2Wk1From
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">and inc</span>
+                        @Model.signupDates.Year2Wk1To
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text">Tick here</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Number of students requested per week:  </span>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"></div>
+        </div>
+    </div>
+}

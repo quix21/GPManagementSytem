@@ -41,6 +41,70 @@ namespace GPManagementSytem.Controllers
 
         }
 
+        public ActionResult AddAllocationExternal()
+        {
+            var academicYear = AcademicYearDD();
+
+            var getDates = _signupDatesService.GetByAcademicYear(academicYear);
+
+            //TODO - get PracticeId and Guid from login querystring ***********************
+
+            int practiceId = 346;
+
+            AllocationExternalViewModel myModel = new AllocationExternalViewModel();
+            Allocations myAllocation = new Allocations();
+
+            myAllocation.PracticeId = practiceId;
+
+            myModel.signupDates = getDates;
+            myModel.allocations = myAllocation;
+
+            return View(myModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddAllocationExternal(AllocationExternalViewModel allocationExternalViewModel, FormCollection fc)
+        {
+            string Year2Requested2 = fc["Year2Requested2"];
+            string Year2Requested4 = fc["Year2Requested4"];
+
+            string year2requested = "";
+
+            if (Year2Requested2 != null)
+            {
+                year2requested = Year2Requested2;
+            }
+            else
+            {
+                year2requested = Year2Requested4;
+            }
+
+            bool requestChecked = false;
+
+            bool Year2Wk1Requested = Convert.ToBoolean(fc["Year2Wk1Requested"]);
+            bool Year2Wk2Requested = Convert.ToBoolean(fc["Year2Wk2Requested"]);
+            bool Year2Wk3Requested = Convert.ToBoolean(fc["Year2Wk3Requested"]);
+
+            if (Year2Wk1Requested)
+            {
+                allocationExternalViewModel.allocations.Year2Wk1Requested = year2requested;
+            }
+
+            if (Year2Wk2Requested)
+            {
+                allocationExternalViewModel.allocations.Year2Wk2Requested = year2requested;
+            }
+
+            if (Year2Wk3Requested)
+            {
+                allocationExternalViewModel.allocations.Year2Wk3Requested = year2requested;
+            }
+
+
+            return View();
+        }
+
         public ActionResult AddSignupDate()
         {
             return View();

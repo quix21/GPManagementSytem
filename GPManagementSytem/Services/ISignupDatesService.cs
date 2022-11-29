@@ -11,5 +11,6 @@ namespace GPManagementSytem.Services
         List<SignupDates> GetAll();
         SignupDates AddSignupDate(SignupDates signupDates);
         SignupDates EditSignupDate(SignupDates signupDates);
+        SignupDates GetByAcademicYear(string year);
     }
 }

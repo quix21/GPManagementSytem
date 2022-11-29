@@ -59,6 +59,17 @@ namespace GPManagementSytem.Controllers
             myModel.signupDates = getDates;
             myModel.allocations = myAllocation;
 
+            Type type = typeof(Allocations);
+            PropertyInfo[] properties = type.GetProperties();
+
+
+            foreach (PropertyInfo info in properties)
+            {
+
+                var test = info.Name;
+
+            }
+
             return View(myModel);
         }
 
@@ -80,7 +91,21 @@ namespace GPManagementSytem.Controllers
                 year2requested = Year2Requested4;
             }
 
-            bool requestChecked = false;
+
+            
+
+            Type type = typeof(Allocations);
+            PropertyInfo[] properties = type.GetProperties();
+
+
+            foreach (PropertyInfo info in properties)
+            {
+                var test = info.Name;
+
+            }
+
+
+                bool requestChecked = false;
 
             bool Year2Wk1Requested = Convert.ToBoolean(fc["Year2Wk1Requested"]);
             bool Year2Wk2Requested = Convert.ToBoolean(fc["Year2Wk2Requested"]);

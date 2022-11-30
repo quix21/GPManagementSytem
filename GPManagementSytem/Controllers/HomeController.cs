@@ -80,7 +80,11 @@ namespace GPManagementSytem.Controllers
             string Year2Requested2 = fc["Year2Requested2"];
             string Year2Requested4 = fc["Year2Requested4"];
 
+            string Year5Requested1 = fc["Year5Requested1"];
+            string Year5Requested2 = fc["Year5Requested2"];
+
             string year2requested = "";
+            string year5requested = "";
 
             if (Year2Requested2 != null)
             {
@@ -91,41 +95,46 @@ namespace GPManagementSytem.Controllers
                 year2requested = Year2Requested4;
             }
 
-
-            
+            if (Year5Requested1 != null)
+            {
+                year5requested = Year5Requested1;
+            }
+            else
+            {
+                year5requested = Year5Requested2;
+            }
+                                  
 
             Type type = typeof(Allocations);
             PropertyInfo[] properties = type.GetProperties();
 
+            //iterate through the form collection. If the form field matches the name of the class property (which are indentically named) it means that the box has been ticked for that block/week. Thefore add 2 or 4 students to that block/week.
 
-            foreach (PropertyInfo info in properties)
+            //this persists from years 2, 3 and 4. In year 5, that value changes to 1 or 2 per block
+
+            foreach (var key in fc.AllKeys)
             {
-                var test = info.Name;
+                var fieldName = key;
 
+                foreach (PropertyInfo info in properties)
+                {
+                    var classPropertyName = info.Name;
+
+                    if (fieldName == classPropertyName)
+                    {
+                        //check if year 2-4 or year 5
+                        if (fieldName.IndexOf("Year5") == -1)
+                        {
+                            info.SetValue(allocationExternalViewModel.allocations, year2requested, null);
+                        }
+                        else
+                        {
+                            info.SetValue(allocationExternalViewModel.allocations, year5requested, null);
+                        }
+
+                    }
+                }
             }
-
-
-                bool requestChecked = false;
-
-            bool Year2Wk1Requested = Convert.ToBoolean(fc["Year2Wk1Requested"]);
-            bool Year2Wk2Requested = Convert.ToBoolean(fc["Year2Wk2Requested"]);
-            bool Year2Wk3Requested = Convert.ToBoolean(fc["Year2Wk3Requested"]);
-
-            if (Year2Wk1Requested)
-            {
-                allocationExternalViewModel.allocations.Year2Wk1Requested = year2requested;
-            }
-
-            if (Year2Wk2Requested)
-            {
-                allocationExternalViewModel.allocations.Year2Wk2Requested = year2requested;
-            }
-
-            if (Year2Wk3Requested)
-            {
-                allocationExternalViewModel.allocations.Year2Wk3Requested = year2requested;
-            }
-
 
             return View();
         }

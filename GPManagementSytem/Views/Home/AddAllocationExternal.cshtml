@@ -21,7 +21,7 @@
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.allocations.PracticeId)
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
-    <h4>Main Details</h4>
+    <h4>2nd Year</h4>
     <div class="containerExternal">
         <div class="container">
             <div class="row">
@@ -117,45 +117,287 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    @*<div class="container">
+        <h4>3rd Year</h4>
+        <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text">Week 1: up to</span>
-                        @Model.signupDates.Year2Wk1From
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text">and inc</span>
-                        @Model.signupDates.Year2Wk1To
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <span class="input-group-text">Tick here</span>
-                    </div>
-                </div>
+                <table class="table table-hover AllocationExtTable">
+                    <tr>
+                        <td>Block 1 @(Model.signupDates.Year3B1From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B1Requested" name="Year3B1Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 2 @(Model.signupDates.Year3B2From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B2Requested" name="Year3B2Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 3 @(Model.signupDates.Year3B3From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B3Requested" name="Year3B3Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 4 @(Model.signupDates.Year3B4From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B4Requested" name="Year3B4Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 5 @(Model.signupDates.Year3B5From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B5Requested" name="Year3B5Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 6 @(Model.signupDates.Year3B6From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B6Requested" name="Year3B6Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 7 @(Model.signupDates.Year3B7From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year3B7To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year3B7Requested" name="Year3B7Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <h4>4th Year</h4>
+        <div class="container">
+            <div class="row">
+                <table class="table table-hover AllocationExtTable">
+                    <tr>
+                        <td>Block 1 @(Model.signupDates.Year4B1From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B1Requested" name="Year4B1Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 2 @(Model.signupDates.Year4B2From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B2Requested" name="Year4B2Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 3 @(Model.signupDates.Year4B3From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B3Requested" name="Year4B3Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 4 @(Model.signupDates.Year4B4From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B4Requested" name="Year4B4Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 5 @(Model.signupDates.Year4B5From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B5Requested" name="Year4B5Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 6 @(Model.signupDates.Year4B6From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B6Requested" name="Year4B6Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 7 @(Model.signupDates.Year4B7From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B7To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B7Requested" name="Year4B7Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 8 @(Model.signupDates.Year4B8From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year4B8To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year4B8Requested" name="Year4B8Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
 
+
+        <h4>5th Year</h4>
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text">Number of students requested per week:  </span>
+                <table class="table table-hover AllocationExtTable">
+                    <tr>
+                        <td>Block 1 @(Model.signupDates.Year5B1From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B1Requested" name="Year5B1Requested" value="true">
 
-                    </div>
-                </div>
-                <div class="col-md-6">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 2 @(Model.signupDates.Year5B2From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B2Requested" name="Year5B2Requested" value="true">
 
-                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 3 @(Model.signupDates.Year5B3From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B3Requested" name="Year5B3Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 4 @(Model.signupDates.Year5B4From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B4Requested" name="Year5B4Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 5 @(Model.signupDates.Year5B5From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B5Requested" name="Year5B5Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Block 6 @(Model.signupDates.Year5B6From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>up to and including</td>
+                        <td>@(Model.signupDates.Year5B6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="Year5B6Requested" name="Year5B6Requested" value="true">
+
+                            </div>
+                        </td>
+                    </tr>
+ 
+                </table>
             </div>
-        </div>*@
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <table class="table NumberRequestedTable">
+                    <tr>
+                        <td>Number of students requested per week:</td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                1&nbsp; <input class="form-check-input" type="checkbox" id="Year5Requested1" name="Year5Requested1" value="1">
 
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-check form-check-inline">
+                                2&nbsp;  <input class="form-check-input" type="checkbox" id="Year5Requested2" name="Year5Requested2" value="2">
 
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+   
 
 
 

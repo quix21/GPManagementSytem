@@ -102,7 +102,7 @@ namespace GPManagementSytem.Controllers
 
                 logger.Info("Login successful for Practice user: " + isUser.Username);
 
-                return this.RedirectToAction("EditPracticeExternal", "Home", new { id = isUser.PracticeId, guid = sentguid });
+                return this.RedirectToAction("AddAllocationExternal", "Home", new { id = isUser.PracticeId, guid = sentguid });
             }
             else
             {

@@ -20,6 +20,7 @@
 
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.allocations.PracticeId)
+    @Html.HiddenFor(model => model.allocations.AcademicYear)
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
     <h4>2nd Year</h4>
     <div class="containerExternal">
@@ -32,8 +33,8 @@
                         <td>@(Model.signupDates.Year2Wk1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true">
-
+                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true"  @(Model.Year2Wk1RequestedChecked ?  "checked" : "")>
+                                
                             </div>
                         </td>
                     </tr>
@@ -109,7 +110,8 @@
                         </td>
                         <td>
                             <div class="form-check form-check-inline">
-                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4">
+                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4" @(Model.Year2Requested4Checked ?  "checked" : "")>
+
 
                             </div>
                         </td>

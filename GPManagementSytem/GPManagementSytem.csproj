@@ -333,6 +333,7 @@
     <Content Include="Views\Home\AddSignupDate.cshtml" />
     <Content Include="Views\Home\EditSignupDate.cshtml" />
     <Content Include="Views\Home\AddAllocationExternal.cshtml" />
+    <Content Include="Views\Home\AllocationRequestSubmitted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

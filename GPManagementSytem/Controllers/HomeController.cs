@@ -41,15 +41,13 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public ActionResult AddAllocationExternal()
+        public ActionResult AddAllocationExternal(int id, string guid = null)
         {
             var academicYear = AcademicYearDD();
 
             var getDates = _signupDatesService.GetByAcademicYear(academicYear);
 
-            //TODO - get PracticeId and Guid from login querystring ***********************
-
-            int practiceId = 346;
+            int practiceId = id;
 
             AllocationExternalViewModel myModel = new AllocationExternalViewModel();
             Allocations myAllocation = new Allocations();
@@ -59,16 +57,9 @@ namespace GPManagementSytem.Controllers
             myModel.signupDates = getDates;
             myModel.allocations = myAllocation;
 
-            Type type = typeof(Allocations);
-            PropertyInfo[] properties = type.GetProperties();
+            myModel.allocations.AcademicYear = academicYear;
 
-
-            foreach (PropertyInfo info in properties)
-            {
-
-                var test = info.Name;
-
-            }
+            ViewBag.Guid = guid;
 
             return View(myModel);
         }
@@ -77,6 +68,8 @@ namespace GPManagementSytem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddAllocationExternal(AllocationExternalViewModel allocationExternalViewModel, FormCollection fc)
         {
+            string guid = fc["guid"].ToString();
+
             string Year2Requested2 = fc["Year2Requested2"];
             string Year2Requested4 = fc["Year2Requested4"];
 
@@ -103,7 +96,8 @@ namespace GPManagementSytem.Controllers
             {
                 year5requested = Year5Requested2;
             }
-                                  
+             
+            
 
             Type type = typeof(Allocations);
             PropertyInfo[] properties = type.GetProperties();
@@ -111,6 +105,8 @@ namespace GPManagementSytem.Controllers
             //iterate through the form collection. If the form field matches the name of the class property (which are indentically named) it means that the box has been ticked for that block/week. Thefore add 2 or 4 students to that block/week.
 
             //this persists from years 2, 3 and 4. In year 5, that value changes to 1 or 2 per block
+
+            bool Year2Checked = false;
 
             foreach (var key in fc.AllKeys)
             {
@@ -126,6 +122,10 @@ namespace GPManagementSytem.Controllers
                         if (fieldName.IndexOf("Year5") == -1)
                         {
                             info.SetValue(allocationExternalViewModel.allocations, year2requested, null);
+                            Year2Checked = true;
+
+                            string dateChecked = fieldName + "checked";
+                            allocationExternalViewModel.Year2Wk1RequestedChecked = true;
                         }
                         else
                         {
@@ -136,6 +136,54 @@ namespace GPManagementSytem.Controllers
                 }
             }
 
+
+            if (year2requested == null && Year2Checked)
+            {
+                ModelState.AddModelError("year2requested", "Please indicate whether you'd like 2 or 4 students in year 2");
+            }
+
+            if (year2requested != "" & !Year2Checked)
+            {
+                ModelState.AddModelError("year2requested", "Please indicate which weeks you are able to accomodate students in year 2");
+                allocationExternalViewModel.Year2Requested4Checked = true;
+            }
+
+            if (ModelState.IsValid)
+            {
+                allocationExternalViewModel.allocations.DateCreated = DateTime.Now;
+                allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
+
+                _allocationService.AddAllocation(allocationExternalViewModel.allocations);
+
+                //update sentlog to show that email has been responded to/allocation requested
+                if (!String.IsNullOrEmpty(guid))
+                {
+                    var myRecord = _signupSendLogService.GetByGuid(guid);
+
+                    if (myRecord != null)
+                    {
+                        myRecord.DetailsUpdated = true;
+                        myRecord.DateActionTaken = DateTime.Now;
+
+                        _signupSendLogService.EditSignupSendLog(myRecord);
+                    }
+                }
+
+                return RedirectToAction("AllocationRequestSubmitted");
+            }
+            else
+            {
+                var getDates = _signupDatesService.GetByAcademicYear(allocationExternalViewModel.allocations.AcademicYear);
+
+                allocationExternalViewModel.signupDates = getDates;
+
+                return View(allocationExternalViewModel);
+            }
+
+        }
+
+        public ActionResult AllocationRequestSubmitted()
+        {
             return View();
         }
 

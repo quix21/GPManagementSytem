@@ -102,6 +102,9 @@ namespace GPManagementSytem.Controllers
             Type type = typeof(Allocations);
             PropertyInfo[] properties = type.GetProperties();
 
+            Type checkedType = typeof(AllocationExternalViewModel);
+            PropertyInfo[] checkedProperties = checkedType.GetProperties();
+
             //iterate through the form collection. If the form field matches the name of the class property (which are indentically named) it means that the box has been ticked for that block/week. Thefore add 2 or 4 students to that block/week.
 
             //this persists from years 2, 3 and 4. In year 5, that value changes to 1 or 2 per block
@@ -124,8 +127,18 @@ namespace GPManagementSytem.Controllers
                             info.SetValue(allocationExternalViewModel.allocations, year2requested, null);
                             Year2Checked = true;
 
-                            string dateChecked = fieldName + "checked";
-                            allocationExternalViewModel.Year2Wk1RequestedChecked = true;
+                            string dateChecked = fieldName + "Checked";
+
+                            foreach (PropertyInfo checkedInfo in checkedProperties)
+                            {
+                                if (dateChecked == checkedInfo.Name)
+                                {
+                                    checkedInfo.SetValue(allocationExternalViewModel, true, null);
+                                }
+                            }
+
+                            //allocationExternalViewModel.Year2Wk1RequestedChecked = true;
+                            
                         }
                         else
                         {

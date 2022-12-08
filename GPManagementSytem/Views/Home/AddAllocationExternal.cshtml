@@ -44,7 +44,7 @@
                         <td>@(Model.signupDates.Year2Wk2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true" @(Model.Year2Wk2RequestedChecked ?  "checked" : "")>
 
                             </div>
                         </td>

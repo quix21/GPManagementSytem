@@ -61,7 +61,12 @@ namespace GPManagementSytem.Controllers
         {
             int showCount = _practiceExternalService.GetAllPending().Count();
 
+            var academicYear = AcademicYearDD();
+
+            int getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).Count();
+
             ViewData["changesCount"] = showCount;
+            ViewData["signupReturnsCount"] = getReturns;
         }
 
         public string AcademicYearDD()

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<GPManagementSytem.Models.Practices>
+
+@{
+    ViewBag.Title = "Manage Signup Responses";
+
+
+}
+
+<h1>@ViewBag.Title</h1>
+<div class="container-fluid">
+
+    <div class="card shadow">
+        <div class="card-header py-3"></div>
+        <div class="card-body">
+
+            <div>
+                <table class="table table-hover" id="simpleManage">
+                    <thead>
+                        <tr>
+                            <th>Surgery</th>
+                            <th>Address 1</th>
+                            <th>Telephone</th>
+                            <th>Main GP</th>
+                            <th>Practice Manager</th>
+                            <th style="width: 280px">Practice Manager Email</th>
+                            <th style="width: 100px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var myPractice in Model)
+                        {
+
+                            <tr>
+
+                                <td>@myPractice.Surgery</td>
+                                <td>@myPractice.Address1</td>
+                                <td>@myPractice.Telephone</td>
+                                <td>@myPractice.GP1</td>
+                                <td>@myPractice.PracticeManager</td>
+                                <td>@myPractice.PMEmail</td>
+                                <td>
+
+                                        <button class="btn btn-link" type="button" onclick="location.href='@Url.Action("AddAllocation", "Home", new { id = myPractice.Id })'">allocate requests</button>
+                                    
+                                </td>
+                            </tr>
+
+
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Surgery</th>
+                            <th>Address 1</th>
+                            <th>Telephone</th>
+                            <th>Main GP</th>
+                            <th>Practice Manager</th>
+                            <th>Practice Manager Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

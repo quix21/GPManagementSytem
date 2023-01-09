@@ -596,6 +596,26 @@ namespace GPManagementSytem.Controllers
             return View(myPractices);
         }
 
+        public ActionResult ManageSignupReturns()
+        {
+            var academicYear = AcademicYearDD();
+
+            var getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).OrderByDescending(x => x.DateActionTaken).ToList();
+
+            List<Practices> PracticesReturned = new List<Practices>();
+
+            var getAllPractices = _practiceService.GetAll();
+
+            foreach (var signup in getReturns)
+            {
+                var getPractice = getAllPractices.Where(x => x.Id == signup.PracticeId).FirstOrDefault();
+
+                PracticesReturned.Add(getPractice);
+            }
+
+            return View(PracticesReturned);
+        }
+
         public ActionResult AddAllocation(int id)
         {
             var academicYear = AcademicYearDD();

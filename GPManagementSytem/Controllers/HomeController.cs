@@ -45,11 +45,33 @@ namespace GPManagementSytem.Controllers
         {
             var academicYear = AcademicYearDD();
 
+            AllocationExternalViewModel myModel = new AllocationExternalViewModel();
+
+            ////////////////
+
+            //check if there are previous change requests pending
+            PracticesExternal changesPending = new PracticesExternal();
+
+            changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id).FirstOrDefault();
+
+            if (changesPending != null)
+            {
+                return RedirectToAction("ApprovalPending");
+            }
+            else
+            {
+                var myPractice = _practiceService.GetById(id);
+
+                myPractice.PracticeStatusGroup = ManagePracticeStatusGroupGET(myPractice);
+                ViewBag.Guid = guid;
+
+                myModel.practice = myPractice;
+            }
+
             var getDates = _signupDatesService.GetByAcademicYear(academicYear);
 
             int practiceId = id;
 
-            AllocationExternalViewModel myModel = new AllocationExternalViewModel();
             Allocations myAllocation = new Allocations();
 
             myAllocation.PracticeId = practiceId;
@@ -163,6 +185,19 @@ namespace GPManagementSytem.Controllers
 
             if (ModelState.IsValid)
             {
+                //update contact details
+                ManagePracticeStatusGroupPOST(allocationExternalViewModel.practice);
+
+                PracticesExternal practicesExternal = ParsePracticeToExternal(allocationExternalViewModel.practice);
+
+                practicesExternal.RequestedBy = Convert.ToInt32(Session["UserId"].ToString());
+                practicesExternal.DateRequested = DateTime.Now;
+                practicesExternal.ChangesApproved = false;
+
+                _practiceExternalService.AddPractice(practicesExternal);
+
+                //add allocation details
+
                 allocationExternalViewModel.allocations.DateCreated = DateTime.Now;
                 allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
 

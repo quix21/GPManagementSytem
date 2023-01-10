@@ -1,12 +1,12 @@
 ﻿@using GPManagementSytem.Models
 @model GPManagementSytem.ViewModel.AllocationExternalViewModel
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Signup";
+    ViewBag.Title = "Signup";
 
-                var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
-                var getGuid = ViewBag.Guid;
+    var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
+    var getGuid = ViewBag.Guid;
 }
 
 <h1>@ViewBag.Title</h1>
@@ -19,9 +19,163 @@
     <div class="validation-summary-errors" id="inclusion-errors"></div>
 
     <div id="error" style="display:none"></div>
+    @Html.HiddenFor(model => model.practice.Id)
     @Html.HiddenFor(model => model.allocations.PracticeId)
     @Html.HiddenFor(model => model.allocations.AcademicYear)
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
+    <h4>Practice Details</h4>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Surgery)</span>
+                    @Html.EditorFor(model => model.practice.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.practice.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.SupplierNumber)</span>
+                    @Html.EditorFor(model => model.practice.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Address1)</span>
+                    @Html.EditorFor(model => model.practice.Address1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Address2)</span>
+                    @Html.EditorFor(model => model.practice.Address2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Town)</span>
+                    @Html.EditorFor(model => model.practice.Town, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Postcode)</span>
+                    @Html.EditorFor(model => model.practice.Postcode, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.Telephone)</span>
+                    @Html.EditorFor(model => model.practice.Telephone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.PracticeManager)</span>
+                    @Html.EditorFor(model => model.practice.PracticeManager, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.PMEmail)</span>
+                    @Html.EditorFor(model => model.practice.PMEmail, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.GP1)</span>
+                    @Html.EditorFor(model => model.practice.GP1, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.GP1Email)</span>
+                    @Html.EditorFor(model => model.practice.GP1Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.GP2)</span>
+                    @Html.EditorFor(model => model.practice.GP2, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.GP2Email)</span>
+                    @Html.EditorFor(model => model.practice.GP2Email, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.AdditionalEmails)</span>
+                    @Html.TextAreaFor(model => model.practice.AdditionalEmails,
+new { @class = "form-control fullTextArea", @rows = 3 })
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.practice.ListSize)</span>
+                    @Html.EditorFor(model => model.practice.ListSize, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br /><br />
     <h4>2nd Year</h4>
     <div class="containerExternal">
         <div class="container">
@@ -33,8 +187,8 @@
                         <td>@(Model.signupDates.Year2Wk1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true"  @(Model.Year2Wk1RequestedChecked ?  "checked" : "")>
-                                
+                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true" @(Model.Year2Wk1RequestedChecked ? "checked" : "")>
+
                             </div>
                         </td>
                     </tr>
@@ -44,7 +198,7 @@
                         <td>@(Model.signupDates.Year2Wk2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true" @(Model.Year2Wk2RequestedChecked ?  "checked" : "")>
+                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true" @(Model.Year2Wk2RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -110,7 +264,7 @@
                         </td>
                         <td>
                             <div class="form-check form-check-inline">
-                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4" @(Model.Year2Requested4Checked ?  "checked" : "")>
+                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4" @(Model.Year2Requested4Checked ? "checked" : "")>
 
 
                             </div>
@@ -370,7 +524,7 @@
                             </div>
                         </td>
                     </tr>
- 
+
                 </table>
             </div>
         </div>
@@ -399,7 +553,7 @@
 
     </div>
 
-   
+
 
 
 

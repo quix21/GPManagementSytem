@@ -11,6 +11,8 @@ namespace GPManagementSytem.ViewModel
     {
         public Allocations allocations { get; set; }
         public SignupDates signupDates { get; set; }
+        public Practices practice { get; set; }
+
 
         [NotMapped]
         public bool Year2Requested4Checked { get; set; }

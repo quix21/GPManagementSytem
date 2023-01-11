@@ -20,6 +20,11 @@
 
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.practice.Id)
+    @Html.HiddenFor(model => model.practice.DateCreated)
+    @Html.HiddenFor(model => model.practice.UpdatedBy)
+    @Html.HiddenFor(model => model.practice.DateUpdated)
+    @Html.HiddenFor(model => model.practice.ContactSurgery)
+    @Html.HiddenFor(model => model.practice.NewPractice)
     @Html.HiddenFor(model => model.allocations.PracticeId)
     @Html.HiddenFor(model => model.allocations.AcademicYear)
     <input type="hidden" name="guid" id="guid" value="@getGuid" />

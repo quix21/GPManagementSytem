@@ -8,6 +8,7 @@ using GPManagementSytem.ViewModel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -186,15 +187,20 @@ namespace GPManagementSytem.Controllers
             if (ModelState.IsValid)
             {
                 //update contact details
-                ManagePracticeStatusGroupPOST(allocationExternalViewModel.practice);
+                //check if any practice details have changed. If not then bypass the PracticeExternal/approval functionality
 
-                PracticesExternal practicesExternal = ParsePracticeToExternal(allocationExternalViewModel.practice);
+                if (ContactDetailsChanged(allocationExternalViewModel))
+                {
+                    ManagePracticeStatusGroupPOST(allocationExternalViewModel.practice);
 
-                practicesExternal.RequestedBy = Convert.ToInt32(Session["UserId"].ToString());
-                practicesExternal.DateRequested = DateTime.Now;
-                practicesExternal.ChangesApproved = false;
+                    PracticesExternal practicesExternal = ParsePracticeToExternal(allocationExternalViewModel.practice);
 
-                _practiceExternalService.AddPractice(practicesExternal);
+                    practicesExternal.RequestedBy = Convert.ToInt32(Session["UserId"].ToString());
+                    practicesExternal.DateRequested = DateTime.Now;
+                    practicesExternal.ChangesApproved = false;
+
+                    _practiceExternalService.AddPractice(practicesExternal);
+                }
 
                 //add allocation details
 
@@ -228,6 +234,33 @@ namespace GPManagementSytem.Controllers
                 return View(allocationExternalViewModel);
             }
 
+        }
+
+        public bool ContactDetailsChanged(AllocationExternalViewModel allocationExternalViewModel)
+        {
+            bool detailsChanged = false;
+
+            Practices currentPractice = _practiceService.GetById(allocationExternalViewModel.practice.Id);
+
+            Type practiceType = typeof(Practices);
+            PropertyInfo[] practiceProperties = practiceType.GetProperties();
+
+
+            foreach (PropertyInfo info in practiceProperties)
+            {
+                var classPropertyName = info.Name;
+                var showCurrentValue = info.GetValue(currentPractice);
+                var showChangedValue = info.GetValue(allocationExternalViewModel.practice);
+
+                int checkChange = Comparer.DefaultInvariant.Compare(showCurrentValue, showChangedValue);
+
+                if (checkChange != 0)
+                {
+                    detailsChanged = true;
+                }
+            }
+
+            return detailsChanged;
         }
 
         public ActionResult AllocationRequestSubmitted()

@@ -1,7 +1,7 @@
 ﻿@using GPManagementSytem.ViewModel
 @model IEnumerable<GPManagementSytem.ViewModel.AllocationViewModel>
 @{
-    ViewBag.Title = "At A Glance";
+    ViewBag.Title = "At A Glance Combined";
 
 }
 
@@ -12,7 +12,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    
+                    @Html.ActionLink("At A Glance", "AtAGlance", "Home", null, null)
+                    |
                     @Html.ActionLink("Download spreadsheet", "DownloadAtAGlance", "Home", null, null)
                 </div>
                 </div>
@@ -30,76 +31,151 @@
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk1Allocated) </span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk2Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk2Allocated) </span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk3Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk3Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk4Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk4Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk5Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk5Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk6Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk6Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B1Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B1Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B2Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B2Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B3Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B3Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B4Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B4Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B5Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B5Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B6Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B6Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B7Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B7Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B1Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B1Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B2Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B2Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B3Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B3Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B4Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B4Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B5Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B5Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B6Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B6Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B7Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year4">@Html.LabelFor(model => Model.First().Year4B7Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B1Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B1Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B2Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B2Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B3Requested)</span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B3Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B4Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B4Allocated)</span></div>
                                 </th>
                                 <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B5Requested)</span></div>
+                                </th>
+                                <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B5Allocated)</span></div>
+                                </th>
+                                <th class="rotated-text">
+                                    <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B6Requested) </span></div>
                                 </th>
                                 <th class="rotated-text">
                                     <div><span class="Year5">@Html.LabelFor(model => Model.First().Year5B6Allocated) </span></div>
@@ -117,30 +193,55 @@
                                 <td>@myAllocation.Postcode</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk1Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk1Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk2Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk2Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk3Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk3Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk4Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk4Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk5Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk5Allocated</td>
+                                <td class="numberAllocated2">@myAllocation.Year2Wk6Requested</td>
                                 <td class="numberAllocated2">@myAllocation.Year2Wk6Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B1Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B1Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B2Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B2Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B3Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B3Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B4Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B4Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B5Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B5Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B6Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B6Allocated</td>
+                                <td class="numberAllocated3">@myAllocation.Year3B7Requested</td>
                                 <td class="numberAllocated3">@myAllocation.Year3B7Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B1Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B1Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B2Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B2Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B3Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B3Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B4Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B4Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B5Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B5Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B6Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B6Allocated</td>
+                                <td class="numberAllocated4">@myAllocation.Year4B7Requested</td>
                                 <td class="numberAllocated4">@myAllocation.Year4B7Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B1Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B1Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B2Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B2Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B3Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B3Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B4Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B4Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B5Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B5Allocated</td>
+                                <td class="numberAllocated5">@myAllocation.Year5B6Requested</td>
                                 <td class="numberAllocated5">@myAllocation.Year5B6Allocated</td>
                                 <td class="ServiceContr">
                                     @{

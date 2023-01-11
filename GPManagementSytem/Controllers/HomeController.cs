@@ -788,6 +788,24 @@ namespace GPManagementSytem.Controllers
             return View(allocationViewModel);
         }
 
+        public ActionResult AtAGlanceCombined()
+        {
+            var academicYear = AcademicYearDD();
+
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myPractices = _practiceService.GetAll();
+
+            List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
+
+            foreach (var allocation in myAllocation)
+            {
+                allocationViewModel.Add(ParseAllocationViewModelEDIT(new AllocationViewModel(), allocation, myPractices));
+
+            }
+
+            return View(allocationViewModel);
+        }
+
         public ActionResult ManageUsers()
         {
             var myUsers = _userService.GetAll();
@@ -1320,11 +1338,17 @@ namespace GPManagementSytem.Controllers
             CreateWorkbook();
         }
 
+        public void DownloadAtAGlanceCombined()
+        {
+
+            CreateWorkbook();
+        }
 
         public void CreateWorkbook()
         {
             List<string> wsNames = new List<string>();
-            wsNames.Add("Assigned");
+            wsNames.Add("Allocated");
+            wsNames.Add("Combined");
 
             //Create Excel object
 
@@ -1332,6 +1356,8 @@ namespace GPManagementSytem.Controllers
             ExcelPackage ep = new ExcelPackage();
 
             createWorksheet(wsNames[0].ToString(), ep);
+            createWorksheetCombined(wsNames[1].ToString(), ep);
+
 
             string fileName = "AtAGlance-" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm") + ".xlsx";
 
@@ -1486,6 +1512,209 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 28].Value = allocation.Year5B6Allocated;
 
                 worksheet.Cells[rowCounter, 29].Value = ShowServiceContract(allocation.ServiceContractReceived);
+
+                rowCounter++;
+            }
+
+
+
+            return worksheet;
+        }
+
+        private ExcelWorksheet createWorksheetCombined(string wsName, ExcelPackage ep)
+        {
+            var academicYear = AcademicYearDD();
+
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myPractices = _practiceService.GetAll();
+
+            List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
+
+            foreach (var allocation in myAllocation)
+            {
+                allocationViewModel.Add(ParseAllocationViewModelEDIT(new AllocationViewModel(), allocation, myPractices));
+
+            }
+
+
+            ExcelWorksheet worksheet = ep.Workbook.Worksheets.Add(wsName);
+
+            var format = new ExcelTextFormat();
+            format.Delimiter = ';';
+            format.TextQualifier = '"';
+            format.DataTypes = new[] { eDataTypes.String };
+
+            worksheet.Cells["A2"].LoadFromText("Practice Name");
+            worksheet.Cells["B2"].LoadFromText("Postcode");
+            worksheet.Cells["C2"].LoadFromText(GetAttributeDisplayName("Year2Wk1Requested"));
+            worksheet.Cells["D2"].LoadFromText(GetAttributeDisplayName("Year2Wk1Allocated"));
+            worksheet.Cells["E2"].LoadFromText(GetAttributeDisplayName("Year2Wk2Requested"));
+            worksheet.Cells["F2"].LoadFromText(GetAttributeDisplayName("Year2Wk2Allocated"));
+            worksheet.Cells["G2"].LoadFromText(GetAttributeDisplayName("Year2Wk3Requested"));
+            worksheet.Cells["H2"].LoadFromText(GetAttributeDisplayName("Year2Wk3Allocated"));
+            worksheet.Cells["I2"].LoadFromText(GetAttributeDisplayName("Year2Wk4Requested"));
+            worksheet.Cells["J2"].LoadFromText(GetAttributeDisplayName("Year2Wk4Allocated"));
+            worksheet.Cells["K2"].LoadFromText(GetAttributeDisplayName("Year2Wk5Requested"));
+            worksheet.Cells["L2"].LoadFromText(GetAttributeDisplayName("Year2Wk5Allocated"));
+            worksheet.Cells["M2"].LoadFromText(GetAttributeDisplayName("Year2Wk6Requested"));
+            worksheet.Cells["N2"].LoadFromText(GetAttributeDisplayName("Year2Wk6Allocated"));
+
+            var year2Header = worksheet.Cells["C2:N2"];
+            year2Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#f8cbad");
+            year2Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year2Header.Style.Font.Bold = true;
+            year2Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year2Header.Style.TextRotation = 90;
+
+            worksheet.Cells["O2"].LoadFromText(GetAttributeDisplayName("Year3B1Requested"));
+            worksheet.Cells["P2"].LoadFromText(GetAttributeDisplayName("Year3B1Allocated"));
+            worksheet.Cells["Q2"].LoadFromText(GetAttributeDisplayName("Year3B2Requested"));
+            worksheet.Cells["R2"].LoadFromText(GetAttributeDisplayName("Year3B2Allocated"));
+            worksheet.Cells["S2"].LoadFromText(GetAttributeDisplayName("Year3B3Requested"));
+            worksheet.Cells["T2"].LoadFromText(GetAttributeDisplayName("Year3B3Allocated"));
+            worksheet.Cells["U2"].LoadFromText(GetAttributeDisplayName("Year3B4Requested"));
+            worksheet.Cells["V2"].LoadFromText(GetAttributeDisplayName("Year3B4Allocated"));
+            worksheet.Cells["W2"].LoadFromText(GetAttributeDisplayName("Year3B5Requested"));
+            worksheet.Cells["X2"].LoadFromText(GetAttributeDisplayName("Year3B5Allocated"));
+            worksheet.Cells["Y2"].LoadFromText(GetAttributeDisplayName("Year3B6Requested"));
+            worksheet.Cells["Z2"].LoadFromText(GetAttributeDisplayName("Year3B6Allocated"));
+            worksheet.Cells["AA2"].LoadFromText(GetAttributeDisplayName("Year3B7Requested"));
+            worksheet.Cells["AB2"].LoadFromText(GetAttributeDisplayName("Year3B7Allocated"));
+
+            var year3Header = worksheet.Cells["O2:AB2"];
+            year3Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#00b0f0");
+            year3Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year3Header.Style.Font.Bold = true;
+            year3Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year3Header.Style.TextRotation = 90;
+
+            worksheet.Cells["AC2"].LoadFromText(GetAttributeDisplayName("Year4B1Requested"));
+            worksheet.Cells["AD2"].LoadFromText(GetAttributeDisplayName("Year4B1Allocated"));
+            worksheet.Cells["AE2"].LoadFromText(GetAttributeDisplayName("Year4B2Requested"));
+            worksheet.Cells["AF2"].LoadFromText(GetAttributeDisplayName("Year4B2Allocated"));
+            worksheet.Cells["AG2"].LoadFromText(GetAttributeDisplayName("Year4B3Requested"));
+            worksheet.Cells["AH2"].LoadFromText(GetAttributeDisplayName("Year4B3Allocated"));
+            worksheet.Cells["AI2"].LoadFromText(GetAttributeDisplayName("Year4B4Requested"));
+            worksheet.Cells["AJ2"].LoadFromText(GetAttributeDisplayName("Year4B4Allocated"));
+            worksheet.Cells["AK2"].LoadFromText(GetAttributeDisplayName("Year4B5Requested"));
+            worksheet.Cells["AL2"].LoadFromText(GetAttributeDisplayName("Year4B5Allocated"));
+            worksheet.Cells["AM2"].LoadFromText(GetAttributeDisplayName("Year4B6Requested"));
+            worksheet.Cells["AN2"].LoadFromText(GetAttributeDisplayName("Year4B6Allocated"));
+            worksheet.Cells["AO2"].LoadFromText(GetAttributeDisplayName("Year4B7Requested"));
+            worksheet.Cells["AP2"].LoadFromText(GetAttributeDisplayName("Year4B7Allocated"));
+
+            var year4Header = worksheet.Cells["AC2:AP2"];
+            year4Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#ffe699");
+            year4Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year4Header.Style.Font.Bold = true;
+            year4Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year4Header.Style.TextRotation = 90;
+
+            worksheet.Cells["AQ2"].LoadFromText(GetAttributeDisplayName("Year5B1Requested"));
+            worksheet.Cells["AR2"].LoadFromText(GetAttributeDisplayName("Year5B1Allocated"));
+            worksheet.Cells["AS2"].LoadFromText(GetAttributeDisplayName("Year5B2Requested"));
+            worksheet.Cells["AT2"].LoadFromText(GetAttributeDisplayName("Year5B2Allocated"));
+            worksheet.Cells["AU2"].LoadFromText(GetAttributeDisplayName("Year5B3Requested"));
+            worksheet.Cells["AV2"].LoadFromText(GetAttributeDisplayName("Year5B3Allocated"));
+            worksheet.Cells["AW2"].LoadFromText(GetAttributeDisplayName("Year5B4Requested"));
+            worksheet.Cells["AX2"].LoadFromText(GetAttributeDisplayName("Year5B4Allocated"));
+            worksheet.Cells["AY2"].LoadFromText(GetAttributeDisplayName("Year5B5Requested"));
+            worksheet.Cells["AZ2"].LoadFromText(GetAttributeDisplayName("Year5B5Allocated"));
+            worksheet.Cells["BA2"].LoadFromText(GetAttributeDisplayName("Year5B6Requested"));
+            worksheet.Cells["BB2"].LoadFromText(GetAttributeDisplayName("Year5B6Allocated"));
+
+            var year5Header = worksheet.Cells["AQ2:BB2"];
+            year5Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#c6e0b4");
+            year5Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year5Header.Style.Font.Bold = true;
+            year5Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year5Header.Style.TextRotation = 90;
+
+            worksheet.Cells["BC2"].LoadFromText(GetAttributeDisplayName("ServiceContractReceived"));
+
+            var servContrHeader = worksheet.Cells["BC2"];
+            servContrHeader.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#e73c3c");
+            servContrHeader.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            servContrHeader.Style.Font.Bold = true;
+            servContrHeader.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            servContrHeader.Style.TextRotation = 90;
+
+            int rowCounter = 3;
+
+            string myRange = "C" + rowCounter + ":BC" + rowCounter;
+            var mainCells = worksheet.Cells[myRange];
+
+
+            foreach (var allocation in allocationViewModel)
+            {
+                myRange = "C" + rowCounter + ":BC" + rowCounter;
+                mainCells = worksheet.Cells[myRange];
+                mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                worksheet.Cells[rowCounter, 1].Value = allocation.Surgery;
+                worksheet.Cells[rowCounter, 2].Value = allocation.Postcode;
+                worksheet.Cells[rowCounter, 3].Value = allocation.Year2Wk1Requested;
+                worksheet.Cells[rowCounter, 4].Value = allocation.Year2Wk1Allocated;
+                worksheet.Cells[rowCounter, 5].Value = allocation.Year2Wk2Requested;
+                worksheet.Cells[rowCounter, 6].Value = allocation.Year2Wk2Allocated;
+                worksheet.Cells[rowCounter, 7].Value = allocation.Year2Wk3Requested;
+                worksheet.Cells[rowCounter, 8].Value = allocation.Year2Wk3Allocated;
+                worksheet.Cells[rowCounter, 9].Value = allocation.Year2Wk4Requested;
+                worksheet.Cells[rowCounter, 10].Value = allocation.Year2Wk4Allocated;
+                worksheet.Cells[rowCounter, 11].Value = allocation.Year2Wk5Requested;
+                worksheet.Cells[rowCounter, 12].Value = allocation.Year2Wk5Allocated;
+                worksheet.Cells[rowCounter, 13].Value = allocation.Year2Wk6Requested;
+                worksheet.Cells[rowCounter, 14].Value = allocation.Year2Wk6Allocated;
+
+                worksheet.Cells[rowCounter, 15].Value = allocation.Year3B1Requested;
+                worksheet.Cells[rowCounter, 16].Value = allocation.Year3B1Allocated;
+                worksheet.Cells[rowCounter, 17].Value = allocation.Year3B2Requested;
+                worksheet.Cells[rowCounter, 18].Value = allocation.Year3B2Allocated;
+                worksheet.Cells[rowCounter, 19].Value = allocation.Year3B3Requested;
+                worksheet.Cells[rowCounter, 20].Value = allocation.Year3B3Allocated;
+                worksheet.Cells[rowCounter, 21].Value = allocation.Year3B4Requested;
+                worksheet.Cells[rowCounter, 22].Value = allocation.Year3B4Allocated;
+                worksheet.Cells[rowCounter, 23].Value = allocation.Year3B5Requested;
+                worksheet.Cells[rowCounter, 24].Value = allocation.Year3B5Allocated;
+                worksheet.Cells[rowCounter, 25].Value = allocation.Year3B6Requested;
+                worksheet.Cells[rowCounter, 26].Value = allocation.Year3B6Allocated;
+                worksheet.Cells[rowCounter, 27].Value = allocation.Year3B7Requested;
+                worksheet.Cells[rowCounter, 28].Value = allocation.Year3B7Allocated;
+
+                worksheet.Cells[rowCounter, 29].Value = allocation.Year4B1Requested;
+                worksheet.Cells[rowCounter, 30].Value = allocation.Year4B1Allocated;
+                worksheet.Cells[rowCounter, 31].Value = allocation.Year4B2Requested;
+                worksheet.Cells[rowCounter, 32].Value = allocation.Year4B2Allocated;
+                worksheet.Cells[rowCounter, 33].Value = allocation.Year4B3Requested;
+                worksheet.Cells[rowCounter, 34].Value = allocation.Year4B3Allocated;
+                worksheet.Cells[rowCounter, 35].Value = allocation.Year4B4Requested;
+                worksheet.Cells[rowCounter, 36].Value = allocation.Year4B4Allocated;
+                worksheet.Cells[rowCounter, 37].Value = allocation.Year4B5Requested;
+                worksheet.Cells[rowCounter, 38].Value = allocation.Year4B5Allocated;
+                worksheet.Cells[rowCounter, 39].Value = allocation.Year4B6Requested;
+                worksheet.Cells[rowCounter, 40].Value = allocation.Year4B6Allocated;
+                worksheet.Cells[rowCounter, 42].Value = allocation.Year4B7Requested;
+                worksheet.Cells[rowCounter, 42].Value = allocation.Year4B7Allocated;
+
+                worksheet.Cells[rowCounter, 43].Value = allocation.Year5B1Requested;
+                worksheet.Cells[rowCounter, 44].Value = allocation.Year5B1Allocated;
+                worksheet.Cells[rowCounter, 45].Value = allocation.Year5B2Requested;
+                worksheet.Cells[rowCounter, 46].Value = allocation.Year5B2Allocated;
+                worksheet.Cells[rowCounter, 47].Value = allocation.Year5B3Requested;
+                worksheet.Cells[rowCounter, 48].Value = allocation.Year5B3Allocated;
+                worksheet.Cells[rowCounter, 49].Value = allocation.Year5B4Requested;
+                worksheet.Cells[rowCounter, 50].Value = allocation.Year5B4Allocated;
+                worksheet.Cells[rowCounter, 51].Value = allocation.Year5B5Requested;
+                worksheet.Cells[rowCounter, 52].Value = allocation.Year5B5Allocated;
+                worksheet.Cells[rowCounter, 53].Value = allocation.Year5B6Requested;
+                worksheet.Cells[rowCounter, 54].Value = allocation.Year5B6Allocated;
+
+                worksheet.Cells[rowCounter, 55].Value = ShowServiceContract(allocation.ServiceContractReceived);
 
                 rowCounter++;
             }

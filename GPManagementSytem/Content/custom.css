@@ -307,11 +307,7 @@ p.logout {
 .Year3 {
     color: #858796;
     background-color: #00b0f0;
-
-    padding-right: 6px;
-    padding-left: 6px;
-    padding-top: 2px;
-    padding-bottom: 7px;
+    padding: 7px;
 }
 
 
@@ -515,4 +511,10 @@ a.subMenuLink {
 
 .fileInputLabel {
     margin-right: 5px;
+}
+
+#wrapper #content-wrapper {
+    background-color: #f8f9fc;
+    width: 100%;
+    overflow-x: visible;
 }

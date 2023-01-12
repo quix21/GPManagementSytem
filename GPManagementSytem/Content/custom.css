@@ -518,3 +518,11 @@ a.subMenuLink {
     width: 100%;
     overflow-x: visible;
 }
+
+.input-group-hidden {
+    display: none;
+}
+
+.row-hidden {
+    display: none;
+}

@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="input-group">
+                <div class="input-group-hidden">
                     <span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.practice.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })
                 </div>
             </div>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="row-hidden">
             <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-text">@Html.LabelFor(model => model.practice.SupplierNumber)</span>
@@ -571,7 +571,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Submit Sign Up</button></div>
             <div class="col-md-6"></div>
         </div>
     </div>

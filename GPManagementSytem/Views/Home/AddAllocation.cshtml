@@ -18,7 +18,20 @@
 
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.PracticeId)
-    <h4>At A Glance Info</h4>
+    <h4>Sign Up Details</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Surgery)</span>
+                    @Html.EditorFor(model => model.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -354,7 +367,7 @@
                                         <td>@Html.EditorFor(model => model.Year5B5Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
                                         <td>@Html.EditorFor(model => model.Year5B6Requested, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
                                         <td>@Html.EditorFor(model => model.Year5B6Allocated, new { htmlAttributes = new { @class = "form-control-allocation", type = "text" } })</td>
-   
+
 
                                     </tr>
                                 </tbody>
@@ -367,30 +380,30 @@
     </div>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="input-group">
-                <span class="input-group-text">Notes</span>
-                @Html.TextAreaFor(model => model.Notes,
-             new { @class = "form-control fullTextArea", @rows = 3, @readonly = "readonly" })
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-text">Notes</span>
+                    @Html.TextAreaFor(model => model.Notes,
+                 new { @class = "form-control fullTextArea", @rows = 3, @readonly = "readonly" })
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+            </div>
         </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
-        <div class="col-md-6"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Save</button></div>
+            <div class="col-md-6"></div>
+        </div>
     </div>
-</div>
 }
 

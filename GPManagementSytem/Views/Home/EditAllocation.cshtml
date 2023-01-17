@@ -23,6 +23,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text">@Html.LabelFor(model => model.Surgery)</span>
+                    @Html.EditorFor(model => model.Surgery, new { htmlAttributes = new { @class = "form-control", type = "text", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
                 <div class="input-group"><span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })</div>
             </div>
             <div class="col-md-6">
@@ -31,7 +44,7 @@
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                         @Html.RadioButtonFor(model => model.ServiceContractReceived, "1", new { @class = "btn-check", @id = "yes" })
                         <label class="btn btn-outline-info" for="yes">Yes</label>
-                        @Html.RadioButtonFor(model => model.ServiceContractReceived, "0", new { @class = "btn-check", @id = "no"})
+                        @Html.RadioButtonFor(model => model.ServiceContractReceived, "0", new { @class = "btn-check", @id = "no" })
                         <label class="btn btn-outline-info" for="no">No</label>
                         @Html.RadioButtonFor(model => model.ServiceContractReceived, "2", new { @class = "btn-check", @id = "na" })
                         <label class="btn btn-outline-info" for="na">N/A</label>

@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "Signup";
+    ViewBag.Title = "Undergraduate Medical Student 2021/2022 GP Placement sign up form";
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
     var getGuid = ViewBag.Guid;
@@ -25,9 +25,22 @@
     @Html.HiddenFor(model => model.practice.DateUpdated)
     @Html.HiddenFor(model => model.practice.ContactSurgery)
     @Html.HiddenFor(model => model.practice.NewPractice)
+    @Html.HiddenFor(model => model.practice.Active)
     @Html.HiddenFor(model => model.allocations.PracticeId)
     @Html.HiddenFor(model => model.allocations.AcademicYear)
+
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
+
+
+    <div class="container-maintext">
+        <p>We are now recruiting for our GP placements for 2021/2022 which sees the introduction of the new curriculum to year 5. This brings the exciting opportunity for all year 5 students to have a clinical experience in general practice, rather than it being a selective component. For those practices who have previously provided year 5 SAMPs these will continue in a reduced format from April 2022. As outlined the attached letter and placement summary all year 3 and year 4 students will be placed in pairs, whilst year 5 students will be placed individually.</p>
+        <p><strong>Due to the curriculum changes we would ask that you sign up for as many blocks as possible.</strong></p>
+        <p>
+            Please could you complete the details below using a tick in the relevant box for your chosen Year group/s and return the form via email to ???liv.ac.uk by the 5th May, so that you may be included in the allocation.
+            <br /><br />
+            Thank you for your continued support.
+        </p>
+    </div>
     <h4>Practice Details</h4>
 
     <div class="container">
@@ -184,6 +197,8 @@ new { @class = "form-control fullTextArea", @rows = 3 })
     <h4>2nd Year</h4>
     <div class="containerExternal">
         <div class="container">
+            <p>Year 2 students are placed for one week in Practice as per the table below. Please indicate which weeks you wish to have students by ticking the relevant boxes.</p>
+            <p>Students will be expected to attend GP placement for 4½ days a week with one half day on a Wednesday afternoon off, as mandated University afternoons.</p>
             <div class="row">
                 <table class="table table-hover AllocationExtTable">
                     <tr>
@@ -257,10 +272,18 @@ new { @class = "form-control fullTextArea", @rows = 3 })
         </div>
         <br />
         <div class="container">
+            <h5>Can you accommodate four students?</h5>
+            <p>
+                <strong>
+                    The students are to be placed in pairs, however you may have the capacity to take four students placement.<br />
+                    The remuneration is paid at £140 per student per day and is therefore £630 per student per 1-week placement i.e. £1260 per pair of students placed.<br /><br />
+                    Please indicate the number of students your Practice is able to accommodate per block.
+                </strong>
+            </p>
             <div class="row">
                 <table class="table NumberRequestedTable">
                     <tr>
-                        <td>Number of students requested:</td>
+                        <td><strong>Number of students requested per week:</strong></td>
                         <td>
                             <div class="form-check form-check-inline">
                                 2&nbsp; <input class="form-check-input" type="checkbox" id="Year2Requested2" name="Year2Requested2" value="2">

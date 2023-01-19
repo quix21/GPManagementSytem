@@ -526,3 +526,7 @@ a.subMenuLink {
 .row-hidden {
     display: none;
 }
+
+.container-maintext {
+    padding-left: 25px;
+}

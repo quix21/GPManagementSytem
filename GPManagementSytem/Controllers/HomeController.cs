@@ -231,6 +231,8 @@ namespace GPManagementSytem.Controllers
 
                 allocationExternalViewModel.signupDates = getDates;
 
+                ViewBag.Guid = guid;
+
                 return View(allocationExternalViewModel);
             }
 

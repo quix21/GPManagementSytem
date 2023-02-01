@@ -15,6 +15,7 @@ namespace GPManagementSytem.ViewModel
 
 
         [NotMapped]
+        public bool Year2Requested2Checked { get; set; }
         public bool Year2Requested4Checked { get; set; }
         public bool Year2Wk1RequestedChecked { get; set; }
         public bool Year2Wk2RequestedChecked { get; set; }

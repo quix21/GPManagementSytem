@@ -229,7 +229,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td>@(Model.signupDates.Year2Wk3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk3Requested" name="Year2Wk3Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk3Requested" name="Year2Wk3Requested" value="true" @(Model.Year2Wk3RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -240,7 +240,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td>@(Model.signupDates.Year2Wk4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk4Requested" name="Year2Wk4Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk4Requested" name="Year2Wk4Requested" value="true" @(Model.Year2Wk4RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -251,7 +251,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td>@(Model.signupDates.Year2Wk5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk5Requested" name="Year2Wk5Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk5Requested" name="Year2Wk5Requested" value="true" @(Model.Year2Wk5RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -262,7 +262,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td>@(Model.signupDates.Year2Wk6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk6Requested" name="Year2Wk6Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year2Wk6Requested" name="Year2Wk6Requested" value="true" @(Model.Year2Wk6RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -286,7 +286,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td><strong>Number of students requested per week:</strong></td>
                         <td>
                             <div class="form-check form-check-inline">
-                                2&nbsp; <input class="form-check-input" type="checkbox" id="Year2Requested2" name="Year2Requested2" value="2">
+                                2&nbsp; <input class="form-check-input" type="checkbox" id="Year2Requested2" name="Year2Requested2" value="2" @(Model.Year2Requested2Checked ? "checked" : "")>
 
                             </div>
                         </td>
@@ -311,7 +311,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                         <td>@(Model.signupDates.Year3B1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
                         <td>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year3B1Requested" name="Year3B1Requested" value="true">
+                                <input class="form-check-input" type="checkbox" id="Year3B1Requested" name="Year3B1Requested" value="true" @(Model.Year3B1RequestedChecked ? "checked" : "")>
 
                             </div>
                         </td>

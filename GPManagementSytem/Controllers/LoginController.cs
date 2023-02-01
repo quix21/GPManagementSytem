@@ -78,6 +78,16 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult PracticeLogin(string guid = null)
         {
+            if (string.IsNullOrEmpty(guid))
+            {
+                logger.Info("No GUID found in URL");
+            }
+            else
+            {
+                logger.Info("GUID found in URL: " + guid);
+            }
+                        
+
             return View();
         }
 
@@ -91,6 +101,15 @@ namespace GPManagementSytem.Controllers
             var sentguid = fc["guid"];
 
             var isUser = _userService.LoginUserPractice(username, password, isImpersonate);
+
+            if (string.IsNullOrEmpty(sentguid))
+            {
+                logger.Info("No GUID found for user: " + username);
+            }
+            else
+            {
+                logger.Info("GUID found for user: " + username + "(" + sentguid + ")");
+            }
 
             if (isUser != null)
             {

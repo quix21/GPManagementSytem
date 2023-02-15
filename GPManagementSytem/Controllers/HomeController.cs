@@ -50,14 +50,18 @@ namespace GPManagementSytem.Controllers
 
             ////////////////
 
-            //check if there are previous change requests pending
-            PracticesExternal changesPending = new PracticesExternal();
+            //check if there are previous allocation requests pending
+            //PracticesExternal changesPending = new PracticesExternal();
 
-            changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id).FirstOrDefault();
+            //changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id).FirstOrDefault();
 
-            if (changesPending != null)
+            Allocations allocationRequestExists = new Allocations();
+
+            allocationRequestExists = _allocationService.GetByPracticeAndYear(id, academicYear);
+
+            if (allocationRequestExists != null)
             {
-                return RedirectToAction("ApprovalPending");
+                return RedirectToAction("AllocationPending");
             }
             else
             {
@@ -205,6 +209,7 @@ namespace GPManagementSytem.Controllers
                 //add allocation details
 
                 allocationExternalViewModel.allocations.ServiceContractReceived = 1;
+                
                 allocationExternalViewModel.allocations.DateCreated = DateTime.Now;
                 allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
 
@@ -380,7 +385,7 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public ActionResult ApprovalPending()
+        public ActionResult AllocationPending()
         {
             return View();
         }

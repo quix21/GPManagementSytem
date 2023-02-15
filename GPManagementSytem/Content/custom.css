@@ -376,12 +376,24 @@ th.Year3 {
     background-color: #00b0f0;
 }
 
+th.Year3dark {
+    background-color: #006082;
+}
+
 th.Year4 {
     background-color: #ffe699;
 }
 
+th.Year4dark {
+    background-color: #b59a48;
+}
+
 th.Year5 {
     background-color: #c6e0b4;
+}
+
+th.Year5dark {
+    background-color: #73975a;
 }
 
 .table thead th {

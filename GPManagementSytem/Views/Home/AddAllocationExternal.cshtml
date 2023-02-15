@@ -7,6 +7,8 @@
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
     var getGuid = ViewBag.Guid;
+
+    string NumberStudentsRequested = "2";
 }
 
 <h1>@ViewBag.Title</h1>
@@ -14,7 +16,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken();
-    @Html.ValidationSummary()
+    @Html.ValidationSummary();
 
     <div class="validation-summary-errors" id="inclusion-errors"></div>
 
@@ -30,6 +32,7 @@
     @Html.HiddenFor(model => model.allocations.AcademicYear)
 
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
+    <input type="hidden" name="GlobalNumberStudentsRequested" id="GlobalNumberStudentsRequested" value="@NumberStudentsRequested" />
 
 
     <div class="container-maintext">
@@ -194,9 +197,10 @@ new { @class = "form-control fullTextArea", @rows = 3 })
         </div>
     </div>
     <br /><br />
-    <h4>2nd Year</h4>
+    @*<h4>2nd Year</h4>*@
     <div class="containerExternal">
-        <div class="container">
+
+        @*<div class="container">
             <p>Year 2 students are placed for one week in Practice as per the table below. Please indicate which weeks you wish to have students by ticking the relevant boxes.</p>
             <p>Students will be expected to attend GP placement for 4½ days a week with one half day on a Wednesday afternoon off, as mandated University afternoons.</p>
             <div class="row">
@@ -269,8 +273,8 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                     </tr>
                 </table>
             </div>
-        </div>
-        <br />
+        </div>*@
+        @*<br />
         <div class="container">
             <h5>Can you accommodate four students?</h5>
             <p>
@@ -300,7 +304,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                     </tr>
                 </table>
             </div>
-        </div>
+        </div>*@
         <h4>3rd Year</h4>
         <div class="container">
             <div class="row">
@@ -559,32 +563,37 @@ new { @class = "form-control fullTextArea", @rows = 3 })
         <br />
         <div class="container">
             <div class="row">
-                <table class="table NumberRequestedTable">
+                <table class="table AcceptTermsTable">
                     <tr>
-                        <td>Number of students requested per week:</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                1&nbsp; <input class="form-check-input" type="checkbox" id="Year5Requested1" name="Year5Requested1" value="1">
+                        <td><input class="form-check-input" type="checkbox" id="acceptTerms" name="acceptTerms" value="1">Please confirm your acceptance of the terms and conditions set out in the Service Contract that was attached to your invitation email by ticking this box. &nbsp; </td>
 
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                2&nbsp;  <input class="form-check-input" type="checkbox" id="Year5Requested2" name="Year5Requested2" value="2">
-
-                            </div>
-                        </td>
                     </tr>
                 </table>
             </div>
         </div>
+        <div class="container">
+            <div class="row">
+                <table class="table AcceptTermsTable">
+                    <tr>
+                        <td>Name of person making this confirmation on behalf of the above-named Practice:</td>
+                        <td>
 
+                            <div class="input-group">
+
+                                @Html.EditorFor(model => model.allocations.ConfirmationName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                            </div>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
+    @Html.ValidationSummary();
+    <div class="validation-summary-errors" id="inclusion-errors"></div>
 
-
-
-
+    <div id="error" style="display:none"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -594,8 +603,23 @@ new { @class = "form-control fullTextArea", @rows = 3 })
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit">Submit Sign Up</button></div>
+            <div class="col-md-6"><button class="btn btn-primary btn-success" type="submit" id="submit">Submit Sign Up</button></div>
             <div class="col-md-6"></div>
         </div>
     </div>
 }
+
+<script type="text/javascript">
+
+    $('#submit').prop("disabled", true);
+    $('#acceptTerms').click(function () {
+        if ($(this).is(':checked')) {
+            $('#submit').prop("disabled", false);
+        } else {
+            if ($('.checks').filter(':checked').length < 1) {
+                $('#submit').attr('disabled', true);
+            }
+        }
+    });
+
+</script>

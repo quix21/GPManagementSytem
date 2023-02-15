@@ -129,6 +129,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.Year5B6Allocated = allocations.Year5B6Allocated;
             entityToUpdate.AcademicYear = allocations.AcademicYear;
             entityToUpdate.ServiceContractReceived = allocations.ServiceContractReceived;
+            entityToUpdate.ConfirmationName = allocations.ConfirmationName;
             entityToUpdate.DateCreated = allocations.DateCreated;
             entityToUpdate.DateUpdated = allocations.DateUpdated;
             entityToUpdate.UpdatedBy = allocations.UpdatedBy;

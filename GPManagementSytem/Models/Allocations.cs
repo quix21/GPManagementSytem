@@ -70,6 +70,8 @@ namespace GPManagementSytem.Models
         public string Year5B6Allocated { get; set; }
         public string AcademicYear { get; set; }
         public int ServiceContractReceived { get; set; }
+        [Required]
+        public string ConfirmationName { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
         public int? UpdatedBy { get; set; }

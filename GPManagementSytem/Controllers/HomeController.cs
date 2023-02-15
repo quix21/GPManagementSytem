@@ -93,32 +93,32 @@ namespace GPManagementSytem.Controllers
         {
             string guid = fc["guid"].ToString();
 
-            string Year2Requested2 = fc["Year2Requested2"];
-            string Year2Requested4 = fc["Year2Requested4"];
+            //string Year2Requested2 = fc["Year2Requested2"];
+            //string Year2Requested4 = fc["Year2Requested4"];
 
-            string Year5Requested1 = fc["Year5Requested1"];
-            string Year5Requested2 = fc["Year5Requested2"];
+            //string Year5Requested1 = fc["Year5Requested1"];
+            //string Year5Requested2 = fc["Year5Requested2"];
 
-            string year2requested = "";
-            string year5requested = "";
+            //string year2requested = "";
+            //string year5requested = "";
 
-            if (Year2Requested2 != null)
-            {
-                year2requested = Year2Requested2;
-            }
-            else
-            {
-                year2requested = Year2Requested4;
-            }
+            //if (Year2Requested2 != null)
+            //{
+            //    year2requested = Year2Requested2;
+            //}
+            //else
+            //{
+            //    year2requested = Year2Requested4;
+            //}
 
-            if (Year5Requested1 != null)
-            {
-                year5requested = Year5Requested1;
-            }
-            else
-            {
-                year5requested = Year5Requested2;
-            }
+            //if (Year5Requested1 != null)
+            //{
+            //    year5requested = Year5Requested1;
+            //}
+            //else
+            //{
+            //    year5requested = Year5Requested2;
+            //}
              
             
 
@@ -132,7 +132,7 @@ namespace GPManagementSytem.Controllers
 
             //this persists from years 2, 3 and 4. In year 5, that value changes to 1 or 2 per block
 
-            bool Year2Checked = false;
+            bool NoBlocksChecked = true;
 
             foreach (var key in fc.AllKeys)
             {
@@ -145,10 +145,10 @@ namespace GPManagementSytem.Controllers
                     if (fieldName == classPropertyName)
                     {
                         //check if year 2-4 or year 5
-                        if (fieldName.IndexOf("Year5") == -1)
-                        {
-                            info.SetValue(allocationExternalViewModel.allocations, year2requested, null);
-                            Year2Checked = true;
+                        //if (fieldName.IndexOf("Year5") == -1)
+                        //{
+                            info.SetValue(allocationExternalViewModel.allocations, allocationExternalViewModel.GlobalNumberStudentsRequested, null);
+                            NoBlocksChecked = false;
 
                             string dateChecked = fieldName + "Checked";
 
@@ -162,27 +162,27 @@ namespace GPManagementSytem.Controllers
 
                             //allocationExternalViewModel.Year2Wk1RequestedChecked = true;
                             
-                        }
-                        else
-                        {
-                            info.SetValue(allocationExternalViewModel.allocations, year5requested, null);
-                        }
+                        //}
+                        //else
+                        //{
+                        //    info.SetValue(allocationExternalViewModel.allocations, year5requested, null);
+                        //}
 
                     }
                 }
             }
 
 
-            if (year2requested == null && Year2Checked)
+            if (NoBlocksChecked)
             {
-                ModelState.AddModelError("year2requested", "Please indicate whether you'd like 2 or 4 students in year 2");
+                ModelState.AddModelError("NoBlocksChecked", "Please check at least one box for one year");
             }
 
-            if (year2requested != "" & !Year2Checked)
-            {
-                ModelState.AddModelError("year2requested", "Please indicate which weeks you are able to accomodate students in year 2");
-                allocationExternalViewModel.Year2Requested4Checked = true;
-            }
+            //if (year2requested != "" & !Year2Checked)
+            //{
+            //    ModelState.AddModelError("year2requested", "Please indicate which weeks you are able to accomodate students in year 2");
+            //    allocationExternalViewModel.Year2Requested4Checked = true;
+            //}
 
             if (ModelState.IsValid)
             {
@@ -204,6 +204,7 @@ namespace GPManagementSytem.Controllers
 
                 //add allocation details
 
+                allocationExternalViewModel.allocations.ServiceContractReceived = 1;
                 allocationExternalViewModel.allocations.DateCreated = DateTime.Now;
                 allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
 

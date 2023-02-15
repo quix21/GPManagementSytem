@@ -415,6 +415,14 @@ th.Year5 {
 
 }
 
+    .GlanceTable thead {
+        position: sticky;
+    }
+
+    .GlanceTable thead {
+        inset-block-start: 0; /* "top" */
+    }
+
     .GlanceTable td.numberAllocated2 {
         border-left: 1px solid #f8cbad;
         border-right: 1px solid #f8cbad;
@@ -439,8 +447,8 @@ th.Year5 {
     margin-left: 20px;
 }
 
-.NumberRequestedTable {
-    width: 50%;
+.AcceptTermsTable {
+    width: 75%;
 }
 
 .AllocationExtTable {

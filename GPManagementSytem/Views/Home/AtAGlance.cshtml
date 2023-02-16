@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    @Html.ActionLink("At A Glance Combined", "AtAGlanceCombined", "Home", null, null)
+                    @Html.ActionLink("At A Glance Requested", "AtAGlanceRequested", "Home", null, null)
                     | 
                     @Html.ActionLink("Download spreadsheet", "DownloadAtAGlance", "Home", null, null)
                 </div>
@@ -24,24 +24,7 @@
                             <tr>
                                 <th>Practice Name</th>
                                 <th>Postcode</th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk1Allocated) </span></div>
-                                </th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk2Allocated) </span></div>
-                                </th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk3Allocated)</span></div>
-                                </th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk4Allocated)</span></div>
-                                </th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk5Allocated)</span></div>
-                                </th>
-                                <th class="rotated-text">
-                                    <div><span class="Year2">@Html.LabelFor(model => Model.First().Year2Wk6Allocated)</span></div>
-                                </th>
+                                
                                 <th class="rotated-text">
                                     <div><span class="Year3">@Html.LabelFor(model => Model.First().Year3B1Allocated)</span></div>
                                 </th>
@@ -113,12 +96,7 @@
                                 <tr>
                                     <td>@myAllocation.Surgery</td>
                                     <td>@myAllocation.Postcode</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk1Allocated</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk2Allocated</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk3Allocated</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk4Allocated</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk5Allocated</td>
-                                    <td class="numberAllocated2">@myAllocation.Year2Wk6Allocated</td>
+
                                     <td class="numberAllocated3">@myAllocation.Year3B1Allocated</td>
                                     <td class="numberAllocated3">@myAllocation.Year3B2Allocated</td>
                                     <td class="numberAllocated3">@myAllocation.Year3B3Allocated</td>

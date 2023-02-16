@@ -796,7 +796,7 @@ namespace GPManagementSytem.Controllers
             return View(allocationViewModel);
         }
 
-        public ActionResult AtAGlanceCombined()
+        public ActionResult AtAGlanceRequested()
         {
             var academicYear = AcademicYearDD();
 
@@ -1356,7 +1356,7 @@ namespace GPManagementSytem.Controllers
         {
             List<string> wsNames = new List<string>();
             wsNames.Add("Allocated");
-            wsNames.Add("Combined");
+            wsNames.Add("Requested");
 
             //Create Excel object
 

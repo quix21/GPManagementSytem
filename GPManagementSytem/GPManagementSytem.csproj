@@ -335,8 +335,9 @@
     <Content Include="Views\Home\EditSignupDate.cshtml" />
     <Content Include="Views\Home\AddAllocationExternal.cshtml" />
     <Content Include="Views\Home\AllocationRequestSubmitted.cshtml" />
-    <Content Include="Views\Home\AtAGlanceCombined.cshtml" />
+    <Content Include="Views\Home\AtAGlanceRequested.cshtml" />
     <Content Include="Views\Home\ManageSignupReturns.cshtml" />
+    <Content Include="Views\Home\AtAGlanceCombined - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

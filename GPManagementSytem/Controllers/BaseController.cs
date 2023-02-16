@@ -24,6 +24,7 @@ namespace GPManagementSytem.Controllers
         public readonly ISessionManager SessionManager;
         public readonly IMailSender _mailSender;
         public readonly IPracticeExternalService _practiceExternalService;
+        public readonly IPracticeService _practiceService;
         public readonly ISignupSendLogService _signupSendLogService;
 
         public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
@@ -34,12 +35,13 @@ namespace GPManagementSytem.Controllers
 
         public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public BaseController(ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService)
+        public BaseController(ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService,  IPracticeService practiceService, ISignupSendLogService signupSendLogService)
         {
             databaseEntities = new DatabaseEntities();
             SessionManager = sessionManager;
             _mailSender = mailSender;
             _practiceExternalService = practiceExternalService;
+            _practiceService = practiceService;
             _signupSendLogService = signupSendLogService;
         }
 
@@ -65,8 +67,13 @@ namespace GPManagementSytem.Controllers
 
             int getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).Count();
 
+            int allPractices = _practiceService.GetAll().Where(x => x.ContactSurgery == true).Count();
+
+            int notReturnedSignup = allPractices - getReturns;
+
             ViewData["changesCount"] = showCount;
             ViewData["signupReturnsCount"] = getReturns;
+            ViewData["notReturnedSignup"] = notReturnedSignup;
         }
 
         public string AcademicYearDD()

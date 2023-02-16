@@ -19,7 +19,7 @@ namespace GPManagementSytem.Controllers
     {
         private readonly IUserService _userService;
 
-        private readonly IPracticeService _practiceService;
+        //private readonly IPracticeService _practiceService;
 
         private bool isImpersonate = Convert.ToBoolean(ConfigurationManager.AppSettings["isImpersonate"].ToString());
 
@@ -28,11 +28,11 @@ namespace GPManagementSytem.Controllers
 
 
 
-        public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, signupSendLogService)
+        public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, practiceService, signupSendLogService)
         {
             _userService = userService;
 
-            _practiceService = practiceService;
+           // _practiceService = practiceService;
 
         }
 

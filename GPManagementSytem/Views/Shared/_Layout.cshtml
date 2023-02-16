@@ -32,6 +32,7 @@
 
         var changesCount = ViewData["changesCount"];
         var signupReturnsCount = ViewData["signupReturnsCount"];
+        var notReturnedCount = ViewData["notReturnedSignup"];
     }
 
 </head>
@@ -44,6 +45,14 @@
                     <div class="sidebar-brand-text mx-3"><span style="font-size: 12px;color: #d0b006;"><i class="material-icons"></i>GP Management System</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
+                <div class="signUpHolder">
+                    Sign up returned: @signupReturnsCount
+                    
+                </div>
+                <div class="signUpHolder">
+                    Sign up not returned: @notReturnedCount
+                </div>
+    
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     @if (isAdmin)
                     {

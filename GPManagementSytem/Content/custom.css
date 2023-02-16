@@ -550,3 +550,15 @@ a.subMenuLink {
 .container-maintext {
     padding-left: 25px;
 }
+
+.signUpHolder {
+    font-size: .85rem;
+    width: 90%;
+    font-weight: bold;
+    color: rgb(29,45,160);
+}
+
+hr.test {
+    color: red;
+
+}

@@ -25,6 +25,7 @@ namespace GPManagementSytem.Controllers
         public readonly IMailSender _mailSender;
         public readonly IPracticeExternalService _practiceExternalService;
         public readonly IPracticeService _practiceService;
+        public readonly IAllocationService _allocationService;
         public readonly ISignupSendLogService _signupSendLogService;
 
         public string getAttachmentPath = ConfigurationManager.AppSettings["attachmentPath"].ToString();
@@ -35,13 +36,14 @@ namespace GPManagementSytem.Controllers
 
         public static ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public BaseController(ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService,  IPracticeService practiceService, ISignupSendLogService signupSendLogService)
+        public BaseController(ISessionManager sessionManager, IMailSender mailSender, IPracticeExternalService practiceExternalService,  IPracticeService practiceService, IAllocationService allocationService, ISignupSendLogService signupSendLogService)
         {
             databaseEntities = new DatabaseEntities();
             SessionManager = sessionManager;
             _mailSender = mailSender;
             _practiceExternalService = practiceExternalService;
             _practiceService = practiceService;
+            _allocationService = allocationService;
             _signupSendLogService = signupSendLogService;
         }
 
@@ -67,6 +69,8 @@ namespace GPManagementSytem.Controllers
 
             int getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).Count();
 
+            int allocationsPending = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == false).Count();
+
             int allPractices = _practiceService.GetAll().Where(x => x.ContactSurgery == true).Count();
 
             int notReturnedSignup = allPractices - getReturns;
@@ -74,6 +78,7 @@ namespace GPManagementSytem.Controllers
             ViewData["changesCount"] = showCount;
             ViewData["signupReturnsCount"] = getReturns;
             ViewData["notReturnedSignup"] = notReturnedSignup;
+            ViewData["allocationsPending"] = allocationsPending;
         }
 
         public string AcademicYearDD()

@@ -18,6 +18,7 @@
 
     <div id="error" style="display:none"></div>
     @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.SupplierNumber)
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
     <h4>Main Details</h4>
     <div class="container">
@@ -36,7 +37,7 @@
         </div>
     </div>
 
-    <div class="container">
+    @*<div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
@@ -45,7 +46,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                @*<div class="input-group">
+                <div class="input-group">
                         <span class="input-group-text-radio">@Html.LabelFor(model => model.NewPractice)</span>
                         <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                             @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true" })
@@ -53,10 +54,10 @@
                             @Html.RadioButtonFor(model => model.NewPractice, "false", new { @class = "btn-check", @id = "false" })
                             <label class="btn btn-outline-info" for="false">No</label>
                         </div>
-                    </div>*@
+                    </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container">
         <div class="row">
             <div class="col-md-6">

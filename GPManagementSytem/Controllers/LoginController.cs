@@ -28,7 +28,7 @@ namespace GPManagementSytem.Controllers
 
 
 
-        public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, practiceService, signupSendLogService)
+        public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IAllocationService allocationService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, practiceService, allocationService, signupSendLogService)
         {
             _userService = userService;
 

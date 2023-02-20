@@ -558,7 +558,6 @@ a.subMenuLink {
     color: rgb(29,45,160);
 }
 
-hr.test {
-    color: red;
-
+p.mainText {
+    margin-left: 30px;
 }

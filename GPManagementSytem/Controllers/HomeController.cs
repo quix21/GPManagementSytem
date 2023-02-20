@@ -27,15 +27,15 @@ namespace GPManagementSytem.Controllers
     public class HomeController : BaseController
     {
         //private readonly IPracticeService _practiceService;
-        private readonly IAllocationService _allocationService;
+        //private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly ISignupDatesService _signupDatesService;
 
-        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender, ISignupDatesService signupDatesService) : base(sessionManager, mailSender, practiceExternalService, practiceService, signupSendLogService)
+        public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender, ISignupDatesService signupDatesService) : base(sessionManager, mailSender, practiceExternalService, practiceService, allocationService, signupSendLogService)
         {
            // _practiceService = practiceService;
-            _allocationService = allocationService;
+            //_allocationService = allocationService;
             _userService = userService;
             _emailTemplateService = emailTemplateService;
             _signupDatesService = signupDatesService;
@@ -209,7 +209,8 @@ namespace GPManagementSytem.Controllers
                 //add allocation details
 
                 allocationExternalViewModel.allocations.ServiceContractReceived = 1;
-                
+                allocationExternalViewModel.allocations.AllocationApproved = false;
+
                 allocationExternalViewModel.allocations.DateCreated = DateTime.Now;
                 allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
 
@@ -676,7 +677,8 @@ namespace GPManagementSytem.Controllers
         {
             var academicYear = AcademicYearDD();
 
-            var getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).OrderByDescending(x => x.DateActionTaken).ToList();
+            //var getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).OrderByDescending(x => x.DateActionTaken).ToList();
+            var getReturns = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == false).OrderByDescending(x => x.DateCreated).ToList();
 
             List<Practices> PracticesReturned = new List<Practices>();
 
@@ -744,6 +746,7 @@ namespace GPManagementSytem.Controllers
             if (ModelState.IsValid)
             {
                 allocationViewModel.DateUpdated = DateTime.Now;
+                myAllocation.AllocationApproved = true;
 
                 var updateAllocation = _allocationService.EditAllocation(ParseAllocationViewModelADD(allocationViewModel, myAllocation));
 
@@ -1366,21 +1369,150 @@ namespace GPManagementSytem.Controllers
             createWorksheet(wsNames[0].ToString(), ep);
             createWorksheetRequested(wsNames[1].ToString(), ep);
 
+            BuildDownload("AtAGlance", ep);
 
-            string fileName = "AtAGlance-" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm") + ".xlsx";
+        }
+
+        public void CreateWorkbookPractices()
+        {
+            List<string> wsNames = new List<string>();
+            wsNames.Add("Practices");
+
+
+            //Create Excel object
+
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage ep = new ExcelPackage();
+
+            createWorksheetPractices(wsNames[0].ToString(), ep);
+
+            BuildDownload("AllPractices", ep);
+
+        }
+
+        private void BuildDownload(string getFileName, ExcelPackage ep)
+        {
+            string fileName = getFileName + "-" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm") + ".xlsx";
 
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             Response.AddHeader("content-disposition", "attachment;  filename=" + fileName);
             Response.BinaryWrite(ep.GetAsByteArray());
             Response.End();
+        }
 
+        private ExcelWorksheet createWorksheetPractices(string wsName, ExcelPackage ep)
+        {
+            var academicYear = AcademicYearDD();
+
+            var myPractices = _practiceService.GetAll();
+
+            ExcelWorksheet worksheet = ep.Workbook.Worksheets.Add(wsName);
+
+            var format = new ExcelTextFormat();
+            format.Delimiter = ';';
+            format.TextQualifier = '"';
+            format.DataTypes = new[] { eDataTypes.String };
+
+            worksheet.Cells["A2"].LoadFromText("Practice Name");
+            worksheet.Cells["B2"].LoadFromText("Postcode");
+            worksheet.Cells["C2"].LoadFromText(GetAttributeDisplayName("Year3B1Allocated"));
+            worksheet.Cells["D2"].LoadFromText(GetAttributeDisplayName("Year3B2Allocated"));
+            worksheet.Cells["E2"].LoadFromText(GetAttributeDisplayName("Year3B3Allocated"));
+            worksheet.Cells["F2"].LoadFromText(GetAttributeDisplayName("Year3B4Allocated"));
+            worksheet.Cells["G2"].LoadFromText(GetAttributeDisplayName("Year3B5Allocated"));
+            worksheet.Cells["H2"].LoadFromText(GetAttributeDisplayName("Year3B6Allocated"));
+            worksheet.Cells["I2"].LoadFromText(GetAttributeDisplayName("Year3B7Allocated"));
+
+            var year3Header = worksheet.Cells["C2:I2"];
+            year3Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#f8cbad");
+            year3Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year3Header.Style.Font.Bold = true;
+            year3Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year3Header.Style.TextRotation = 90;
+
+            worksheet.Cells["J2"].LoadFromText(GetAttributeDisplayName("Year4B1Allocated"));
+            worksheet.Cells["K2"].LoadFromText(GetAttributeDisplayName("Year4B2Allocated"));
+            worksheet.Cells["L2"].LoadFromText(GetAttributeDisplayName("Year4B3Allocated"));
+            worksheet.Cells["M2"].LoadFromText(GetAttributeDisplayName("Year4B4Allocated"));
+            worksheet.Cells["N2"].LoadFromText(GetAttributeDisplayName("Year4B5Allocated"));
+            worksheet.Cells["O2"].LoadFromText(GetAttributeDisplayName("Year4B6Allocated"));
+            worksheet.Cells["P2"].LoadFromText(GetAttributeDisplayName("Year4B7Allocated"));
+
+            var year4Header = worksheet.Cells["J2:P2"];
+            year4Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#00b0f0");
+            year4Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year4Header.Style.Font.Bold = true;
+            year4Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year4Header.Style.TextRotation = 90;
+
+            worksheet.Cells["Q2"].LoadFromText(GetAttributeDisplayName("Year5B1Allocated"));
+            worksheet.Cells["R2"].LoadFromText(GetAttributeDisplayName("Year5B2Allocated"));
+            worksheet.Cells["S2"].LoadFromText(GetAttributeDisplayName("Year5B3Allocated"));
+            worksheet.Cells["T2"].LoadFromText(GetAttributeDisplayName("Year5B4Allocated"));
+            worksheet.Cells["U2"].LoadFromText(GetAttributeDisplayName("Year5B5Allocated"));
+            worksheet.Cells["V2"].LoadFromText(GetAttributeDisplayName("Year5B6Allocated"));
+
+
+            var year5Header = worksheet.Cells["Q2:V2"];
+            year5Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            colFromHex = System.Drawing.ColorTranslator.FromHtml("#ffe699");
+            year5Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            year5Header.Style.Font.Bold = true;
+            year5Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            year5Header.Style.TextRotation = 90;
+
+            int rowCounter = 3;
+
+            string myRange = "C" + rowCounter + ":V" + rowCounter;
+            var mainCells = worksheet.Cells[myRange];
+
+            //mainCells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            //mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            foreach (var allocation in allocationViewModel)
+            {
+                myRange = "C" + rowCounter + ":V" + rowCounter;
+                mainCells = worksheet.Cells[myRange];
+                mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                worksheet.Cells[rowCounter, 1].Value = allocation.Surgery;
+                worksheet.Cells[rowCounter, 2].Value = allocation.Postcode;
+                worksheet.Cells[rowCounter, 3].Value = allocation.Year3B1Allocated;
+                worksheet.Cells[rowCounter, 4].Value = allocation.Year3B2Allocated;
+                worksheet.Cells[rowCounter, 5].Value = allocation.Year3B3Allocated;
+                worksheet.Cells[rowCounter, 6].Value = allocation.Year3B4Allocated;
+                worksheet.Cells[rowCounter, 7].Value = allocation.Year3B5Allocated;
+                worksheet.Cells[rowCounter, 8].Value = allocation.Year3B6Allocated;
+                worksheet.Cells[rowCounter, 9].Value = allocation.Year3B7Allocated;
+
+                worksheet.Cells[rowCounter, 10].Value = allocation.Year4B1Allocated;
+                worksheet.Cells[rowCounter, 11].Value = allocation.Year4B2Allocated;
+                worksheet.Cells[rowCounter, 12].Value = allocation.Year4B3Allocated;
+                worksheet.Cells[rowCounter, 13].Value = allocation.Year4B4Allocated;
+                worksheet.Cells[rowCounter, 14].Value = allocation.Year4B5Allocated;
+                worksheet.Cells[rowCounter, 15].Value = allocation.Year4B6Allocated;
+                worksheet.Cells[rowCounter, 16].Value = allocation.Year4B7Allocated;
+
+                worksheet.Cells[rowCounter, 17].Value = allocation.Year5B1Allocated;
+                worksheet.Cells[rowCounter, 18].Value = allocation.Year5B2Allocated;
+                worksheet.Cells[rowCounter, 19].Value = allocation.Year5B3Allocated;
+                worksheet.Cells[rowCounter, 20].Value = allocation.Year5B4Allocated;
+                worksheet.Cells[rowCounter, 21].Value = allocation.Year5B5Allocated;
+                worksheet.Cells[rowCounter, 22].Value = allocation.Year5B6Allocated;
+
+                rowCounter++;
+            }
+                    
+            return worksheet;
         }
 
         private ExcelWorksheet createWorksheet(string wsName, ExcelPackage ep)
         {
             var academicYear = AcademicYearDD();
 
-            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == true);
             var myPractices = _practiceService.GetAll();
 
             List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
@@ -1390,7 +1522,6 @@ namespace GPManagementSytem.Controllers
                 allocationViewModel.Add(ParseAllocationViewModelEDIT(new AllocationViewModel(), allocation, myPractices));
 
             }
-
 
             ExcelWorksheet worksheet = ep.Workbook.Worksheets.Add(wsName);
 

@@ -72,6 +72,7 @@ namespace GPManagementSytem.Models
         public int ServiceContractReceived { get; set; }
         [Required]
         public string ConfirmationName { get; set; }
+        public bool AllocationApproved { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
         public int? UpdatedBy { get; set; }

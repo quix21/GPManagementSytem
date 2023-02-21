@@ -655,11 +655,11 @@ namespace GPManagementSytem.Controllers
                     break;
 
                 case 2:
-                    myPractices = myPractices.Where(x => x.Disabled == 1).ToList();
+                    myPractices = myPractices.Where(x => x.Queried == 1).ToList();
                     break;
 
                 case 3:
-                    myPractices = myPractices.Where(x => x.Queried == 1).ToList();
+                    myPractices = myPractices.Where(x => x.Disabled == 1).ToList();
                     break;
             }
 
@@ -1355,9 +1355,9 @@ namespace GPManagementSytem.Controllers
             CreateWorkbook();
         }
 
-        public void DownloadPractices()
+        public void DownloadPractices(int practiceStatus = 0)
         {
-            CreateWorkbookPractices();
+            CreateWorkbookPractices(practiceStatus);
         }
 
         public void CreateWorkbook()
@@ -1378,7 +1378,7 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public void CreateWorkbookPractices()
+        public void CreateWorkbookPractices(int practiceStatus)
         {
             List<string> wsNames = new List<string>();
             wsNames.Add("Practices");
@@ -1386,7 +1386,7 @@ namespace GPManagementSytem.Controllers
             //Create Excel object
             ExcelPackage ep = new ExcelPackage();
 
-            createWorksheetPractices(wsNames[0].ToString(), ep);
+            createWorksheetPractices(wsNames[0].ToString(), ep, practiceStatus);
 
             BuildDownload("AllPractices", ep);
 
@@ -1402,11 +1402,26 @@ namespace GPManagementSytem.Controllers
             Response.End();
         }
 
-        private ExcelWorksheet createWorksheetPractices(string wsName, ExcelPackage ep)
+        private ExcelWorksheet createWorksheetPractices(string wsName, ExcelPackage ep, int practiceStatus)
         {
             var academicYear = AcademicYearDD();
 
             var myPractices = _practiceService.GetAll();
+
+            switch (practiceStatus)
+            {
+                case 1:
+                    myPractices = myPractices.Where(x => x.Active == 1).ToList();
+                    break;
+
+                case 2:
+                    myPractices = myPractices.Where(x => x.Queried == 1).ToList();
+                    break;
+
+                case 3:
+                    myPractices = myPractices.Where(x => x.Disabled == 1).ToList();
+                    break;
+            }
 
             ExcelWorksheet worksheet = ep.Workbook.Worksheets.Add(wsName);
 
@@ -1458,7 +1473,7 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 1].Value = practice.Surgery;
                 worksheet.Cells[rowCounter, 2].Value = practice.Postcode;
                 worksheet.Cells[rowCounter, 3].Value = practice.SupplierNumber;
-                worksheet.Cells[rowCounter, 4].Value = practice.NewPractice;
+                worksheet.Cells[rowCounter, 4].Value = ShowBoolean(practice.NewPractice);
                 worksheet.Cells[rowCounter, 5].Value = practice.Address1;
                 worksheet.Cells[rowCounter, 6].Value = practice.Address2;
                 worksheet.Cells[rowCounter, 7].Value = practice.Town;
@@ -1476,7 +1491,7 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 17].Value = practice.ListSize;
                 worksheet.Cells[rowCounter, 18].Value = ShowPracticeStatus(ManagePracticeStatusGroupGET(practice));
                 worksheet.Cells[rowCounter, 19].Value = practice.TutorTrainingGPName;
-                worksheet.Cells[rowCounter, 20].Value = practice.ContactSurgery;
+                worksheet.Cells[rowCounter, 20].Value = ShowBoolean(practice.ContactSurgery);
                 worksheet.Cells[rowCounter, 21].Value = practice.Notes;
                 worksheet.Cells[rowCounter, 22].Value = practice.QualityVisitNotes;
 
@@ -1767,12 +1782,12 @@ namespace GPManagementSytem.Controllers
                 myPSG = 1;
             }
 
-            if (myPractice.Disabled == 1)
+            if (myPractice.Queried == 1)
             {
                 myPSG = 2;
             }
 
-            if (myPractice.Queried == 1)
+            if (myPractice.Disabled == 1)
             {
                 myPSG = 3;
             }
@@ -1784,12 +1799,12 @@ namespace GPManagementSytem.Controllers
                     myPSG = 1;
                 }
 
-                if (practicesExternal.Disabled == 1)
+                if (practicesExternal.Queried == 1)
                 {
                     myPSG = 2;
                 }
 
-                if (practicesExternal.Queried == 1)
+                if (practicesExternal.Disabled == 1)
                 {
                     myPSG = 3;
                 }
@@ -1810,14 +1825,14 @@ namespace GPManagementSytem.Controllers
 
                 case 2:
                     practice.Active = 0;
-                    practice.Disabled = 1;
-                    practice.Queried = 0;
+                    practice.Disabled = 0;
+                    practice.Queried = 1;
                     break;
 
                 case 3:
                     practice.Active = 0;
-                    practice.Disabled = 0;
-                    practice.Queried = 1;
+                    practice.Disabled = 1;
+                    practice.Queried = 0;
                     break;
             }
 
@@ -1844,6 +1859,18 @@ namespace GPManagementSytem.Controllers
             }
 
             return showStatusGroup;
+        }
+
+        private string ShowBoolean(bool getState)
+        {
+            string showBoolean = "Yes";
+
+            if (!getState)
+            {
+                showBoolean = "No";
+            }
+
+            return showBoolean;
         }
 
         private string ShowServiceContract(int serviceContractStatus)

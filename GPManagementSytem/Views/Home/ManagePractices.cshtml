@@ -18,13 +18,13 @@
             <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 1 })" class="subMenuLink @if (getStatus == 1) { <text>active</text>} ">Show Active Only</a>
         </div>
         <div class="col-md-3">
-            <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 2 })" class="subMenuLink @if (getStatus == 2) { <text>active</text>} ">Show Withdrawn Only</a>
+            <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 2 })" class="subMenuLink @if (getStatus == 2) { <text>active</text>} ">Show Dormant Only</a>
         </div>
         <div class="col-md-3">
             <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 3 })" class="subMenuLink @if (getStatus == 3) { <text>active</text>}" >Show Archived Only</a>
         </div>
         <div class="col-md-3">
-            @Html.ActionLink("Download Practices", "DownloadPractices", "Home", null, null)
+            <a href="@Url.Action("DownloadPractices", "Home", new { practiceStatus = getStatus })" class="subMenuLink">Download Practices</a>
         </div>
     </div>
 </div>

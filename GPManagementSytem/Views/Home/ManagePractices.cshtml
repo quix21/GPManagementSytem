@@ -24,7 +24,7 @@
             <a href="@Url.Action("ManagePractices", "Home", new { practiceStatus = 3 })" class="subMenuLink @if (getStatus == 3) { <text>active</text>}" >Show Archived Only</a>
         </div>
         <div class="col-md-3">
-
+            @Html.ActionLink("Download Practices", "DownloadPractices", "Home", null, null)
         </div>
     </div>
 </div>

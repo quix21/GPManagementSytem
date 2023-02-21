@@ -1355,6 +1355,11 @@ namespace GPManagementSytem.Controllers
             CreateWorkbook();
         }
 
+        public void DownloadPractices()
+        {
+            CreateWorkbookPractices();
+        }
+
         public void CreateWorkbook()
         {
             List<string> wsNames = new List<string>();
@@ -1378,10 +1383,7 @@ namespace GPManagementSytem.Controllers
             List<string> wsNames = new List<string>();
             wsNames.Add("Practices");
 
-
             //Create Excel object
-
-            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage ep = new ExcelPackage();
 
             createWorksheetPractices(wsNames[0].ToString(), ep);
@@ -1415,92 +1417,68 @@ namespace GPManagementSytem.Controllers
 
             worksheet.Cells["A2"].LoadFromText("Practice Name");
             worksheet.Cells["B2"].LoadFromText("Postcode");
-            worksheet.Cells["C2"].LoadFromText(GetAttributeDisplayName("Year3B1Allocated"));
-            worksheet.Cells["D2"].LoadFromText(GetAttributeDisplayName("Year3B2Allocated"));
-            worksheet.Cells["E2"].LoadFromText(GetAttributeDisplayName("Year3B3Allocated"));
-            worksheet.Cells["F2"].LoadFromText(GetAttributeDisplayName("Year3B4Allocated"));
-            worksheet.Cells["G2"].LoadFromText(GetAttributeDisplayName("Year3B5Allocated"));
-            worksheet.Cells["H2"].LoadFromText(GetAttributeDisplayName("Year3B6Allocated"));
-            worksheet.Cells["I2"].LoadFromText(GetAttributeDisplayName("Year3B7Allocated"));
+            worksheet.Cells["C2"].LoadFromText("Supplier Number");
+            worksheet.Cells["D2"].LoadFromText("New Practice");
+            worksheet.Cells["E2"].LoadFromText("Address1");
+            worksheet.Cells["F2"].LoadFromText("Address2");
+            worksheet.Cells["G2"].LoadFromText("Town");
+            worksheet.Cells["H2"].LoadFromText("Postcode");
+            worksheet.Cells["I2"].LoadFromText("Telephone");
+            worksheet.Cells["J2"].LoadFromText(GetAttributeDisplayNamePractice("PracticeManager"));
+            worksheet.Cells["K2"].LoadFromText(GetAttributeDisplayNamePractice("PMEmail"));
+            worksheet.Cells["L2"].LoadFromText(GetAttributeDisplayNamePractice("GP1"));
+            worksheet.Cells["M2"].LoadFromText(GetAttributeDisplayNamePractice("GP1Email"));
+            worksheet.Cells["N2"].LoadFromText(GetAttributeDisplayNamePractice("GP2"));
+            worksheet.Cells["O2"].LoadFromText(GetAttributeDisplayNamePractice("GP2Email"));
+            worksheet.Cells["P2"].LoadFromText(GetAttributeDisplayNamePractice("AdditionalEmails"));
+            worksheet.Cells["Q2"].LoadFromText(GetAttributeDisplayNamePractice("ListSize"));
+            worksheet.Cells["R2"].LoadFromText("Practice Status");
+            worksheet.Cells["S2"].LoadFromText(GetAttributeDisplayNamePractice("TutorTrainingGPName"));
+            worksheet.Cells["T2"].LoadFromText(GetAttributeDisplayNamePractice("ContactSurgery"));
+            worksheet.Cells["U2"].LoadFromText(GetAttributeDisplayNamePractice("Notes"));
+            worksheet.Cells["V2"].LoadFromText(GetAttributeDisplayNamePractice("QualityVisitNotes"));
 
-            var year3Header = worksheet.Cells["C2:I2"];
-            year3Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#f8cbad");
-            year3Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
-            year3Header.Style.Font.Bold = true;
-            year3Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            year3Header.Style.TextRotation = 90;
-
-            worksheet.Cells["J2"].LoadFromText(GetAttributeDisplayName("Year4B1Allocated"));
-            worksheet.Cells["K2"].LoadFromText(GetAttributeDisplayName("Year4B2Allocated"));
-            worksheet.Cells["L2"].LoadFromText(GetAttributeDisplayName("Year4B3Allocated"));
-            worksheet.Cells["M2"].LoadFromText(GetAttributeDisplayName("Year4B4Allocated"));
-            worksheet.Cells["N2"].LoadFromText(GetAttributeDisplayName("Year4B5Allocated"));
-            worksheet.Cells["O2"].LoadFromText(GetAttributeDisplayName("Year4B6Allocated"));
-            worksheet.Cells["P2"].LoadFromText(GetAttributeDisplayName("Year4B7Allocated"));
-
-            var year4Header = worksheet.Cells["J2:P2"];
-            year4Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            colFromHex = System.Drawing.ColorTranslator.FromHtml("#00b0f0");
-            year4Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
-            year4Header.Style.Font.Bold = true;
-            year4Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            year4Header.Style.TextRotation = 90;
-
-            worksheet.Cells["Q2"].LoadFromText(GetAttributeDisplayName("Year5B1Allocated"));
-            worksheet.Cells["R2"].LoadFromText(GetAttributeDisplayName("Year5B2Allocated"));
-            worksheet.Cells["S2"].LoadFromText(GetAttributeDisplayName("Year5B3Allocated"));
-            worksheet.Cells["T2"].LoadFromText(GetAttributeDisplayName("Year5B4Allocated"));
-            worksheet.Cells["U2"].LoadFromText(GetAttributeDisplayName("Year5B5Allocated"));
-            worksheet.Cells["V2"].LoadFromText(GetAttributeDisplayName("Year5B6Allocated"));
-
-
-            var year5Header = worksheet.Cells["Q2:V2"];
-            year5Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            colFromHex = System.Drawing.ColorTranslator.FromHtml("#ffe699");
-            year5Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
-            year5Header.Style.Font.Bold = true;
-            year5Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            year5Header.Style.TextRotation = 90;
+            var mainHeader = worksheet.Cells["A2:V2"];
+            mainHeader.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#eaecf4");
+            mainHeader.Style.Fill.BackgroundColor.SetColor(colFromHex);
+            mainHeader.Style.Font.Bold = true;
 
             int rowCounter = 3;
 
             string myRange = "C" + rowCounter + ":V" + rowCounter;
             var mainCells = worksheet.Cells[myRange];
 
-            //mainCells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            //mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            foreach (var allocation in allocationViewModel)
+            foreach (var practice in myPractices)
             {
-                myRange = "C" + rowCounter + ":V" + rowCounter;
+                myRange = "A" + rowCounter + ":V" + rowCounter;
                 mainCells = worksheet.Cells[myRange];
-                mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
-                worksheet.Cells[rowCounter, 1].Value = allocation.Surgery;
-                worksheet.Cells[rowCounter, 2].Value = allocation.Postcode;
-                worksheet.Cells[rowCounter, 3].Value = allocation.Year3B1Allocated;
-                worksheet.Cells[rowCounter, 4].Value = allocation.Year3B2Allocated;
-                worksheet.Cells[rowCounter, 5].Value = allocation.Year3B3Allocated;
-                worksheet.Cells[rowCounter, 6].Value = allocation.Year3B4Allocated;
-                worksheet.Cells[rowCounter, 7].Value = allocation.Year3B5Allocated;
-                worksheet.Cells[rowCounter, 8].Value = allocation.Year3B6Allocated;
-                worksheet.Cells[rowCounter, 9].Value = allocation.Year3B7Allocated;
+                worksheet.Cells[rowCounter, 1].Value = practice.Surgery;
+                worksheet.Cells[rowCounter, 2].Value = practice.Postcode;
+                worksheet.Cells[rowCounter, 3].Value = practice.SupplierNumber;
+                worksheet.Cells[rowCounter, 4].Value = practice.NewPractice;
+                worksheet.Cells[rowCounter, 5].Value = practice.Address1;
+                worksheet.Cells[rowCounter, 6].Value = practice.Address2;
+                worksheet.Cells[rowCounter, 7].Value = practice.Town;
+                worksheet.Cells[rowCounter, 8].Value = practice.Postcode;
+                worksheet.Cells[rowCounter, 9].Value = practice.Telephone;
 
-                worksheet.Cells[rowCounter, 10].Value = allocation.Year4B1Allocated;
-                worksheet.Cells[rowCounter, 11].Value = allocation.Year4B2Allocated;
-                worksheet.Cells[rowCounter, 12].Value = allocation.Year4B3Allocated;
-                worksheet.Cells[rowCounter, 13].Value = allocation.Year4B4Allocated;
-                worksheet.Cells[rowCounter, 14].Value = allocation.Year4B5Allocated;
-                worksheet.Cells[rowCounter, 15].Value = allocation.Year4B6Allocated;
-                worksheet.Cells[rowCounter, 16].Value = allocation.Year4B7Allocated;
+                worksheet.Cells[rowCounter, 10].Value = practice.PracticeManager;
+                worksheet.Cells[rowCounter, 11].Value = practice.PMEmail;
+                worksheet.Cells[rowCounter, 12].Value = practice.GP1;
+                worksheet.Cells[rowCounter, 13].Value = practice.GP1Email;
+                worksheet.Cells[rowCounter, 14].Value = practice.GP2;
+                worksheet.Cells[rowCounter, 15].Value = practice.GP2Email;
+                worksheet.Cells[rowCounter, 16].Value = practice.AdditionalEmails;
 
-                worksheet.Cells[rowCounter, 17].Value = allocation.Year5B1Allocated;
-                worksheet.Cells[rowCounter, 18].Value = allocation.Year5B2Allocated;
-                worksheet.Cells[rowCounter, 19].Value = allocation.Year5B3Allocated;
-                worksheet.Cells[rowCounter, 20].Value = allocation.Year5B4Allocated;
-                worksheet.Cells[rowCounter, 21].Value = allocation.Year5B5Allocated;
-                worksheet.Cells[rowCounter, 22].Value = allocation.Year5B6Allocated;
+                worksheet.Cells[rowCounter, 17].Value = practice.ListSize;
+                worksheet.Cells[rowCounter, 18].Value = ShowPracticeStatus(ManagePracticeStatusGroupGET(practice));
+                worksheet.Cells[rowCounter, 19].Value = practice.TutorTrainingGPName;
+                worksheet.Cells[rowCounter, 20].Value = practice.ContactSurgery;
+                worksheet.Cells[rowCounter, 21].Value = practice.Notes;
+                worksheet.Cells[rowCounter, 22].Value = practice.QualityVisitNotes;
 
                 rowCounter++;
             }
@@ -1846,6 +1824,28 @@ namespace GPManagementSytem.Controllers
             return practice;
         }
 
+        private string ShowPracticeStatus(int PracticeStatusGroup)
+        {
+            string showStatusGroup = "";
+
+            switch (PracticeStatusGroup)
+            {
+                case 1:
+                    showStatusGroup = "Active";
+                    break;
+
+                case 2:
+                    showStatusGroup = "Dormant";
+                    break;
+
+                case 3:
+                    showStatusGroup = "Archived";
+                    break;
+            }
+
+            return showStatusGroup;
+        }
+
         private string ShowServiceContract(int serviceContractStatus)
         {
             string showService = "";
@@ -1879,5 +1879,15 @@ namespace GPManagementSytem.Controllers
             return (atts[0] as DisplayNameAttribute).DisplayName;
         }
 
+        private string GetAttributeDisplayNamePractice(string getProperty)
+        {
+            PropertyInfo property = typeof(Practices).GetProperty(getProperty);
+
+            var atts = property.GetCustomAttributes(
+                typeof(DisplayNameAttribute), true);
+            if (atts.Length == 0)
+                return property.Name;
+            return (atts[0] as DisplayNameAttribute).DisplayName;
+        }
     }
 }

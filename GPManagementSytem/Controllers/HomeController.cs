@@ -328,26 +328,7 @@ namespace GPManagementSytem.Controllers
         {
             if (ModelState.IsValid)
             {
-                switch (practice.PracticeStatusGroup)
-                {
-                    case 1:
-                        practice.Active = 1;
-                        practice.Disabled = 0;
-                        practice.Queried = 0;
-                        break;
-
-                    case 2:
-                        practice.Active = 0;
-                        practice.Disabled = 1;
-                        practice.Queried = 0;
-                        break;
-
-                    case 3:
-                        practice.Active = 0;
-                        practice.Disabled = 0;
-                        practice.Queried = 1;
-                        break;
-                }
+                ManagePracticeStatusGroupPOST(practice);
 
                 practice.DateCreated = DateTime.Now;
                 practice.UpdatedBy = 1;
@@ -409,6 +390,8 @@ namespace GPManagementSytem.Controllers
         {
             if (ModelState.IsValid)
             {
+                ManagePracticeStatusGroupPOST(myPractice);
+
                 var thisPractice = ParsePracticesExternalForRegistration(myPractice);
 
                 //update original practice record
@@ -1814,6 +1797,32 @@ namespace GPManagementSytem.Controllers
         }
 
         private Practices ManagePracticeStatusGroupPOST(Practices practice)
+        {
+            switch (practice.PracticeStatusGroup)
+            {
+                case 1:
+                    practice.Active = 1;
+                    practice.Disabled = 0;
+                    practice.Queried = 0;
+                    break;
+
+                case 2:
+                    practice.Active = 0;
+                    practice.Disabled = 0;
+                    practice.Queried = 1;
+                    break;
+
+                case 3:
+                    practice.Active = 0;
+                    practice.Disabled = 1;
+                    practice.Queried = 0;
+                    break;
+            }
+
+            return practice;
+        }
+
+        private PracticesExternal ManagePracticeStatusGroupPOST(PracticesExternal practice)
         {
             switch (practice.PracticeStatusGroup)
             {

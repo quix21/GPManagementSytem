@@ -42,17 +42,7 @@
                     @Html.EditorFor(model => model.SupplierNumber, new { htmlAttributes = new { @class = "form-control", type = "text" } })
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.NewPractice)</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.NewPractice, "true", new { @class = "btn-check", @id = "true" })
-                        <label class="btn btn-outline-info" for="true">Yes</label>
-                        @Html.RadioButtonFor(model => model.NewPractice, "false", new { @class = "btn-check", @id = "false" })
-                        <label class="btn btn-outline-info" for="false">No</label>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <div class="container">
@@ -183,10 +173,10 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                     <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
                         @Html.RadioButtonFor(model => model.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
                         <label class="btn btn-outline-info" for="active">Active</label>
-                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
-                        <label class="btn btn-outline-info" for="disabled">Withdrawn</label>
-                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
-                        <label class="btn btn-outline-info" for="queried">Archived</label>
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "queried" })
+                        <label class="btn btn-outline-info" for="queried">Dormant</label>
+                        @Html.RadioButtonFor(model => model.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "disabled" })
+                        <label class="btn btn-outline-info" for="disabled">Archived</label>
                     </div>
                 </div>
             </div>

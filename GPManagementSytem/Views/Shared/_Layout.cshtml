@@ -61,8 +61,8 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     @if (isAdmin)
                     {
-                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="#"><i class="fa fa-file-o"></i>Sign up</a></li>
-                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Recruitment</a></li>
+                        @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="#"><i class="fa fa-file-o"></i>Sign up</a></li>*@
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Add Practice</a></li>
                         <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManagePractices"><i class="fas fa-table"></i>Manage Practices</a></li>
 
                         <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePracticesExternal", "Home") ? "active" : "")" href="~/Home/ManagePracticesExternal"><i class="fas fa-table"></i>Practice Changes (@changesCount)</a></li>

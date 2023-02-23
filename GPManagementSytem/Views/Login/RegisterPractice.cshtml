@@ -29,13 +29,13 @@
             </div>
             <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select" })
+                    <span class="input-group-text">Academic year</span>@Html.DropDownListFor(model => model.AcademicYear, academicYearDD, "--- Select Year ---", new { Class = "form-select", disabled = "disabled" })
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    @*<div class="container">
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
@@ -47,7 +47,7 @@
 
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container">
         <div class="row">
             <div class="col-md-6">

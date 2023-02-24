@@ -1,7 +1,7 @@
 ﻿@using GPManagementSytem.ViewModel
 @model IEnumerable<GPManagementSytem.ViewModel.AllocationViewModel>
 @{
-    ViewBag.Title = "At A Glance Requested";
+    ViewBag.Title = "At A Glance (requested)";
 
 }
 
@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    @Html.ActionLink("At A Glance", "AtAGlance", "Home", null, null)
+                    @Html.ActionLink("At A Glance (allocated)", "AtAGlance", "Home", null, null)
                     |
                     @Html.ActionLink("Download spreadsheet", "DownloadAtAGlance", "Home", null, null)
                 </div>

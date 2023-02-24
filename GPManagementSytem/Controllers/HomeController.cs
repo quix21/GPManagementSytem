@@ -768,7 +768,7 @@ namespace GPManagementSytem.Controllers
         {
             var academicYear = AcademicYearDD();
 
-            var myAllocation = _allocationService.GetByAcademicYear(academicYear);
+            var myAllocation = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == true);
             var myPractices = _practiceService.GetAll();
 
             List<AllocationViewModel> allocationViewModel = new List<AllocationViewModel>();
@@ -1008,13 +1008,6 @@ namespace GPManagementSytem.Controllers
             List<Users> getUsers = _userService.GetAllPracticeUsers();
 
             var getSendLog = _signupSendLogService.GetAllNoActivity(AcademicYearDD());
-
-            //foreach (var sendlog in getSendLog)
-            //{
-            //    var thisUser = getUsers.Where(x => x.PracticeId == sendlog.PracticeId).FirstOrDefault();
-
-            //    myUsers.Add(thisUser);
-            //}
 
             foreach (var user in getUsers)
             {

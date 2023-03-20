@@ -60,6 +60,7 @@ namespace GPManagementSytem.Services
             entityToUpdate.Subject = emailTemplates.Subject;
             entityToUpdate.Body = emailTemplates.Body;
             entityToUpdate.AttachmentName = emailTemplates.AttachmentName;
+            entityToUpdate.AttachmentName2 = emailTemplates.AttachmentName2;
             entityToUpdate.DateUpdated = emailTemplates.DateUpdated;
             entityToUpdate.UpdatedBy = emailTemplates.UpdatedBy;
 

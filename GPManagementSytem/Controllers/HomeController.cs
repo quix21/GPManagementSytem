@@ -23,7 +23,7 @@ using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
 {
-    //[CheckAuthorisation]
+    [CheckAuthorisation]
     public class HomeController : BaseController
     {
         //private readonly IPracticeService _practiceService;
@@ -929,7 +929,7 @@ namespace GPManagementSytem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendSignUpInvite(EmailTemplates emailTemplates, HttpPostedFileBase attachmentFile, string Command, FormCollection fc)
+        public ActionResult SendSignUpInvite(EmailTemplates emailTemplates, HttpPostedFileBase attachmentFile, HttpPostedFileBase attachmentFile2, string Command, FormCollection fc)
         {
             if (ModelState.IsValid)
             {
@@ -943,13 +943,25 @@ namespace GPManagementSytem.Controllers
                     DeleteAttachment(myEmail.AttachmentName);
                 }
 
+                if (fc["removeAttachment2"] != null)
+                {
+                    emailTemplates.AttachmentName2 = null;
+
+                    DeleteAttachment(myEmail.AttachmentName2);
+                }
+
                 myEmail = emailTemplates;
 
                 if (attachmentFile != null)
                 {
                     myEmail.AttachmentName = UploadDocument(attachmentFile);
                 }
-                
+
+                if (attachmentFile2 != null)
+                {
+                    myEmail.AttachmentName2 = UploadDocument(attachmentFile2);
+                }
+
                 myEmail.DateUpdated = DateTime.Now;
                 myEmail.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
@@ -974,6 +986,7 @@ namespace GPManagementSytem.Controllers
                     var myAdmin = _userService.GetById(Convert.ToInt32(Session["UserId"].ToString()));
 
                     BuildEmail(myAdmin, null, myEmail);
+                    logger.Info("Preview email sent: " + myAdmin.Email);
                     return this.RedirectToAction("SendSignUpInvite", "Home");
                 }
                 else

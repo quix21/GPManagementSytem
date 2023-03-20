@@ -16,6 +16,7 @@
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.EmailTypeId)
     @Html.HiddenFor(model => model.AttachmentName)
+    @Html.HiddenFor(model => model.AttachmentName2)
 
     <div class="container">
         <div class="row">
@@ -76,6 +77,37 @@ new { @class = "form-control fullTextArea", @rows = 3 })
                     <span class="input-group-text fileInputLabel">Attachment</span>
                     <label class="input-group-text" for="attachmentFile">Browse...</label>
                     <input type="file" class="form-control" id="attachmentFile" name="attachmentFile">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    if (Model.AttachmentName2 != null)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <a href="@Url.Content("~/Content/EmailAttachments/" + Model.AttachmentName2)" target="_blank">Click to view attachment (@Model.AttachmentName2)</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input class="form-check-input" type="checkbox" value="" id="removeAttachment2" name="removeAttachment2">
+                    <label class="form-check-label" for="removeAttachment2">
+                        Remove attachment
+                    </label>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group custom-file-button">
+                    <span class="input-group-text fileInputLabel">Attachment</span>
+                    <label class="input-group-text" for="attachmentFile2">Browse...</label>
+                    <input type="file" class="form-control" id="attachmentFile2" name="attachmentFile2">
                 </div>
             </div>
         </div>

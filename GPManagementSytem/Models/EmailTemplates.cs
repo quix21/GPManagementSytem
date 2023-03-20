@@ -23,6 +23,7 @@ namespace GPManagementSytem.Models
         [Required]
         public string Body { get; set; }
         public string AttachmentName { get; set; }
+        public string AttachmentName2 { get; set; }
         public DateTime DateUpdated { get; set; }
         public int UpdatedBy { get; set; }
 

@@ -127,7 +127,7 @@ namespace GPManagementSytem.Controllers
                     if (cu != null)
                     {
                         content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL, getURL);
-                        SendEmail(cu.Email, subject, content, getEmailType, cu.Id, 0, getSendCode, GuidToIndentify, getType.AttachmentName);
+                        SendEmail(cu.Email, subject, content, getEmailType, cu.Id, 0, getSendCode, GuidToIndentify, getType.AttachmentName, getType.AttachmentName2);
                     }
                     else
                     {
@@ -139,7 +139,7 @@ namespace GPManagementSytem.Controllers
                             var loginURL = getURL + "Login/PracticeLogin?guid=" + GuidToIndentify;
 
                             content = createTemplateEmailBody(getType.Body, user.Firstname, nochangeURL, loginURL);
-                            SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName);
+                            SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName, getType.AttachmentName2);
                         }
                     }
                                        
@@ -151,7 +151,7 @@ namespace GPManagementSytem.Controllers
 
         }
 
-        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, int PracticeId, string getSendCode, string GuidToIndentify, string myAttachment = null)
+        public void SendEmail(string emailAddress, string subject, string body, int typeId, int userId, int PracticeId, string getSendCode, string GuidToIndentify, string myAttachment = null, string myAttachment2 = null)
         {
 
             if (myAttachment != null)
@@ -162,11 +162,19 @@ namespace GPManagementSytem.Controllers
 
             }
 
+            if (myAttachment2 != null)
+            {
+                string uploadFolder = Server.MapPath(getAttachmentPath);
+
+                string getAttachment2 = uploadFolder + myAttachment2;
+
+            }
+
             try
             {
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["SendEmails"]))
                 {
-                    _mailSender.SendMail(emailAddress, adminEmail, adminName, subject, body, null, null, GetAttachmentFilePath(myAttachment));
+                    _mailSender.SendMail(emailAddress, adminEmail, adminName, subject, body, null, null, GetAttachmentFilePath(myAttachment), GetAttachmentFilePath(myAttachment2));
 
                     //write email log only if not a Preview Email
                     if (PracticeId !=0)

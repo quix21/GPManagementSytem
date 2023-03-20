@@ -28,7 +28,7 @@ namespace GPManagementSytem.Services
                 try
                 {
                     smtpServer.Send(mailMessage);
-                    //mailMessage.Dispose();
+                    mailMessage.Dispose();
                 }
                 catch (Exception e)
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace GPManagementSytem.Models
         public string Surgery { get; set; }
         public bool SurgeryInUse { get; set; }
         [Required]
+        [DisplayName("Lead GP Tutor")]
         public string GP1 { get; set; }
+        [Required]
+        [DisplayName("Lead GP Tutor Email")]
         public string GP1Email { get; set; }
         [Required]
         public string Address1 { get; set; }
@@ -35,7 +39,9 @@ namespace GPManagementSytem.Models
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [Required]
         public string PMEmail { get; set; }
+        [DisplayName("Additional GP Tutor")]
         public string GP2 { get; set; }
+        [DisplayName("Additional GP Tutor Email")]
         public string GP2Email { get; set; }
         public string Website { get; set; }
         public string GP3 { get; set; }

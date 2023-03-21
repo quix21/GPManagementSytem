@@ -67,11 +67,11 @@ namespace GPManagementSytem.Controllers
 
             var academicYear = AcademicYearDD();
 
-            int getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).Count();
+            int getReturns = _allocationService.GetByAcademicYear(academicYear).Count();
 
             int allocationsPending = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == false).Count();
 
-            int allPractices = _practiceService.GetAll().Where(x => x.ContactSurgery == true).Count();
+            int allPractices = _practiceService.GetAll().Where(x => x.Active == 1).Count();
 
             int notReturnedSignup = allPractices - getReturns;
 

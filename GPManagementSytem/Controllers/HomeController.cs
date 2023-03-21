@@ -308,7 +308,7 @@ namespace GPManagementSytem.Controllers
         public ActionResult EditSignupDate(SignupDates signupDates)
         {
             signupDates.DateUpdated = DateTime.Now;
-            signupDates.UpdatedBy = 1; //to be updated to login session!!!!
+            signupDates.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
             _signupDatesService.EditSignupDate(signupDates);
 
@@ -331,8 +331,19 @@ namespace GPManagementSytem.Controllers
                 ManagePracticeStatusGroupPOST(practice);
 
                 practice.DateCreated = DateTime.Now;
-                practice.UpdatedBy = 1;
-                _practiceService.AddPractice(practice);
+                practice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+                var newPractice = _practiceService.AddPractice(practice);
+
+                if (CreatePMUser(newPractice) == false)
+                {
+                    logger.Error("Practice manager user not created (email exists): " + newPractice.PMEmail);
+                }
+
+                if (CreateGPUser(newPractice) == false)
+                {
+                    logger.Error("GP1 user not created (email exists): " + newPractice.GP1Email);
+                }
+                
 
                 return RedirectToAction("ManagePractices");
             }
@@ -451,6 +462,110 @@ namespace GPManagementSytem.Controllers
 
                 return View(myPractice);
             }
+        }
+
+        public bool CreatePMUser(Practices practice)
+        {
+            //create user 
+            var getUsers = _userService.GetAll().Where(x => x.UserType > 1).ToList();
+
+            bool isNew = true;
+
+            var thisUser = getUsers.Where(x => x.Email == practice.PMEmail).ToList();
+
+            if (thisUser.Count() > 0)
+            {
+                isNew = false;
+            }
+
+            if (isNew)
+            {
+                Users newUser = new Users();
+
+                string firstName = "";
+                string surname = "";
+
+                string[] getNames = practice.PracticeManager.Split(' ').ToArray();
+
+                if (getNames.Length >= 2)
+                {
+                    firstName = getNames[0].ToString();
+                    surname = getNames[1].ToString();
+                }
+
+                newUser.Firstname = firstName;
+                newUser.Surname = surname;
+                newUser.Email = practice.PMEmail;
+                newUser.Username = practice.PMEmail;
+                newUser.Pwd = GeneratePassword();
+                newUser.UserType = 2;
+                newUser.PracticeId = practice.Id;
+                newUser.Year2 = false;
+                newUser.Year3 = false;
+                newUser.Year4 = false;
+                newUser.Year5 = false;
+                newUser.IsActive = true;
+                newUser.DateCreated = DateTime.Now;
+                newUser.DateUpdated = DateTime.Now;
+                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(newUser);
+                                
+            }
+
+            return isNew;
+        }
+
+        public bool CreateGPUser(Practices practice)
+        {
+            //create user 
+            var getUsers = _userService.GetAll().Where(x => x.UserType > 1).ToList(); 
+
+            bool isNew = true;
+
+            var thisUser = getUsers.Where(x => x.Email == practice.GP1Email).ToList();
+
+            if (thisUser.Count() > 0)
+            {
+                isNew = false;
+            }
+
+            if (isNew)
+            {
+                Users newUser = new Users();
+
+                string firstName = "";
+                string surname = "";
+
+                string[] getNames = practice.GP1.Split(' ').ToArray();
+
+                if (getNames.Length >= 2)
+                {
+                    firstName = getNames[0].ToString();
+                    surname = getNames[1].ToString();
+                }
+
+                newUser.Firstname = firstName;
+                newUser.Surname = surname;
+                newUser.Email = practice.GP1Email;
+                newUser.Username = practice.GP1Email;
+                newUser.Pwd = GeneratePassword();
+                newUser.UserType = 2;
+                newUser.PracticeId = practice.Id;
+                newUser.Year2 = false;
+                newUser.Year3 = false;
+                newUser.Year4 = false;
+                newUser.Year5 = false;
+                newUser.IsActive = true;
+                newUser.DateCreated = DateTime.Now;
+                newUser.DateUpdated = DateTime.Now;
+                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(newUser);
+            }
+
+            return isNew;
+
         }
 
         public ActionResult ApprovePracticeChanges(int id)
@@ -749,11 +864,17 @@ namespace GPManagementSytem.Controllers
             if (ModelState.IsValid)
             {
                 allocation.DateCreated = DateTime.Now;
-                //allocation.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
-
-                allocation.UpdatedBy = 1;
+                allocation.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());                
 
                 var myAllocation = _allocationService.AddAllocation(ParseAllocationViewModelADD(allocationViewModel, allocation));
+
+                //set PracticeStatus to Active 
+                var practice = _practiceService.GetById(allocation.PracticeId);
+                ManagePracticeStatusGroupPOST(practice);
+
+                practice.DateUpdated = DateTime.Now;
+                practice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString()); 
+                _practiceService.EditPractice(practice);
 
                 return RedirectToAction("ManagePractices");
             }
@@ -969,16 +1090,19 @@ namespace GPManagementSytem.Controllers
 
                 List<Users> Sendlist = new List<Users>(0);
 
-                switch (emailTemplates.SendList)
-                {
-                    case 1:
-                        Sendlist = _userService.GetAllPracticeUsers();
-                        break;
 
-                    case 2:
-                        Sendlist = GetUsersFromSendListLog();
-                        break;
-                }
+                Sendlist = GetSendListByPracticeStatus(emailTemplates.SendList);
+
+                //switch (emailTemplates.SendList)
+                //{
+                //    case 1:
+                //        Sendlist = _userService.GetAllPracticeUsers();
+                //        break;
+
+                //    case 2:
+                //        Sendlist = GetUsersFromSendListLog();
+                //        break;
+                //}
 
 
                 if (Command == "Send Preview Email")
@@ -1005,6 +1129,41 @@ namespace GPManagementSytem.Controllers
 
             }
 
+        }
+
+        public List<Users> GetSendListByPracticeStatus(int practiceStatus)
+        {
+            List<Users> sendList = new List<Users>(0);
+            List<Users> getUsers = _userService.GetAllPracticeUsers();
+
+            var getPractices = _practiceService.GetAll();
+
+            switch (practiceStatus)
+            {
+                case 1:
+                    getPractices.Where(x => x.Active ==1).ToList();
+                    break;
+
+                case 2:
+                    getPractices.Where(x => x.Queried == 1).ToList();
+                    break;
+
+                case 3:
+                    getPractices.Where(x => x.Disabled == 1).ToList();
+                    break;
+            }
+
+            foreach (var practice in getPractices)
+            {
+                List<Users> practiceUsers = getUsers.Where(x => x.PracticeId == practice.Id).ToList();
+
+                foreach (var user in practiceUsers)
+                {
+                    sendList.Add(user);
+                }
+            }
+
+            return sendList;
         }
 
         public ActionResult InviteSent(string getSendCode)
@@ -1087,8 +1246,9 @@ namespace GPManagementSytem.Controllers
             List<SelectListItem> li = new List<SelectListItem>();
 
             li.Add(new SelectListItem { Text = "Select", Value = "" });
-            li.Add(new SelectListItem { Text = "All practices", Value = "1" });
-            li.Add(new SelectListItem { Text = "Practices yet to respond", Value = "2" });
+            li.Add(new SelectListItem { Text = "Active practices", Value = "1" });
+            li.Add(new SelectListItem { Text = "Dormant practices", Value = "2" });
+            li.Add(new SelectListItem { Text = "Archived practices", Value = "3" });
 
             return li;
         }

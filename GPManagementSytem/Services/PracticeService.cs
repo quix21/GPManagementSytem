@@ -32,6 +32,30 @@ namespace GPManagementSytem.Services
             return AllNoTracking().Where(x => x.Id == id).FirstOrDefault();
         }
 
+        public List<Practices> GetPracticesNotReturnedSignup(string academicYear)
+        {
+            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1)
+                         where !(from a in _databaseEntities.Allocations.Where(x => x.AcademicYear == academicYear)
+                                 select a.PracticeId)
+                                .Contains(p.Id)
+                         select p;
+
+            return result.ToList();
+
+        }
+
+        public List<Practices> GetPracticesReturnedSignup(string academicYear)
+        {
+            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1)
+                         where (from a in _databaseEntities.Allocations.Where(x => x.AcademicYear == academicYear)
+                                 select a.PracticeId)
+                                .Contains(p.Id)
+                         select p;
+
+            return result.ToList();
+
+        }
+
         public Practices AddPractice(Practices practice)
         {
             return UpdatePractice(practice);

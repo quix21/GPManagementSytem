@@ -49,11 +49,12 @@
                 @if (isAdmin)
                 {
                     <div class="signUpHolder">
-                        Sign up returned: @signupReturnsCount
+                        Sign up returned: <a href="~/Home/ManageReturned">@signupReturnsCount</a>
 
                     </div>
                     <div class="signUpHolder">
-                        Sign up not returned: @notReturnedCount
+                        Sign up not returned: 
+                        <a href="~/Home/ManageNotReturned">@notReturnedCount</a>
                     </div>
                 }
 

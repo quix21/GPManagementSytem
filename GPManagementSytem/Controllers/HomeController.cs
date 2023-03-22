@@ -411,39 +411,15 @@ namespace GPManagementSytem.Controllers
 
                 var newPractice = _practiceService.AddPractice(thisPractice);
 
-                //create user 
-                //TODO - check for existing email in users table
-
-                Users newUser = new Users();
-
-                string firstName = "";
-                string surname = "";
-
-                string[] getNames = newPractice.PracticeManager.Split(' ').ToArray();
-
-                if (getNames.Length >=2)
+                if (CreatePMUser(newPractice) == false)
                 {
-                    firstName = getNames[0].ToString();
-                    surname = getNames[1].ToString();
+                    logger.Error("Practice manager user not created (email exists): " + newPractice.PMEmail);
                 }
 
-                newUser.Firstname = firstName;
-                newUser.Surname = surname;
-                newUser.Email = newPractice.PMEmail;
-                newUser.Username = newPractice.PMEmail;
-                newUser.Pwd = GeneratePassword();
-                newUser.UserType = 2;
-                newUser.PracticeId = newPractice.Id;
-                newUser.Year2 = false;
-                newUser.Year3 = false;
-                newUser.Year4 = false;
-                newUser.Year5 = false;
-                newUser.IsActive = true;
-                newUser.DateCreated = DateTime.Now;
-                newUser.DateUpdated = DateTime.Now;
-                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
-
-                _userService.AddUser(newUser);
+                if (CreateGPUser(newPractice) == false)
+                {
+                    logger.Error("GP1 user not created (email exists): " + newPractice.GP1Email);
+                }
 
                 //update practiceexternal record and mark as approved
                 myPractice.PrimaryId = newPractice.Id;
@@ -516,10 +492,114 @@ namespace GPManagementSytem.Controllers
             return isNew;
         }
 
+        public bool CreatePMUser(PracticesExternal practice)
+        {
+            //create user 
+            var getUsers = _userService.GetAll().Where(x => x.UserType > 1).ToList();
+
+            bool isNew = true;
+
+            var thisUser = getUsers.Where(x => x.Email == practice.PMEmail).ToList();
+
+            if (thisUser.Count() > 0)
+            {
+                isNew = false;
+            }
+
+            if (isNew)
+            {
+                Users newUser = new Users();
+
+                string firstName = "";
+                string surname = "";
+
+                string[] getNames = practice.PracticeManager.Split(' ').ToArray();
+
+                if (getNames.Length >= 2)
+                {
+                    firstName = getNames[0].ToString();
+                    surname = getNames[1].ToString();
+                }
+
+                newUser.Firstname = firstName;
+                newUser.Surname = surname;
+                newUser.Email = practice.PMEmail;
+                newUser.Username = practice.PMEmail;
+                newUser.Pwd = GeneratePassword();
+                newUser.UserType = 2;
+                newUser.PracticeId = practice.Id;
+                newUser.Year2 = false;
+                newUser.Year3 = false;
+                newUser.Year4 = false;
+                newUser.Year5 = false;
+                newUser.IsActive = true;
+                newUser.DateCreated = DateTime.Now;
+                newUser.DateUpdated = DateTime.Now;
+                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(newUser);
+
+            }
+
+            return isNew;
+        }
+
         public bool CreateGPUser(Practices practice)
         {
             //create user 
             var getUsers = _userService.GetAll().Where(x => x.UserType > 1).ToList(); 
+
+            bool isNew = true;
+
+            var thisUser = getUsers.Where(x => x.Email == practice.GP1Email).ToList();
+
+            if (thisUser.Count() > 0)
+            {
+                isNew = false;
+            }
+
+            if (isNew)
+            {
+                Users newUser = new Users();
+
+                string firstName = "";
+                string surname = "";
+
+                string[] getNames = practice.GP1.Split(' ').ToArray();
+
+                if (getNames.Length >= 2)
+                {
+                    firstName = getNames[0].ToString();
+                    surname = getNames[1].ToString();
+                }
+
+                newUser.Firstname = firstName;
+                newUser.Surname = surname;
+                newUser.Email = practice.GP1Email;
+                newUser.Username = practice.GP1Email;
+                newUser.Pwd = GeneratePassword();
+                newUser.UserType = 2;
+                newUser.PracticeId = practice.Id;
+                newUser.Year2 = false;
+                newUser.Year3 = false;
+                newUser.Year4 = false;
+                newUser.Year5 = false;
+                newUser.IsActive = true;
+                newUser.DateCreated = DateTime.Now;
+                newUser.DateUpdated = DateTime.Now;
+                newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+
+                _userService.AddUser(newUser);
+            }
+
+            return isNew;
+
+        }
+
+        public bool CreateGPUser(PracticesExternal practice)
+        {
+            //create user 
+            var getUsers = _userService.GetAll().Where(x => x.UserType > 1).ToList();
 
             bool isNew = true;
 
@@ -762,6 +842,22 @@ namespace GPManagementSytem.Controllers
             }
 
             return View(myPractices);
+        }
+
+        public ActionResult ManageNotReturned()
+        {
+            var academicYear = AcademicYearDD();
+            List<Practices> notReturned = _practiceService.GetPracticesNotReturnedSignup(academicYear);
+
+            return View(notReturned);
+        }
+
+        public ActionResult ManageReturned()
+        {
+            var academicYear = AcademicYearDD();
+            List<Practices> Returned = _practiceService.GetPracticesReturnedSignup(academicYear);
+
+            return View(Returned);
         }
 
         public ActionResult ManagePracticesExternal()

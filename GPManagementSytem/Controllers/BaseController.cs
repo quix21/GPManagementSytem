@@ -71,7 +71,7 @@ namespace GPManagementSytem.Controllers
 
             int allocationsPending = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == false).Count();
 
-            int allPractices = _practiceService.GetAll().Where(x => x.Active == 1).Count();
+            int allPractices = _practiceService.GetAll().Where(x => x.Active == 1 || x.Queried == 1).Count();
 
             int notReturnedSignup = allPractices - getReturns;
 

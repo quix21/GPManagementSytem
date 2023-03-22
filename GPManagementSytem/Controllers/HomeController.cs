@@ -95,36 +95,7 @@ namespace GPManagementSytem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddAllocationExternal(AllocationExternalViewModel allocationExternalViewModel, FormCollection fc)
         {
-            string guid = fc["guid"].ToString();
-
-            //string Year2Requested2 = fc["Year2Requested2"];
-            //string Year2Requested4 = fc["Year2Requested4"];
-
-            //string Year5Requested1 = fc["Year5Requested1"];
-            //string Year5Requested2 = fc["Year5Requested2"];
-
-            //string year2requested = "";
-            //string year5requested = "";
-
-            //if (Year2Requested2 != null)
-            //{
-            //    year2requested = Year2Requested2;
-            //}
-            //else
-            //{
-            //    year2requested = Year2Requested4;
-            //}
-
-            //if (Year5Requested1 != null)
-            //{
-            //    year5requested = Year5Requested1;
-            //}
-            //else
-            //{
-            //    year5requested = Year5Requested2;
-            //}
-             
-            
+            string guid = fc["guid"].ToString();          
 
             Type type = typeof(Allocations);
             PropertyInfo[] properties = type.GetProperties();
@@ -163,15 +134,6 @@ namespace GPManagementSytem.Controllers
                                     checkedInfo.SetValue(allocationExternalViewModel, true, null);
                                 }
                             }
-
-                            //allocationExternalViewModel.Year2Wk1RequestedChecked = true;
-                            
-                        //}
-                        //else
-                        //{
-                        //    info.SetValue(allocationExternalViewModel.allocations, year5requested, null);
-                        //}
-
                     }
                 }
             }
@@ -181,12 +143,6 @@ namespace GPManagementSytem.Controllers
             {
                 ModelState.AddModelError("NoBlocksChecked", "Please check at least one box for one year");
             }
-
-            //if (year2requested != "" & !Year2Checked)
-            //{
-            //    ModelState.AddModelError("year2requested", "Please indicate which weeks you are able to accomodate students in year 2");
-            //    allocationExternalViewModel.Year2Requested4Checked = true;
-            //}
 
             if (ModelState.IsValid)
             {
@@ -215,6 +171,15 @@ namespace GPManagementSytem.Controllers
                 allocationExternalViewModel.allocations.UpdatedBy = allocationExternalViewModel.allocations.PracticeId;
 
                 _allocationService.AddAllocation(allocationExternalViewModel.allocations);
+
+                //set PracticeStatus to Active 
+                var practice = _practiceService.GetById(allocationExternalViewModel.allocations.PracticeId);
+                practice.PracticeStatusGroup = 1;
+                ManagePracticeStatusGroupPOST(practice);
+
+                practice.DateUpdated = DateTime.Now;
+                practice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+                _practiceService.EditPractice(practice);
 
                 //update sentlog to show that email has been responded to/allocation requested
                 if (!String.IsNullOrEmpty(guid))
@@ -263,9 +228,13 @@ namespace GPManagementSytem.Controllers
 
                 int checkChange = Comparer.DefaultInvariant.Compare(showCurrentValue, showChangedValue);
 
-                if (checkChange != 0)
+                //ignore for automatic status change from dormant to active
+                if (classPropertyName != "Active" && classPropertyName != "Queried")
                 {
-                    detailsChanged = true;
+                    if (checkChange != 0)
+                    {
+                        detailsChanged = true;
+                    }
                 }
             }
 
@@ -964,14 +933,6 @@ namespace GPManagementSytem.Controllers
 
                 var myAllocation = _allocationService.AddAllocation(ParseAllocationViewModelADD(allocationViewModel, allocation));
 
-                //set PracticeStatus to Active 
-                var practice = _practiceService.GetById(allocation.PracticeId);
-                ManagePracticeStatusGroupPOST(practice);
-
-                practice.DateUpdated = DateTime.Now;
-                practice.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString()); 
-                _practiceService.EditPractice(practice);
-
                 return RedirectToAction("ManagePractices");
             }
             else
@@ -1237,15 +1198,15 @@ namespace GPManagementSytem.Controllers
             switch (practiceStatus)
             {
                 case 1:
-                    getPractices.Where(x => x.Active ==1).ToList();
+                    getPractices = getPractices.Where(x => x.Active ==1).ToList();
                     break;
 
                 case 2:
-                    getPractices.Where(x => x.Queried == 1).ToList();
+                    getPractices = getPractices.Where(x => x.Queried == 1).ToList();
                     break;
 
                 case 3:
-                    getPractices.Where(x => x.Disabled == 1).ToList();
+                    getPractices = getPractices.Where(x => x.Disabled == 1).ToList();
                     break;
             }
 

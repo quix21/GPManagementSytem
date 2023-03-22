@@ -34,7 +34,7 @@ namespace GPManagementSytem.Services
 
         public List<Practices> GetPracticesNotReturnedSignup(string academicYear)
         {
-            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1)
+            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1 || x.Queried ==1)
                          where !(from a in _databaseEntities.Allocations.Where(x => x.AcademicYear == academicYear)
                                  select a.PracticeId)
                                 .Contains(p.Id)
@@ -46,7 +46,7 @@ namespace GPManagementSytem.Services
 
         public List<Practices> GetPracticesReturnedSignup(string academicYear)
         {
-            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1)
+            var result = from p in _databaseEntities.Practices.Where(x => x.Active == 1 || x.Queried == 1)
                          where (from a in _databaseEntities.Allocations.Where(x => x.AcademicYear == academicYear)
                                  select a.PracticeId)
                                 .Contains(p.Id)

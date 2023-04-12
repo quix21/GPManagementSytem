@@ -59,27 +59,26 @@
                 }
 
 
-                    <ul class="navbar-nav text-light" id="accordionSidebar">
-                        @if (isAdmin)
-                        {
-                            @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="#"><i class="fa fa-file-o"></i>Sign up</a></li>*@
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Add Practice</a></li>
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManagePractices"><i class="fas fa-table"></i>Manage Practices</a></li>
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    @if (isAdmin)
+                    {
+                        @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="#"><i class="fa fa-file-o"></i>Sign up</a></li>*@
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Add Practice</a></li>
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManagePractices"><i class="fas fa-table"></i>Manage Practices</a></li>
 
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePracticesExternal", "Home") ? "active" : "")" href="~/Home/ManagePracticesExternal"><i class="fas fa-table"></i>Practice Changes (@changesCount)</a></li>
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePracticesExternal", "Home") ? "active" : "")" href="~/Home/ManagePracticesExternal"><i class="fas fa-table"></i>Practice Changes (@changesCount)</a></li>
 
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageSignupReturns", "Home") ? "active" : "")" href="~/Home/ManageSignupReturns"><i class="fas fa-table"></i>Manage Sign Up Responses (@allocationsPending)</a></li>
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageSignupReturns", "Home") ? "active" : "")" href="~/Home/ManageSignupReturns"><i class="fas fa-table"></i>Manage Sign Up Responses (@allocationsPending)</a></li>
 
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AtAGlanceRequested", "Home") ? "active" : "")" href="~/Home/AtAGlanceRequested"><i class="fas fa-table"></i>At A Glance</a></li>
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("SendSignUpInvite", "Home") ? "active" : "")" href="~/Home/SendSignUpInvite"><i class="fa fa-envelope-o"></i>Send Signup Emails</a></li>
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("EditSignupDate", "Home") ? "active" : "")" href="~/Home/EditSignupDate/1"><i class="fas fa-calendar-check-o"></i>Edit Sign Up dates</a></li>
-                            <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUsers", "Home") ? "active" : "")" href="~/Home/ManageUsers"><i class="fas fa-user-circle"></i>Manage Users</a></li>
-                        }
-
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AtAGlanceRequested", "Home") ? "active" : "")" href="~/Home/AtAGlanceRequested"><i class="fas fa-table"></i>At A Glance</a></li>
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("SendSignUpInvite", "Home") ? "active" : "")" href="~/Home/SendSignUpInvite"><i class="fa fa-envelope-o"></i>Send Signup Emails</a></li>
+                        <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManageUsers", "Home") ? "active" : "")" href="~/Home/ManageUsers"><i class="fas fa-user-circle"></i>Manage Users</a></li>
+                    }
 
 
-                        <li class="nav-item"><a class="nav-link" href="~/Login/Logout"><i class="fas fa-user-circle"></i>Log out</a></li>
-                    </ul>
+
+                    <li class="nav-item"><a class="nav-link" href="~/Login/Logout"><i class="fas fa-user-circle"></i>Log out</a></li>
+                </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>

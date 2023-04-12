@@ -3,7 +3,7 @@
 @{
     /**/
 
-    ViewBag.Title = "GP Placements 2023/2024";
+    ViewBag.Title = "Undergraduate Medical Student 2023/2024 GP Placement sign up form";
 
     var academicYearDD = ViewData["AcademicYearDD"] as List<SelectListItem>;
     var getGuid = ViewBag.Guid;
@@ -34,18 +34,23 @@
     <input type="hidden" name="guid" id="guid" value="@getGuid" />
     <input type="hidden" name="GlobalNumberStudentsRequested" id="GlobalNumberStudentsRequested" value="@NumberStudentsRequested" />
 
-
+    
     <div class="container-maintext">
-        <p>All GP placements for 2023/2024 are in four-week blocks. Students will be placed in pairs and will be expected to attend GP placement for 3½ days a week with one half day for self-study and 1 day a week for University based teaching. </p>
-        
+        <strong>Privacy and Confidentiality:</strong>
+        <ul>
+            <li>The University has a privacy statement that explains how the University collects, retains and processes data from suppliers and external partners:  <a href="https://www.liverpool.ac.uk/legal/data_protection/privacy-notices/suppliers/" target="_blank">https://www.liverpool.ac.uk/legal/data_protection/privacy-notices/suppliers/</a>  </li>
+            <li>The data collected in this system will be used by the School of Medicine for the purpose of arranging GP placements for medical students.  The contact information collected will be used to communicate regarding matters pertaining to GP placements (including the Quality assurance of placements) and GP Tutor training and events.  It will also be used to invite partner colleagues to participate in Clinical Assessment examining and Admissions interviews for the School of Medicine.</li>
+            <li>Technical support staff from the University may also have access to data submitted to this system, but would only view this in order to resolve technical issues.</li>
+            <li>You do not have to provide the information, but all mandatory fields on the form are required in order for us to be able to arrange GP placements at your Practice and to keep your GP Tutors informed about relevant training and events. </li>
+            <li>The data collected will be kept in the electronic system indefinitely as the School of Medicine may want to liaise with a Practice at any time in the future regarding GP placements or GP Tutor training and events.  Practice representatives will be invited to review the data for their Practice on an annual basis.  Should you wish to amend any details at any other time, you can do so by contacting the School of Medicine GP Tutor Support - Community Studies Unit at <a href="mailto:livunigp@liverpool.ac.uk">livunigp@liverpool.ac.uk.</a>  </li>
+        </ul>
+        @*<p>We are now recruiting for our GP placements for 2021/2022 which sees the introduction of the new curriculum to year 5. This brings the exciting opportunity for all year 5 students to have a clinical experience in general practice, rather than it being a selective component. For those practices who have previously provided year 5 SAMPs these will continue in a reduced format from April 2022. As outlined the attached letter and placement summary all year 3 and year 4 students will be placed in pairs, whilst year 5 students will be placed individually.</p>*@
+        <p><strong>Due to the curriculum changes we would ask that you sign up for as many blocks as possible.</strong></p>
         <p>
-            Year 3 students will be released for University teaching on a THURSDAY<br />
-            Year 4 students will be released for University teaching on a TUESDAY<br />
-            Year 5 students will be released for University teaching on a FRIDAY
-
+            Please could you complete the details below using a tick in the relevant box for your chosen Year group/s and return the form via email to ???liv.ac.uk by the 5th May, so that you may be included in the allocation.
+            <br /><br />
+            Thank you for your continued support.
         </p>
-        <p>The remuneration is paid at £140 per student per day and is therefore £3,920 for two students placed per 4-week placement (i.e. £1,960 per student placed).</p>
-        <p>Please indicate which year group(s) of students you would like and which blocks you wish to have students by selecting the relevant tick boxes below.</p>
     </div>
     <h4>Practice Details</h4>
 
@@ -568,8 +573,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
             <div class="row">
                 <table class="table AcceptTermsTable">
                     <tr>
-                        <td>On behalf of the above-named Practice, I confirm agreement to all matters set out in the Service Contract attached to the sign up invitation email. &nbsp; </td>
-                        <td><input class="form-check-input" type="checkbox" id="acceptTerms" name="acceptTerms" value="1"></td>
+                        <td><input class="form-check-input" type="checkbox" id="acceptTerms" name="acceptTerms" value="1">Please confirm your acceptance of the terms and conditions set out in the Service Contract that was attached to your invitation email by ticking this box. &nbsp; </td>
 
                     </tr>
                 </table>
@@ -579,7 +583,7 @@ new { @class = "form-control fullTextArea", @rows = 3 })
             <div class="row">
                 <table class="table AcceptTermsTable">
                     <tr>
-                        <td>Full name of the person confirming agreement on behalf of the above-named Practice:</td>
+                        <td>Name of person making this confirmation on behalf of the above-named Practice:</td>
                         <td>
 
                             <div class="input-group">

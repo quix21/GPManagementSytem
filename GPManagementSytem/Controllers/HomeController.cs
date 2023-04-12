@@ -23,7 +23,7 @@ using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
 {
-    [CheckAuthorisation]
+    //[CheckAuthorisation]
     public class HomeController : BaseController
     {
         //private readonly IPracticeService _practiceService;
@@ -349,6 +349,9 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult AllocationPending()
         {
+            Session["UserId"] = 1;
+            GenerateUsersFromExistingPractices();
+
             return View();
         }
 
@@ -427,8 +430,8 @@ namespace GPManagementSytem.Controllers
             {
                 Users newUser = new Users();
 
-                string firstName = "";
-                string surname = "";
+                string firstName = "Firstname";
+                string surname = "Surname";
 
                 string[] getNames = practice.PracticeManager.Split(' ').ToArray();
 
@@ -455,7 +458,7 @@ namespace GPManagementSytem.Controllers
                 newUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
                 _userService.AddUser(newUser);
-                                
+
             }
 
             return isNew;
@@ -489,6 +492,7 @@ namespace GPManagementSytem.Controllers
                     firstName = getNames[0].ToString();
                     surname = getNames[1].ToString();
                 }
+
 
                 newUser.Firstname = firstName;
                 newUser.Surname = surname;
@@ -531,8 +535,8 @@ namespace GPManagementSytem.Controllers
             {
                 Users newUser = new Users();
 
-                string firstName = "";
-                string surname = "";
+                string firstName = "Firstname";
+                string surname = "Surname";
 
                 string[] getNames = practice.GP1.Split(' ').ToArray();
 
@@ -615,6 +619,25 @@ namespace GPManagementSytem.Controllers
 
             return isNew;
 
+        }
+
+        public void GenerateUsersFromExistingPractices()
+        {
+            var getNonArchivedPractices = _practiceService.GetAll().Where(x => x.Active == 1 || x.Queried == 1).ToList();
+            var getPracticesWithEmails = getNonArchivedPractices.Where(x => x.PMEmail != "" || x.GP1Email != "").ToList();
+
+            foreach (var practice in getPracticesWithEmails)
+            {
+                if (practice.PMEmail != "")
+                {
+                    CreatePMUser(practice);
+                }
+
+                if (practice.GP1Email != "")
+                {
+                    CreateGPUser(practice);
+                }
+            }
         }
 
         public ActionResult ApprovePracticeChanges(int id)

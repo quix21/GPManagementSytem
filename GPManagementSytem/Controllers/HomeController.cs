@@ -617,6 +617,28 @@ namespace GPManagementSytem.Controllers
 
         }
 
+
+
+
+
+        public void GenerateUsersFromExistingPractices()
+        {
+            var getNonArchivedPractices = _practiceService.GetAll().Where(x => x.Active == 1 || x.Queried == 1).ToList();
+            var getPracticesWithEmails = getNonArchivedPractices.Where(x => x.PMEmail != "" || x.GP1Email != "").ToList();
+
+            foreach (var practice in getPracticesWithEmails)
+            {
+                if (practice.PMEmail != "")
+                {
+                    CreatePMUser(practice);
+                }
+
+                if (practice.GP1Email != "")
+                {
+                    CreateGPUser(practice);
+                }
+            }
+        }
         public ActionResult ApprovePracticeChanges(int id)
         {
             var academicYear = AcademicYearDD();

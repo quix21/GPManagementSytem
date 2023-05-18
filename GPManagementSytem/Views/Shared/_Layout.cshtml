@@ -62,7 +62,7 @@
                     <ul class="navbar-nav text-light" id="accordionSidebar">
                         @if (isAdmin)
                         {
-                            @*<li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddAllocation", "Home") ? "active" : "")" href="#"><i class="fa fa-file-o"></i>Sign up</a></li>*@
+                           
                             <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("AddPractice", "Home") ? "active" : "")" href="~/Home/AddPractice"><i class="fa fa-file-o"></i>Add Practice</a></li>
                             <li class="nav-item"><a class="nav-link @(Html.ActionLinkIsCurrentPage("ManagePractices", "Home") ? "active" : "")" href="~/Home/ManagePractices"><i class="fas fa-table"></i>Manage Practices</a></li>
 
@@ -140,8 +140,6 @@
     <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap4.min.js"></script>
 
 
-    @*<script src="~/Scripts/bs-init.js"></script>
-        <script src="~/Scripts/theme.js"></script>*@
     <script src="~/Scripts/doPopover.js"></script>
 
     <link rel="stylesheet" type="text/css" href="~/Content/jquery-idle-hands.css" />
@@ -151,7 +149,7 @@
     <script src="~/Scripts/datatablesSetup.js"></script>
 
     @* Inactivity timeout *@
-    @*@if (Session["UserId"] != null)
+    @if (Session["UserId"] != null)
     {
         var request = HttpContext.Current.Request;
         var getPath = $"{request.Url.Scheme}://{request.Url.Authority}{Url.Content("~")}Login/ForceLogout";
@@ -170,7 +168,7 @@
             });
         </script>
 
-    }*@
+    }
 
 </body>
 </html>

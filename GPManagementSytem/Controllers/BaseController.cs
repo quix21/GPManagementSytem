@@ -61,6 +61,7 @@ namespace GPManagementSytem.Controllers
             return myPwd;
         }
 
+        //headline figures to be displayed in the admin menu via _Layout
         public void ShowChangesPendingCount()
         {
             int showCount = _practiceExternalService.GetAllPending().Count();
@@ -95,8 +96,6 @@ namespace GPManagementSytem.Controllers
             string showThisYear = getLastYear + " - " + getThisYear;
             string showNextYear = getThisYear + " - " + getNextYear;
 
-
-            //myList.Add(new SelectListItem { Value = getLastYear, Text = getLastYear });
             myList.Add(new SelectListItem { Value = showThisYear, Text = showThisYear, Selected = true });
             myList.Add(new SelectListItem { Value = showNextYear, Text = showNextYear });
 
@@ -126,7 +125,7 @@ namespace GPManagementSytem.Controllers
                     //if single user object exists then test email
                     if (cu != null)
                     {
-                        content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL, getURL);
+                        content = createTemplateEmailBody(getType.Body, cu.Firstname, getURL);
                         SendEmail(cu.Email, subject, content, getEmailType, cu.Id, 0, getSendCode, GuidToIndentify, getType.AttachmentName, getType.AttachmentName2);
                     }
                     else
@@ -135,10 +134,10 @@ namespace GPManagementSytem.Controllers
                         {
                             GuidToIndentify = "";
                             GuidToIndentify = Guid.NewGuid().ToString();
-                            var nochangeURL = getURL + "Login/ConfirmNoChanges?guid=" + GuidToIndentify;
+
                             var loginURL = getURL + "Login/PracticeLogin?guid=" + GuidToIndentify;
 
-                            content = createTemplateEmailBody(getType.Body, user.Firstname, nochangeURL, loginURL);
+                            content = createTemplateEmailBody(getType.Body, user.Firstname, loginURL);
                             SendEmail(user.Email, subject, content, getEmailType, user.Id, user.PracticeId, getSendCode, GuidToIndentify, getType.AttachmentName, getType.AttachmentName2);
                         }
                     }
@@ -228,7 +227,7 @@ namespace GPManagementSytem.Controllers
             _signupSendLogService.AddSignupSendLog(esl);
         }
 
-        public string createTemplateEmailBody(string bodytext, string firstname, string nochangeurl, string loginurl)
+        public string createTemplateEmailBody(string bodytext, string firstname, string loginurl)
         {
             string body = string.Empty;
 
@@ -239,7 +238,6 @@ namespace GPManagementSytem.Controllers
 
             body = body.Replace("{firstname}", firstname);
             body = body.Replace("{bodytext}", bodytext);
-            body = body.Replace("{nochangeurl}", nochangeurl);
             body = body.Replace("{loginurl}", loginurl);
 
             return body;
@@ -297,6 +295,7 @@ namespace GPManagementSytem.Controllers
             return myPracticeExt;
         }
 
+        //need to be run each time a command/page load is executed to ensure the figures in the menu are updated and in real time
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);

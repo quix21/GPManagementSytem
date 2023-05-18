@@ -19,21 +19,11 @@ namespace GPManagementSytem.Controllers
     {
         private readonly IUserService _userService;
 
-        //private readonly IPracticeService _practiceService;
-
         private bool isImpersonate = Convert.ToBoolean(ConfigurationManager.AppSettings["isImpersonate"].ToString());
-
-        //private string adminEmail = ConfigurationManager.AppSettings["adminEmail"].ToString();
-        //private string adminName = ConfigurationManager.AppSettings["adminName"].ToString();
-
-
 
         public LoginController(IUserService userService, ISessionManager sessionManager,  IPracticeExternalService practiceExternalService, ISignupSendLogService signupSendLogService, IPracticeService practiceService, IAllocationService allocationService, IMailSender mailSender) : base(sessionManager, mailSender, practiceExternalService, practiceService, allocationService, signupSendLogService)
         {
             _userService = userService;
-
-           // _practiceService = practiceService;
-
         }
 
         // GET: Login
@@ -57,7 +47,6 @@ namespace GPManagementSytem.Controllers
                 Session["UserId"] = isUser.Id;
                 Session["IsAdmin"] = true;
 
-
                 SessionManager.SetLoggedInUser(isUser);
 
                 logger.Info("Login successful for: " + isUser.Username);
@@ -70,8 +59,6 @@ namespace GPManagementSytem.Controllers
 
                 logger.Info("Login failed for: " + username);
             }
-
-            //TODO - audit logging
 
             return View();
         }
@@ -130,8 +117,6 @@ namespace GPManagementSytem.Controllers
                 logger.Info("Login failed for: " + username);
             }
 
-            //TODO - audit logging
-
             return View();
         }
 
@@ -151,12 +136,9 @@ namespace GPManagementSytem.Controllers
 
             if (isUser != null)
             {
-                //TODO send email with newly generated password
                 string newPassword = GeneratePassword();
 
                 var emailBody = createEmailBody(isUser.Firstname, newPassword);
-
-                
 
                 _mailSender.SendMail(isUser.Username, adminEmail, adminName, "Password reset", emailBody, null, null);
 
@@ -263,7 +245,6 @@ namespace GPManagementSytem.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            //Session.Abandon();
             Session.Clear();
 
             return View();

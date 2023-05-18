@@ -268,6 +268,8 @@
     <Content Include="Content\Contact-Form-Clean.css" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\jquery-idle-hands.css" />
+    <EmbeddedResource Include="DatabaseObjects\gp-system-20230518.sql" />
+    <EmbeddedResource Include="DatabaseObjects\gp-system-STRUCTUREONLY-20230518.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -292,7 +294,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Templates\signup_email - Copy.html" />
     <Content Include="Templates\signup_email.html" />
     <Content Include="Templates\resetpassword_email.html" />
     <Content Include="Web.config">

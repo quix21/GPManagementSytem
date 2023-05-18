@@ -69,15 +69,6 @@
                 </div>
             </div>
             <div class="col-md-6">
-                @*<div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.NewPractice)</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "true", new { @class = "btn-check", @id = "true" })
-                        <label class="btn btn-outline-info" for="true">Yes</label>
-                        @Html.RadioButtonFor(model => model.changedRecord.NewPractice, "false", new { @class = "btn-check", @id = "false" })
-                        <label class="btn btn-outline-info" for="false">No</label>
-                    </div>
-                </div>*@
             </div>
         </div>
     </div>
@@ -323,136 +314,12 @@
                 </div>
             </div>
             <div class="col-md-6">
-                @*<div class="input-group">
-                    
-                        @if (Model.originalRecord.PracticeStatusGroup != Model.changedRecord.PracticeStatusGroup)
-                        {
 
-
-                            switch (Model.originalRecord.PracticeStatusGroup)
-                            {
-                                case 1:
-                                    showPSG = "Active";
-                                    break;
-
-                                case 2:
-                                    showPSG = "Disabled";
-                                    break;
-
-                                case 3:
-                                    showPSG = "Queried";
-                                    break;
-                            }
-                        
-                    <span class="input-group-text-radio"><i class="bi bi-pencil-square" data-toggle="tooltip" data-placement="top" title="@showPSG"></i>&nbsp;Practice Status</span>
-                    }
-                    else
-                    {
-                        <span class="input-group-text-radio">Practice Status</span>
-                    }
-
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @if (Model.originalRecord.PracticeStatusGroup != Model.changedRecord.PracticeStatusGroup)
-                    {
-                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
-                        <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 1) {<text>fieldChanged</text> }  " for="active">Active</label>
-                        @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
-                            <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 2) {<text>fieldChanged</text> }" for="disabled">Disabled</label>
-                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
-                            <label class="btn btn-outline-info @if (Model.changedRecord.PracticeStatusGroup == 3) {<text>fieldChanged</text> }" for="queried">Queried</label>
-                        }
-                        else
-                        {
-                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "1", new { @class = "btn-check", @id = "active" })
-                            <label class="btn btn-outline-info" for="active">Active</label>
-                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "2", new { @class = "btn-check", @id = "disabled" })
-                            <label class="btn btn-outline-info" for="disabled">Disabled</label>
-                            @Html.RadioButtonFor(model => model.changedRecord.PracticeStatusGroup, "3", new { @class = "btn-check", @id = "queried" })
-                            <label class="btn btn-outline-info" for="queried">Queried</label>
-                        }
-
-
-                    </div>
-                </div>*@
             </div>
         </div>
     </div>
 
 
-    @*<div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <hr>
-            </div>
-        </div>
-    </div>
-    <h4>Other Details</h4>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.TutorTrainingGPName)</span>
-                    @Html.EditorFor(model => model.changedRecord.TutorTrainingGPName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.SurgeryInUse)</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.changedRecord.SurgeryInUse, "true", new { @class = "btn-check", @id = "NotInUseTrue" })
-                        <label class="btn btn-outline-info" for="NotInUseTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.changedRecord.SurgeryInUse, "false", new { @class = "btn-check", @id = "NotInUseFalse" })
-                        <label class="btn btn-outline-info" for="NotInUseFalse">No</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-text-radio">@Html.LabelFor(model => model.changedRecord.ContactSurgery)</span>
-                    <div class="btn-group-radio" role="group" aria-label="Basic radio toggle button group">
-                        @Html.RadioButtonFor(model => model.changedRecord.ContactSurgery, "true", new { @class = "btn-check", @id = "NoContactTrue" })
-                        <label class="btn btn-outline-info" for="NoContactTrue">Yes</label>
-                        @Html.RadioButtonFor(model => model.changedRecord.ContactSurgery, "false", new { @class = "btn-check", @id = "NoContactFalse" })
-                        <label class="btn btn-outline-info" for="NoContactFalse">No</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.Notes)</span>
-                    @Html.TextAreaFor(model => model.changedRecord.Notes,
-                 new { @class = "form-control fullTextArea", @rows = 3 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.UCCTNotes)</span>
-                    @Html.TextAreaFor(model => model.changedRecord.UCCTNotes,
-                 new { @class = "form-control fullTextArea", @rows = 3 })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <span class="input-group-text">@Html.LabelFor(model => model.changedRecord.QualityVisitNotes)</span>
-                    @Html.TextAreaFor(model => model.changedRecord.QualityVisitNotes,
-                 new { @class = "form-control fullTextArea", @rows = 3 })
-                </div>
-            </div>
-        </div>
-    </div>*@
     <div class="container">
         <div class="row">
             <div class="col-md-12">

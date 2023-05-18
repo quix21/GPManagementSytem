@@ -44,7 +44,7 @@
             <li>You do not have to provide the information, but all mandatory fields on the form are required in order for us to be able to arrange GP placements at your Practice and to keep your GP Tutors informed about relevant training and events. </li>
             <li>The data collected will be kept in the electronic system indefinitely as the School of Medicine may want to liaise with a Practice at any time in the future regarding GP placements or GP Tutor training and events.  Practice representatives will be invited to review the data for their Practice on an annual basis.  Should you wish to amend any details at any other time, you can do so by contacting the School of Medicine GP Tutor Support - Community Studies Unit at <a href="mailto:livunigp@liverpool.ac.uk">livunigp@liverpool.ac.uk.</a>  </li>
         </ul>
-        @*<p>We are now recruiting for our GP placements for 2021/2022 which sees the introduction of the new curriculum to year 5. This brings the exciting opportunity for all year 5 students to have a clinical experience in general practice, rather than it being a selective component. For those practices who have previously provided year 5 SAMPs these will continue in a reduced format from April 2022. As outlined the attached letter and placement summary all year 3 and year 4 students will be placed in pairs, whilst year 5 students will be placed individually.</p>*@
+
         <p><strong>Due to the curriculum changes we would ask that you sign up for as many blocks as possible.</strong></p>
         <p>
             Please could you complete the details below using a tick in the relevant box for your chosen Year group/s and return the form via email to ???liv.ac.uk by the 5th May, so that you may be included in the allocation.
@@ -205,114 +205,9 @@ new { @class = "form-control fullTextArea", @rows = 3 })
         </div>
     </div>
     <br /><br />
-    @*<h4>2nd Year</h4>*@
+
     <div class="containerExternal">
 
-        @*<div class="container">
-            <p>Year 2 students are placed for one week in Practice as per the table below. Please indicate which weeks you wish to have students by ticking the relevant boxes.</p>
-            <p>Students will be expected to attend GP placement for 4½ days a week with one half day on a Wednesday afternoon off, as mandated University afternoons.</p>
-            <div class="row">
-                <table class="table table-hover AllocationExtTable">
-                    <tr>
-                        <td>Week 1 @(Model.signupDates.Year2Wk1From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk1To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk1Requested" name="Year2Wk1Requested" value="true" @(Model.Year2Wk1RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Week 2 @(Model.signupDates.Year2Wk2From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk2To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk2Requested" name="Year2Wk2Requested" value="true" @(Model.Year2Wk2RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Week 3 @(Model.signupDates.Year2Wk3From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk3To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk3Requested" name="Year2Wk3Requested" value="true" @(Model.Year2Wk3RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Week 4 @(Model.signupDates.Year2Wk4From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk4To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk4Requested" name="Year2Wk4Requested" value="true" @(Model.Year2Wk4RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Week 5 @(Model.signupDates.Year2Wk5From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk5To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk5Requested" name="Year2Wk5Requested" value="true" @(Model.Year2Wk5RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Week 6 @(Model.signupDates.Year2Wk6From?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>up to and including</td>
-                        <td>@(Model.signupDates.Year2Wk6To?.ToString("dd/MM/yyyy") ?? string.Empty)</td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="Year2Wk6Requested" name="Year2Wk6Requested" value="true" @(Model.Year2Wk6RequestedChecked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>*@
-        @*<br />
-        <div class="container">
-            <h5>Can you accommodate four students?</h5>
-            <p>
-                <strong>
-                    The students are to be placed in pairs, however you may have the capacity to take four students placement.<br />
-                    The remuneration is paid at £140 per student per day and is therefore £630 per student per 1-week placement i.e. £1260 per pair of students placed.<br /><br />
-                    Please indicate the number of students your Practice is able to accommodate per block.
-                </strong>
-            </p>
-            <div class="row">
-                <table class="table NumberRequestedTable">
-                    <tr>
-                        <td><strong>Number of students requested per week:</strong></td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                2&nbsp; <input class="form-check-input" type="checkbox" id="Year2Requested2" name="Year2Requested2" value="2" @(Model.Year2Requested2Checked ? "checked" : "")>
-
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-check form-check-inline">
-                                4&nbsp;  <input class="form-check-input" type="checkbox" id="Year2Requested4" name="Year2Requested4" value="4" @(Model.Year2Requested4Checked ? "checked" : "")>
-
-
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>*@
         <h4>3rd Year</h4>
         <div class="container">
             <div class="row">

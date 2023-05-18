@@ -23,19 +23,16 @@ using System.Web.Mvc;
 
 namespace GPManagementSytem.Controllers
 {
-    [CheckAuthorisation]
+    [CheckAuthorisation] //login session variable check applied at the controller level 
     public class HomeController : BaseController
     {
-        //private readonly IPracticeService _practiceService;
-        //private readonly IAllocationService _allocationService;
         private readonly IUserService _userService;
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly ISignupDatesService _signupDatesService;
 
         public HomeController(IPracticeService practiceService, IPracticeExternalService practiceExternalService, IAllocationService allocationService, IUserService userService, IEmailTemplateService emailTemplateService, ISignupSendLogService signupSendLogService , ISessionManager sessionManager, IMailSender mailSender, ISignupDatesService signupDatesService) : base(sessionManager, mailSender, practiceExternalService, practiceService, allocationService, signupSendLogService)
         {
-           // _practiceService = practiceService;
-            //_allocationService = allocationService;
+
             _userService = userService;
             _emailTemplateService = emailTemplateService;
             _signupDatesService = signupDatesService;
@@ -48,13 +45,7 @@ namespace GPManagementSytem.Controllers
 
             AllocationExternalViewModel myModel = new AllocationExternalViewModel();
 
-            ////////////////
-
             //check if there are previous allocation requests pending
-            //PracticesExternal changesPending = new PracticesExternal();
-
-            //changesPending = _practiceExternalService.GetAllPending().Where(x => x.PrimaryId == id).FirstOrDefault();
-
             Allocations allocationRequestExists = new Allocations();
 
             allocationRequestExists = _allocationService.GetByPracticeAndYear(id, academicYear);
@@ -105,7 +96,7 @@ namespace GPManagementSytem.Controllers
 
             //iterate through the form collection. If the form field matches the name of the class property (which are indentically named) it means that the box has been ticked for that block/week. Thefore add 2 or 4 students to that block/week.
 
-            //this persists from years 2, 3 and 4. In year 5, that value changes to 1 or 2 per block
+            //this persists for years 3 and 4. In year 5, that value changes to 1 or 2 per block
 
             bool NoBlocksChecked = true;
 
@@ -119,21 +110,18 @@ namespace GPManagementSytem.Controllers
 
                     if (fieldName == classPropertyName)
                     {
-                        //check if year 2-4 or year 5
-                        //if (fieldName.IndexOf("Year5") == -1)
-                        //{
-                            info.SetValue(allocationExternalViewModel.allocations, allocationExternalViewModel.GlobalNumberStudentsRequested, null);
-                            NoBlocksChecked = false;
+                        info.SetValue(allocationExternalViewModel.allocations, allocationExternalViewModel.GlobalNumberStudentsRequested, null);
+                        NoBlocksChecked = false;
 
-                            string dateChecked = fieldName + "Checked";
+                        string dateChecked = fieldName + "Checked";
 
-                            foreach (PropertyInfo checkedInfo in checkedProperties)
+                        foreach (PropertyInfo checkedInfo in checkedProperties)
+                        {
+                            if (dateChecked == checkedInfo.Name)
                             {
-                                if (dateChecked == checkedInfo.Name)
-                                {
-                                    checkedInfo.SetValue(allocationExternalViewModel, true, null);
-                                }
+                                checkedInfo.SetValue(allocationExternalViewModel, true, null);
                             }
+                        }
                     }
                 }
             }
@@ -219,7 +207,7 @@ namespace GPManagementSytem.Controllers
             Type practiceType = typeof(Practices);
             PropertyInfo[] practiceProperties = practiceType.GetProperties();
 
-
+            //iterate through the practice table fields to check if any of the current values have been changed and flag if so
             foreach (PropertyInfo info in practiceProperties)
             {
                 var classPropertyName = info.Name;
@@ -409,6 +397,8 @@ namespace GPManagementSytem.Controllers
             }
         }
 
+        //Each new practice has a Practice Manager (PM) and GP user account created
+        //There is a function for both External and administration creation of new practices
         public bool CreatePMUser(Practices practice)
         {
             //create user 
@@ -513,6 +503,8 @@ namespace GPManagementSytem.Controllers
             return isNew;
         }
 
+        //Each new practice has a Practice Manager (PM) and GP user account created
+        //There is a function for both External and administration creation of new practices
         public bool CreateGPUser(Practices practice)
         {
             //create user 
@@ -617,10 +609,8 @@ namespace GPManagementSytem.Controllers
 
         }
 
-
-
-
-
+        //This is a one off function produced in order to create the appropriate user accounts for the imported practice data
+        //As of 16/05/2023 is has not been run
         public void GenerateUsersFromExistingPractices()
         {
             var getNonArchivedPractices = _practiceService.GetAll().Where(x => x.Active == 1 || x.Queried == 1).ToList();
@@ -738,8 +728,6 @@ namespace GPManagementSytem.Controllers
         [HttpPost]
         public ActionResult EditPracticeExternal(Practices practice, FormCollection fc)
         {
-            //var myPractice = _practiceService.GetById(practice.Id);
-
             string guid = fc["guid"].ToString();
 
             if (ModelState.IsValid)
@@ -862,7 +850,6 @@ namespace GPManagementSytem.Controllers
         {
             var academicYear = AcademicYearDD();
 
-            //var getReturns = _signupSendLogService.GetAllNoActivity(academicYear).Where(x => x.DetailsUpdated == true).OrderByDescending(x => x.DateActionTaken).ToList();
             var getReturns = _allocationService.GetByAcademicYear(academicYear).Where(x => x.AllocationApproved == false).OrderByDescending(x => x.DateCreated).ToList();
 
             List<Practices> PracticesReturned = new List<Practices>();
@@ -957,10 +944,7 @@ namespace GPManagementSytem.Controllers
 
                 return RedirectToAction("ManagePractices");
             }
-            else
-            {
 
-            }
             return View(BuildAddAllocation(allocationViewModel.PracticeId));
         }
 
@@ -1045,10 +1029,9 @@ namespace GPManagementSytem.Controllers
                 myUser.UserType = user.UserType;
                 myUser.PracticeId = user.PracticeId;
 
-                //myUser.Pwd = user.Pwd;
                 myUser.IsActive = user.IsActive;
                 myUser.DateUpdated = DateTime.Now;
-                //myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+                myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
                 _userService.EditUser(myUser);
 
@@ -1063,7 +1046,6 @@ namespace GPManagementSytem.Controllers
         public ActionResult AddUser()
         {
             PrepareUserViewBag();
-
 
             return View();
         }
@@ -1104,7 +1086,7 @@ namespace GPManagementSytem.Controllers
 
                 myUser.IsActive = user.IsActive;
                 myUser.DateCreated = DateTime.Now;
-                //myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
+                myUser.UpdatedBy = Convert.ToInt32(Session["UserId"].ToString());
 
                 _userService.AddUser(myUser);
 
@@ -1172,18 +1154,6 @@ namespace GPManagementSytem.Controllers
 
                 Sendlist = GetSendListByPracticeStatus(emailTemplates.SendList);
 
-                //switch (emailTemplates.SendList)
-                //{
-                //    case 1:
-                //        Sendlist = _userService.GetAllPracticeUsers();
-                //        break;
-
-                //    case 2:
-                //        Sendlist = GetUsersFromSendListLog();
-                //        break;
-                //}
-
-
                 if (Command == "Send Preview Email")
                 {
                     var myAdmin = _userService.GetById(Convert.ToInt32(Session["UserId"].ToString()));
@@ -1197,7 +1167,6 @@ namespace GPManagementSytem.Controllers
                     
                     return RedirectToAction("InviteSent", "Home", new {getSendCode = BuildEmail(null, Sendlist, myEmail) });
                 }
-
                 
             }
             else
@@ -1247,7 +1216,6 @@ namespace GPManagementSytem.Controllers
 
         public ActionResult InviteSent(string getSendCode)
         {
-            //TODO - show list/count of emails sent?
             ViewData["SendCount"] = _signupSendLogService.GetBySendCode(getSendCode).Count();
 
             return View();
@@ -1415,9 +1383,6 @@ namespace GPManagementSytem.Controllers
             allocation.Year5B6Allocated = allocationViewModel.Year5B6Allocated;
             allocation.AcademicYear = allocationViewModel.AcademicYear;
             allocation.ServiceContractReceived = allocationViewModel.ServiceContractReceived;
-            //allocation.DateCreated = allocationViewModel.DateCreated;
-            //allocation.DateUpdated = allocationViewModel.DateUpdated;
-            //allocation.UpdatedBy = allocationViewModel.UpdatedBy;
 
             return allocation;
         }
@@ -1497,8 +1462,6 @@ namespace GPManagementSytem.Controllers
         private Practices ParseApprovePracticesViewModel(ApprovePracticeChangesViewModel approvePracticeChangesViewModel)
         {
             approvePracticeChangesViewModel.originalRecord.Surgery = approvePracticeChangesViewModel.changedRecord.Surgery;
-
-            //approvePracticeChangesViewModel.originalRecord.SurgeryInUse = approvePracticeChangesViewModel.changedRecord.SurgeryInUse;
             approvePracticeChangesViewModel.originalRecord.GP1 = approvePracticeChangesViewModel.changedRecord.GP1;
             approvePracticeChangesViewModel.originalRecord.GP1Email = approvePracticeChangesViewModel.changedRecord.GP1Email;
             approvePracticeChangesViewModel.originalRecord.Address1 = approvePracticeChangesViewModel.changedRecord.Address1;
@@ -1506,35 +1469,13 @@ namespace GPManagementSytem.Controllers
             approvePracticeChangesViewModel.originalRecord.Town = approvePracticeChangesViewModel.changedRecord.Town;
             approvePracticeChangesViewModel.originalRecord.Postcode = approvePracticeChangesViewModel.changedRecord.Postcode;
             approvePracticeChangesViewModel.originalRecord.Telephone = approvePracticeChangesViewModel.changedRecord.Telephone;
-            //approvePracticeChangesViewModel.originalRecord.Fax = approvePracticeChangesViewModel.changedRecord.Fax;
             approvePracticeChangesViewModel.originalRecord.PracticeManager = approvePracticeChangesViewModel.changedRecord.PracticeManager;
             approvePracticeChangesViewModel.originalRecord.PMEmail = approvePracticeChangesViewModel.changedRecord.PMEmail;
             approvePracticeChangesViewModel.originalRecord.GP2 = approvePracticeChangesViewModel.changedRecord.GP2;
             approvePracticeChangesViewModel.originalRecord.GP2Email = approvePracticeChangesViewModel.changedRecord.GP2Email;
-            //approvePracticeChangesViewModel.originalRecord.Website = approvePracticeChangesViewModel.changedRecord.Website;
-            //approvePracticeChangesViewModel.originalRecord.GP3 = approvePracticeChangesViewModel.changedRecord.GP3;
-            //approvePracticeChangesViewModel.originalRecord.GP3Email = approvePracticeChangesViewModel.changedRecord.GP3Email;
-            //approvePracticeChangesViewModel.originalRecord.GP4 = approvePracticeChangesViewModel.changedRecord.GP4;
-            //approvePracticeChangesViewModel.originalRecord.GP4Email = approvePracticeChangesViewModel.changedRecord.GP4Email;
             approvePracticeChangesViewModel.originalRecord.AdditionalEmails = approvePracticeChangesViewModel.changedRecord.AdditionalEmails;
             approvePracticeChangesViewModel.originalRecord.SupplierNumber = approvePracticeChangesViewModel.changedRecord.SupplierNumber;
-            //approvePracticeChangesViewModel.originalRecord.ContactSurgery = approvePracticeChangesViewModel.changedRecord.ContactSurgery;
-            //approvePracticeChangesViewModel.originalRecord.Notes = approvePracticeChangesViewModel.changedRecord.Notes;
-            //approvePracticeChangesViewModel.originalRecord.AttachmentsAllocated = approvePracticeChangesViewModel.changedRecord.AttachmentsAllocated;
-            //approvePracticeChangesViewModel.originalRecord.UCCTNotes = approvePracticeChangesViewModel.changedRecord.UCCTNotes;
-            //approvePracticeChangesViewModel.originalRecord.QualityVisitDateR1 = approvePracticeChangesViewModel.changedRecord.QualityVisitDateR1;
-            //approvePracticeChangesViewModel.originalRecord.QualityVisitNotes = approvePracticeChangesViewModel.changedRecord.QualityVisitNotes;
-            //approvePracticeChangesViewModel.originalRecord.Active = approvePracticeChangesViewModel.changedRecord.Active;
-            //approvePracticeChangesViewModel.originalRecord.Disabled = approvePracticeChangesViewModel.changedRecord.Disabled;
-            //approvePracticeChangesViewModel.originalRecord.Queried = approvePracticeChangesViewModel.changedRecord.Queried;
             approvePracticeChangesViewModel.originalRecord.ListSize = approvePracticeChangesViewModel.changedRecord.ListSize;
-            //approvePracticeChangesViewModel.originalRecord.NewPractice = approvePracticeChangesViewModel.changedRecord.NewPractice;
-            //approvePracticeChangesViewModel.originalRecord.AcademicYear = approvePracticeChangesViewModel.changedRecord.AcademicYear;
-            //approvePracticeChangesViewModel.originalRecord.QualityVisitDate = approvePracticeChangesViewModel.changedRecord.QualityVisitDate;
-            //approvePracticeChangesViewModel.originalRecord.OKToProceed = approvePracticeChangesViewModel.changedRecord.OKToProceed;
-            //approvePracticeChangesViewModel.originalRecord.DataReviewDate = approvePracticeChangesViewModel.changedRecord.DataReviewDate;
-            //approvePracticeChangesViewModel.originalRecord.TutorTrainingGPName = approvePracticeChangesViewModel.changedRecord.TutorTrainingGPName;
-            //approvePracticeChangesViewModel.originalRecord.TutorTrainingDate = approvePracticeChangesViewModel.changedRecord.TutorTrainingDate;
 
             return approvePracticeChangesViewModel.originalRecord;
         }
@@ -1595,8 +1536,6 @@ namespace GPManagementSytem.Controllers
             wsNames.Add("Requested");
 
             //Create Excel object
-
-            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage ep = new ExcelPackage();
 
             createWorksheet(wsNames[0].ToString(), ep);
@@ -1705,7 +1644,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 6].Value = practice.Town;
                 worksheet.Cells[rowCounter, 7].Value = practice.Postcode;
                 worksheet.Cells[rowCounter, 8].Value = practice.Telephone;
-
                 worksheet.Cells[rowCounter, 9].Value = practice.PracticeManager;
                 worksheet.Cells[rowCounter, 10].Value = practice.PMEmail;
                 worksheet.Cells[rowCounter, 11].Value = practice.GP1;
@@ -1713,7 +1651,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 13].Value = practice.GP2;
                 worksheet.Cells[rowCounter, 14].Value = practice.GP2Email;
                 worksheet.Cells[rowCounter, 15].Value = practice.AdditionalEmails;
-
                 worksheet.Cells[rowCounter, 16].Value = practice.ListSize;
                 worksheet.Cells[rowCounter, 17].Value = ShowPracticeStatus(ManagePracticeStatusGroupGET(practice));
                 worksheet.Cells[rowCounter, 18].Value = practice.TutorTrainingGPName;
@@ -1799,38 +1736,10 @@ namespace GPManagementSytem.Controllers
             year5Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             year5Header.Style.TextRotation = 90;
 
-            //worksheet.Cells["W2"].LoadFromText(GetAttributeDisplayName("Year5B1Allocated"));
-            //worksheet.Cells["X2"].LoadFromText(GetAttributeDisplayName("Year5B2Allocated"));
-            //worksheet.Cells["Y2"].LoadFromText(GetAttributeDisplayName("Year5B3Allocated"));
-            //worksheet.Cells["Z2"].LoadFromText(GetAttributeDisplayName("Year5B4Allocated"));
-            //worksheet.Cells["AA2"].LoadFromText(GetAttributeDisplayName("Year5B5Allocated"));
-            //worksheet.Cells["AB2"].LoadFromText(GetAttributeDisplayName("Year5B6Allocated"));
-
-            //var year5Header = worksheet.Cells["W2:AB2"];
-            //year5Header.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            //colFromHex = System.Drawing.ColorTranslator.FromHtml("#c6e0b4");
-            //year5Header.Style.Fill.BackgroundColor.SetColor(colFromHex);
-            //year5Header.Style.Font.Bold = true;
-            //year5Header.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            //year5Header.Style.TextRotation = 90;
-
-            //worksheet.Cells["AC2"].LoadFromText(GetAttributeDisplayName("ServiceContractReceived"));
-
-            //var servContrHeader = worksheet.Cells["AC2"];
-            //servContrHeader.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            //colFromHex = System.Drawing.ColorTranslator.FromHtml("#e73c3c");
-            //servContrHeader.Style.Fill.BackgroundColor.SetColor(colFromHex);
-            //servContrHeader.Style.Font.Bold = true;
-            //servContrHeader.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            //servContrHeader.Style.TextRotation = 90;
-
             int rowCounter = 3;
 
             string myRange = "C" + rowCounter + ":V" + rowCounter;
             var mainCells = worksheet.Cells[myRange];
-
-            //mainCells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            //mainCells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             foreach (var allocation in allocationViewModel)
             {
@@ -1847,7 +1756,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 7].Value = allocation.Year3B5Allocated;
                 worksheet.Cells[rowCounter, 8].Value = allocation.Year3B6Allocated;
                 worksheet.Cells[rowCounter, 9].Value = allocation.Year3B7Allocated;
-
                 worksheet.Cells[rowCounter, 10].Value = allocation.Year4B1Allocated;
                 worksheet.Cells[rowCounter, 11].Value = allocation.Year4B2Allocated;
                 worksheet.Cells[rowCounter, 12].Value = allocation.Year4B3Allocated;
@@ -1855,7 +1763,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 14].Value = allocation.Year4B5Allocated;
                 worksheet.Cells[rowCounter, 15].Value = allocation.Year4B6Allocated;
                 worksheet.Cells[rowCounter, 16].Value = allocation.Year4B7Allocated;
-
                 worksheet.Cells[rowCounter, 17].Value = allocation.Year5B1Allocated;
                 worksheet.Cells[rowCounter, 18].Value = allocation.Year5B2Allocated;
                 worksheet.Cells[rowCounter, 19].Value = allocation.Year5B3Allocated;
@@ -1863,20 +1770,8 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 21].Value = allocation.Year5B5Allocated;
                 worksheet.Cells[rowCounter, 22].Value = allocation.Year5B6Allocated;
 
-
-                //worksheet.Cells[rowCounter, 23].Value = allocation.Year5B1Allocated;
-                //worksheet.Cells[rowCounter, 24].Value = allocation.Year5B2Allocated;
-                //worksheet.Cells[rowCounter, 25].Value = allocation.Year5B3Allocated;
-                //worksheet.Cells[rowCounter, 26].Value = allocation.Year5B4Allocated;
-                //worksheet.Cells[rowCounter, 27].Value = allocation.Year5B5Allocated;
-                //worksheet.Cells[rowCounter, 28].Value = allocation.Year5B6Allocated;
-
-                //worksheet.Cells[rowCounter, 29].Value = ShowServiceContract(allocation.ServiceContractReceived);
-
                 rowCounter++;
-            }
-
-
+            }            
 
             return worksheet;
         }
@@ -1976,7 +1871,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 7].Value = allocation.Year3B5Requested;
                 worksheet.Cells[rowCounter, 8].Value = allocation.Year3B6Requested;
                 worksheet.Cells[rowCounter, 9].Value = allocation.Year3B7Requested;
-
                 worksheet.Cells[rowCounter, 10].Value = allocation.Year4B1Requested;
                 worksheet.Cells[rowCounter, 11].Value = allocation.Year4B2Requested;
                 worksheet.Cells[rowCounter, 12].Value = allocation.Year4B3Requested;
@@ -1984,7 +1878,6 @@ namespace GPManagementSytem.Controllers
                 worksheet.Cells[rowCounter, 14].Value = allocation.Year4B5Requested;
                 worksheet.Cells[rowCounter, 15].Value = allocation.Year4B6Requested;
                 worksheet.Cells[rowCounter, 16].Value = allocation.Year4B7Requested;
-
                 worksheet.Cells[rowCounter, 17].Value = allocation.Year5B1Requested;
                 worksheet.Cells[rowCounter, 18].Value = allocation.Year5B2Requested;
                 worksheet.Cells[rowCounter, 19].Value = allocation.Year5B3Requested;
@@ -2039,6 +1932,7 @@ namespace GPManagementSytem.Controllers
             return myPSG;
         }
 
+        //original data has Active, Disabled and Queried as seperate boolean fields rather than one field with a numeric value to denote each status. This logic represents that
         private Practices ManagePracticeStatusGroupPOST(Practices practice)
         {
             switch (practice.PracticeStatusGroup)
